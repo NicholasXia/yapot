@@ -1,0 +1,2 @@
+exports.PER_PAGE_NUM=5;
+exports.DESCRIPTION_WORD_NUM=140;

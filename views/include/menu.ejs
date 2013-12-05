@@ -1,0 +1,74 @@
+<ul class="page-sidebar-menu">
+				<li>
+					<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+					<div class="sidebar-toggler hidden-phone"></div>
+					<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+				</li>
+				<li>
+					<!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
+					<form class="sidebar-search" action="javascript:;" method="POST">
+						<div class="form-container">
+							<div class="input-box">
+								<a href="javascript:;" class="remove"></a>
+								<input type="text" placeholder="搜索"/>
+								<input type="button" class="submit" value=" "/>
+							</div>
+						</div>
+					</form>
+					<!-- END RESPONSIVE QUICK SEARCH FORM -->
+				</li>
+				<li class="<%if(locals.indexActive){%>start <%=indexActive%><%}%>">
+					<a href="/cms/index">
+					<i class="fa fa-home"></i> 
+					<span class="title">首页</span>	
+					<span class="selected"></span>
+					</a>
+				</li>
+				<li class="<%if(locals.channelActive){%>start <%=channelActive%><%}%> ">
+					<a href="/cms/channel/index">
+					<i class="fa fa-cogs"></i> 
+					<span class="title">频道</span>					
+					<!-- <span class="selected"></span> -->
+				
+					</a>
+				</li>
+				<li class="<%if(locals.nodeActive){%>start <%=nodeActive%><%}%> ">
+					<a href="/cms/node/index">
+					<i class="fa fa-cogs"></i> 
+					<span class="title">文章</span>					
+					<!-- <span class="selected"></span> -->
+				
+					</a>
+					<ul class="sub-menu">
+						<li class="<%if(locals.nodeManActive){%>start <%=nodeManActive%><%}%> ">
+							<a href="/cms/node/index">
+							文章管理							
+						</a>
+						</li>
+					<!-- 	<li class="<%if(locals.articleActive){%>start <%=articleActive%><%}%> ">
+							<a href="/cms/node/addArticle">
+								添加图文	
+							</a>
+						</li> -->
+					
+					</ul>
+				</li>
+				<!-- <li class="<%if(locals.menuActive){%>start <%=menuActive%><%}%> ">
+					<a href="/cms/menu/index">
+					<i class="fa fa-cogs"></i> 
+					<span class="title">菜单</span>					
+					
+				
+					</a>
+				</li> -->
+			
+				
+			
+				
+			
+			
+			
+				
+				
+		
+			</ul>

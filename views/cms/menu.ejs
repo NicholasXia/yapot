@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+	<meta charset="utf-8" />
+	<title>菜单</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	<meta name="MobileOptimized" content="320">
+	<!-- BEGIN GLOBAL MANDATORY STYLES -->          
+	<% include ../include/global_css %>
+	<!-- END GLOBAL MANDATORY STYLES -->
+	<!-- BEGIN THEME STYLES --> 
+	<% include ../include/theme_css %>
+	<!-- END THEME STYLES -->
+	<!-- BEGIN PAGE LEVEL STYLES -->
+
+
+	<!-- END PAGE LEVEL STYLES -->
+
+	<link rel="shortcut icon" href="favicon.ico" />
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+	<!-- BEGIN HEADER -->   
+	<div class="header navbar navbar-inverse navbar-fixed-top">
+		<!-- BEGIN TOP NAVIGATION BAR -->
+		<% include ../include/top %>
+		<!-- END TOP NAVIGATION BAR -->
+	</div>
+	<!-- END HEADER -->
+	<div class="clearfix"></div>
+	<!-- BEGIN CONTAINER -->   
+	<div class="page-container">
+		<!-- BEGIN SIDEBAR -->
+		<div class="page-sidebar navbar-collapse collapse">
+			<!-- BEGIN SIDEBAR MENU -->        	
+			<%include ../include/menu.ejs%>
+			<!-- END SIDEBAR MENU -->
+		</div>
+		<!-- END SIDEBAR -->
+		<!-- BEGIN PAGE -->
+		<div class="page-content">
+
+
+			<!-- BEGIN PAGE HEADER-->
+			<div class="row">
+				<div class="col-md-12">
+					<!-- BEGIN PAGE TITLE & BREADCRUMB-->			
+					<h3 class="page-title">
+						菜单				<small>管理网站菜单</small>
+					</h3>
+					<ul class="page-breadcrumb breadcrumb">
+				
+						<li>
+							<i class="fa fa-home"></i>
+							<a href="/cms/menu/index">菜单</a> 
+							<!-- <i class="fa fa-angle-right"></i> -->
+						</li>
+				
+					</ul>
+					<!-- END PAGE TITLE & BREADCRUMB-->
+				</div>
+			</div>
+			<!-- END PAGE HEADER-->
+			<!-- BEGIN PAGE CONTENT-->
+			<div class="row">
+				<div class="col-md-3">
+					<div class="portlet blue box">
+						<div class="portlet-title">
+							<div class="caption"><i class="fa fa-cogs"></i>菜单列表</div>
+							<div class="actions">
+								<div class="btn-group btn-group-solid">
+									<a href="#" data-target="#idAddModal" data-toggle="modal" class="btn btn-sm btn-default"><i class="fa fa-plus"></i>添加 </a>
+									
+								</div>
+								
+							</div>
+						</div>
+						<div class="portlet-body">
+							<div class="scroller" style="height:350px" data-always-visible="1" data-rail-visible="0">
+
+							
+							<div id="idMenuTree" class="demo" >
+								
+							</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="col-md-9">
+					<div class="portlet green box">
+						<div class="portlet-title">
+							<div class="caption"><i class="fa fa-cogs"></i>频道信息</div>
+							<div class="tools">
+								<a href="javascript:;" class="collapse"></a>
+							
+								
+							</div>
+						</div>
+						<div class="portlet-body form">
+							<!-- BEGIN FORM-->
+							<form action="#" class="horizontal-form">
+								<div class="form-body">
+									<h3 class="form-section">菜单信息</h3>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="control-label">频道名称</label>
+												<input type="text" id="firstName" class="form-control" placeholder="">
+												
+											</div>
+										</div>
+										<!--/span-->
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="control-label">英文名</label>
+												<input type="text" id="lastName" class="form-control" placeholder="">
+												
+											</div>
+										</div>
+										<!--/span-->
+									</div>
+									<!--/row-->
+									      
+							
+									
+								</div>
+								<div class="form-actions right">
+									<button type="button" class="btn default">删除</button>
+									<button type="submit" class="btn blue"><i class="fa fa-check"></i>保存</button>
+								</div>
+							</form>
+							<!-- END FORM--> 
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 添加频道MODAL -->
+			<div id="idAddModal" class="modal fade" tabindex="-1" data-width="400">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+							<h4 class="modal-title">添加菜单</h4>
+						</div>
+						<form action="#" id="idAddForm" class="form-horizontal">
+						<div class="modal-body">
+							
+								<div class="form-body">
+									
+									<div class="form-group">
+										<label class="control-label col-md-4">菜单名称<span class="required">*</span></label>
+										<div class="col-md-4">
+											<input type="text" name="channel" data-required="1" class="form-control"/>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-md-4">频道英文名<span class="required">*</span></label>
+										<div class="col-md-4">
+											<input name="english_channel" type="text" class="form-control"/>
+										</div>
+									</div>
+									
+								</div>
+								
+							
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" data-dismiss="modal" class="btn">关闭</button>
+							<button type="submit" class="btn red">保存</button>
+						</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<!-- END PAGE CONTENT-->
+		</div>
+		<!-- END PAGE -->    
+	</div>
+	<!-- END CONTAINER -->
+	<!-- BEGIN FOOTER -->
+	<%include ../include/footer.ejs %>
+	<!-- END FOOTER -->
+	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+	<!-- BEGIN CORE PLUGINS -->   
+	<%include ../include/ie.ejs %>
+	<%include ../include/core_plugin.ejs %>
+	<!-- END CORE PLUGINS -->
+	
+
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+	
+	<script type="text/javascript" src="/assets/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="/assets/plugins/jquery-validation/dist/additional-methods.min.js"></script>
+
+
+<script type="text/javascript" src="/assets/plugins/jstree/jquery.jstree.js"></script>
+
+	<!-- END PAGE LEVEL SCRIPTS -->       
+	<script src="/assets/scripts/app.js"></script>
+	<script src="/assets/scripts/menu.js"></script>
+
+	<script>
+		jQuery(document).ready(function() {       
+		   // initiate layout and plugins
+		   App.init();
+		   Menu.init();
+		
+	});
+	</script>
+	<!-- END JAVASCRIPTS -->
+
+</body>
+<!-- END BODY -->
+</html>
