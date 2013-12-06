@@ -9,9 +9,14 @@ exports.redirectIndex=function(req,res){
 }
 
 exports.index=function(req,res){
+	console.log("bull shit!!!! ");
 	websiteService.findByAccountId(req.user.id,function(err,website){
+		console.log("website "+website);
+		if(!website){
+			return res.render("cms/init.ejs",{user:req.user});
+		}
 		req.session.website=website;
-		res.render("cms/index",{user:req.user,indexActive:'active'});
+		return res.render("cms/index",{user:req.user,indexActive:'active'});
 	});	
 }
 //管理员首页
