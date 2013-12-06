@@ -15,9 +15,11 @@ var channelCms=require('./routes/cms/channel');
 var my=require('./routes/cms/my')
 var nodeCms=require('./routes/cms/node');
 var menuCms=require('./routes/cms/menu');
+var accountCms=require('./routes/cms/account');
 var http = require('http');
 var path = require('path');
 var upload = require('jquery-file-upload-middleware');
+var config=require('./config/website');
 var app = express();
 require("./model/MongoConnect");
 var passport = require('passport')
@@ -87,14 +89,22 @@ passport.use(new LocalStrategy({
     	passwordField: 'password'
 	},
     function(username, password, done) {
-    	console.log(username+"="+password);
+    	console.log(username+" "+password);
+      if(username==config.ADMIN&&password==config.PASSWORD){//系统管理员
+        var user={};
+        user.id='0';
+        user.email=username;
+        user.name='admin';
+        user.role=0;//管理员
+        console.log('pass');
+        return done(null,user);
+      }
 
   		accountService.login(username,password,function(err,user){
         console.log(user);
   		 if (err) { return done(err);} 
 
   		 if(!user){
-  		
   		 	return done(null, false);
   		 }
 	     return done(null, user);
@@ -103,18 +113,26 @@ passport.use(new LocalStrategy({
 ));
 
 passport.serializeUser(function(user, done) {
-  
+  console.log("user.id "+user.id);
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) { 
-
-  accountService.findById(id,function(err,user){
-
-
+  console.log('id='+id);
+  if(id=='0'){
+    var user={};
+    user.id='0';
+    user.email=config.ADMIN;
+    user.name='admin';
+    user.role=0;//管理员
+    done(null,user);
+  }else{
+    accountService.findById(id,function(err,user){
         if(err) done(err);
         done(err,user);
-  });
+    });
+  }
+  
 });
 
 
@@ -123,11 +141,12 @@ app.post('/ajLogin', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
     // console.log("lll "+req.user.email);
     // console.log(user);
-   console.log(info);
+   console.log("user "+user.email);
     if (err) { return next(err); }
 
     if (!user) { return res.send({ login: "error"});}
     req.login(user,function(err){
+      console.log("err"+err);
       if (err) { return res.send({ login: "error"});}
       return res.send({ login: "ok"});
     });
@@ -135,26 +154,61 @@ app.post('/ajLogin', function(req, res, next) {
   })(req, res, next);
 });
 
-app.get('/cms/index',ensureAuthenticated,my.index);
-app.get('/cms/channel/index',ensureAuthenticated,channelCms.index);
-app.get('/cms/channel/ajGetTree',ensureAuthenticated,channelCms.ajGetTree);
-app.get('/cms/channel/ajAdd',ensureAuthenticated,channelCms.ajAdd);
-app.get('/cms/channel/ajDelete',ensureAuthenticated,channelCms.ajDelete);
-app.get('/cms/node/index',ensureAuthenticated,nodeCms.index);
-app.get('/cms/node/ajList',ensureAuthenticated,nodeCms.ajList);
-app.get('/cms/node/addArticle',ensureAuthenticated,nodeCms.addArticle);
-app.get('/cms/node/ajAddArticle',ensureAuthenticated,nodeCms.ajAddArticle);
-app.get('/cms/node/ajDeleteArticle',ensureAuthenticated,nodeCms.ajDeleteArticle);
 
-app.get('/cms/menu/index',ensureAuthenticated,menuCms.index);
-app.get('/cms/menu/ajGetTree',ensureAuthenticated,menuCms.ajGetTree);
+
+//EDITOR
+
+
+app.get('/cms/redirectIndex',ensureAuthenticated,my.redirectIndex);
+app.get('/cms/index',ensureEditor,my.index);
+app.get('/cms/channel/index',ensureEditor,channelCms.index);
+app.get('/cms/channel/ajGetTree',ensureEditor,channelCms.ajGetTree);
+app.get('/cms/channel/ajAdd',ensureEditor,channelCms.ajAdd);
+app.get('/cms/channel/ajDelete',ensureEditor,channelCms.ajDelete);
+app.get('/cms/node/index',ensureEditor,nodeCms.index);
+app.get('/cms/node/ajList',ensureEditor,nodeCms.ajList);
+app.get('/cms/node/addArticle',ensureEditor,nodeCms.addArticle);
+app.get('/cms/node/ajAddArticle',ensureEditor,nodeCms.ajAddArticle);
+app.get('/cms/node/ajDeleteArticle',ensureEditor,nodeCms.ajDeleteArticle);
+app.get('/cms/menu/index',ensureEditor,menuCms.index);
+app.get('/cms/menu/ajGetTree',ensureEditor,menuCms.ajGetTree);
+
+//ADMIN
+app.get('/cms/admin/index',ensureAdmin,my.indexAdmin);
+app.get('/cms/admin/account/index',ensureAdmin,accountCms.index);
+app.get('/cms/admin/account/ajList',ensureAdmin,accountCms.ajList);
+app.get('/cms/admin/account/ajAdd',ensureAdmin,accountCms.ajAdd);
+app.get('/cms/admin/account/ajUpdatePassword',ensureAdmin,accountCms.ajUpdatePassword);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+function ensureEditor(req,res,next){
+   if (req.isAuthenticated()) { 
+    if(req.user.role==0){
+       return res.send('无权限');
+    }
+    return next(); 
+  }
+  res.redirect('/login')
+}
+
+function ensureAdmin(req,res,next){
+   if (req.isAuthenticated()) { 
+    if(req.user.role!=0){
+       return res.send('无权限');
+    }
+    return next(); 
+  }
+  res.redirect('/login')
+}
 		
 function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
+  if (req.isAuthenticated()) { 
+   
+    return next(); 
+  }
   res.redirect('/login')
 }
 
