@@ -52,11 +52,26 @@ var AdminAccount=function(){
                 "sAjaxSource": "/cms/admin/account/ajList",
                 "aoColumns": [
                     { "mData": "email"},
-                    { "mData": "role" },
+                    { "mData": "role" ,
+                    	"mRender":function(data,type,full){
+                    		if(data=='1') return "网站管理员";
+                    		return "";
+                    	} 
+                	},
                     { "mData": "name" },
-                    { "mData": "reg_date" },
-                    { "mData": "exp_date" },
-                    { "mData": "status" },
+                    { "mData": "reg_date",
+                    	"mRender":function(data,type,full){
+                    		return moment(data).format('YYYY-MM-DD HH:mm');
+                    	} 
+                    },
+                    { "mData": "exp_date",
+                    	"mRender":function(data,type,full){
+                    		var reg_date=moment(full.reg_date);
+                    		var exp_date=moment(data);
+                    		return exp_date.from(reg_date);
+                    	} 
+                    },
+                    // { "mData": "status" },
                     { "mData": "_id",
                       "mRender":function(data,type,full){
                         var deleteButton="<a class='deleteArticle' nodeid=\""+data+"\" href=\"#\" class=\"btn default btn-xs black\"><i class=\"fa fa-trash-o\"></i> 删除</a>";
@@ -91,6 +106,7 @@ var AdminAccount=function(){
 	};
 	var event={
 		pageLoad:function(cb){
+				moment.lang('zh-cn');
 			render.accountListTable(function(){
 				cb();
 			});
@@ -204,6 +220,7 @@ var AdminAccount=function(){
 	};
 	return {
 		init:function(){
+
 			event.pageLoad(function(){
 				event.clickAddAccount(function(){//弹出添加MODAL
 				
