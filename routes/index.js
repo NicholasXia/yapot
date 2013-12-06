@@ -11,6 +11,7 @@ exports.index = function(req, res){
 };
 
 exports.login=function(req,res){
+	req.logout();
 	res.render('login');
 }
 

@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+<!-- 
+Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.0
+Version: 1.5.3
+Author: KeenThemes
+Website: http://www.keenthemes.com/
+Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
+-->
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+	<meta charset="utf-8" />
+	<title>首页</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	<meta name="MobileOptimized" content="320">
+	<!-- BEGIN GLOBAL MANDATORY STYLES -->          
+	<% include ../../include/global_css %>
+	<!-- END GLOBAL MANDATORY STYLES -->
+	<!-- BEGIN THEME STYLES --> 
+	<% include ../../include/theme_css %>
+	<!-- END THEME STYLES -->
+	
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link rel="stylesheet" href="/assets/plugins/data-tables/DT_bootstrap.css" />
+	<!-- END PAGE LEVEL STYLES -->
+
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+	<!-- BEGIN HEADER -->   
+	<div class="header navbar navbar-inverse navbar-fixed-top">
+		<!-- BEGIN TOP NAVIGATION BAR -->
+		<% include ../../include/top %>
+		<!-- END TOP NAVIGATION BAR -->
+	</div>
+	<!-- END HEADER -->
+	<div class="clearfix"></div>
+	<!-- BEGIN CONTAINER -->   
+	<div class="page-container">
+		<!-- BEGIN SIDEBAR -->
+		<div class="page-sidebar navbar-collapse collapse">
+			<!-- BEGIN SIDEBAR MENU -->        	
+			<%include ../../include/admin_menu.ejs%>
+			<!-- END SIDEBAR MENU -->
+		</div>
+		<!-- END SIDEBAR -->
+		<!-- BEGIN PAGE -->
+		<div class="page-content">
+		
+
+			<!-- BEGIN PAGE HEADER-->
+			<div class="row">
+				<div class="col-md-12">
+					<!-- BEGIN PAGE TITLE & BREADCRUMB-->			
+					<h3 class="page-title">
+						账户				<small>管理账户</small>
+					</h3>
+					<ul class="page-breadcrumb breadcrumb">
+				
+						<li>
+							<i class="fa fa-home"></i>
+							<a href="/cms/admin/index">首页</a> 
+							
+							<i class="fa fa-angle-right"></i>
+						</li>
+						<li>
+							<i class="fa fa-home"></i>
+							<a href="/cms/admin/account/index">账户</a> 
+							
+							
+						</li>
+						
+				
+					</ul>
+					<!-- END PAGE TITLE & BREADCRUMB-->
+				</div>
+			</div>
+			<!-- END PAGE HEADER-->
+			<!-- BEGIN PAGE CONTENT-->
+			<div class="row">
+				<div class="col-md-12">
+				<div class="portlet">
+						<div class="portlet-title">
+							<div class="caption"><i class="fa fa-bell-o"></i>账户列表</div>
+							<div class="tools">
+								<a href="javascript:;" class="collapse"></a>
+						
+							</div>
+						</div>
+						<div class="portlet-body">
+							<div id="idSuccessMsg" style="display:none" class="alert alert-success">
+								<strong>成功标题</strong> <span>成功内容</span>
+							</div>
+							<div id="idErrorMsg" style="display:none" class="alert alert-danger">
+								<strong>失败标题</strong> <span>失败内容</span>
+							</div>
+							<div class="table-toolbar">
+								<div class="btn-group">
+									<button id="idAddAccountBT"  class="btn green">
+									添加账号 <i class="fa fa-plus"></i>
+									</button>
+
+								</div>
+								
+							</div>
+
+							<div class="table-responsive">
+								<table id="idAccountTable" class="table table-striped table-bordered table-advance table-hover">
+									<thead>
+										<tr>
+											<th>登陆邮箱</th>
+											<th>权限</th>	
+											<th>用户名</th>
+											<th>注册时间</th>
+											<th>过期时间</th>
+											<th>状态</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- END PAGE CONTENT-->
+		</div>
+		<!-- END PAGE -->    
+	</div>
+
+	<!-- 弹出层开始 -->
+	<div id="idAddAccountModal" class="modal fade" tabindex="-1" data-width="400">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+					<h4 class="modal-title">添加账号</h4>
+				</div>
+				<!-- BEGIN FORM-->
+				<form action="#" id="idAddAccountForm" class="form-horizontal">
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="portlet box">
+									<div class="portlet-body form">
+										<div class="form-group">
+											<label class="col-md-3 control-label">登录邮箱</label>
+											<div class="col-md-6">
+												<input name="email" type="email" class="form-control" placeholder="邮箱地址">
+											</div>
+										</div>	
+										<div class="form-group">
+											<label class="col-md-3 control-label">密码</label>
+											<div class="col-md-6">
+												<input name="password" type="password" class="form-control" placeholder="Password">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-3 control-label">重复密码</label>
+											<div class="col-md-6">		
+												<input id="idRepeatPassword" type="password" class="form-control" placeholder="Password">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-3 control-label">用户名</label>
+											<div class="col-md-6">
+												<input name="username" type="input" class="form-control" placeholder="用户名">
+											</div>
+										</div>	
+										<div class="form-group">
+											<label class="col-md-3 control-label">权限</label>
+											<div class="col-md-6">
+												<select name="role" class="form-control">
+													<option value="1">网站管理员</option>
+												</select>
+											</div>
+										</div>											
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal" class="btn">关闭</button>
+						<button type="submit" class="btn red">保存</button>
+					</div>
+				</form>
+				<!-- END FORM--> 
+			</div>
+		</div>
+	</div>
+
+
+	<div id="idAlterPwdModal" class="modal fade in" tabindex="-1" data-width="400"  aria-hidden="false">
+		<div class="modal-dialog">
+			<form id="idUpdatePwdForm">
+				<input name='accountid' id="idAccountIdHiden" type='hidden' value=''></input>
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+						<h4 class="modal-title">修改密码</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-12">
+								<h4>新密码</h4>
+								<p><input name="password" type="password" class="col-md-12 form-control"></p>
+								
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal" class="btn">关闭</button>
+						<button id="idUpdatePwdBT" type="button" class="btn red">修改</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+<!-- 弹出层结束 -->
+
+
+	<!-- END CONTAINER -->
+	<!-- BEGIN FOOTER -->
+	<%include ../../include/footer.ejs %>
+	<!-- END FOOTER -->
+	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+	<!-- BEGIN CORE PLUGINS -->   
+	<%include ../../include/ie.ejs %>
+	<%include ../../include/core_plugin.ejs %>
+	<!-- END CORE PLUGINS -->
+	<script type="text/javascript" src="/assets/plugins/data-tables/jquery.dataTables.js"></script>
+	<script type="text/javascript" src="/assets/plugins/data-tables/DT_bootstrap.js"></script>
+	<script type="text/javascript" src="/assets/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="/assets/plugins/jquery-validation/dist/additional-methods.min.js"></script>
+	<script src="/assets/scripts/app.js"></script>  
+	<script src="/assets/scripts/admin_account.js"></script>          
+	<script>
+		jQuery(document).ready(function() {    
+		   App.init();
+		   AdminAccount.init();
+		});
+	</script>
+	<!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

@@ -22,7 +22,7 @@ var Login = function () {
 						$('.alert-danger').show();
 						$('.alert-danger span').html("用户名或密码错误");
 					}else{
-						document.location='/cms/index';
+						document.location='/cms/redirectIndex';
 					}		
 				}
 			});

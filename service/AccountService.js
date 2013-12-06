@@ -1,5 +1,6 @@
 var accountDao=require('../model/Account');
 var CryptoJS = require("crypto-js");
+var page=require("../model/Page");
 var moment = require('moment');
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
@@ -10,6 +11,7 @@ exports.add=function(user,cb){
 	function cbSave(err,data){
 		cb(err,data);
 	}
+	user.password=CryptoJS.MD5(user.password)+"";
 	accountDao.create(user,cbSave);
 }
 
@@ -30,6 +32,19 @@ exports.login=function(email,password,cb){
 	});
 }
 
+exports.updatePasswordById=function(accountId,password,cb){
+	accountDao.update({"_id":accountId},{$set:{password:CryptoJS.MD5(password)+""}},{multi:false},function(err,numAffected){
+		if(err) cb(err);
+		if(numAffected==0) cb('{error:1}');
+		cb();
+	});
+}
+
+exports.findAllPage=function(pageParam,cb){
+	pageParam.sort={'reg_date':-1};
+	page.pageQuery2(accountDao,{},pageParam,cb);
+}
+
 exports.findById=function(id,cb){
 	accountDao.findOne({"_id":id},cb);
 }
@@ -41,6 +56,7 @@ function testAdd(cb){
 		password:CryptoJS.MD5('xia1983')+"",
 		reg_date:new Date(),
 		exp_date:moment().add('years',1),
+		role:1,
 		status:accountDao.ACTIVE
 	};
 	exports.add(account,function(err,data){
@@ -63,4 +79,16 @@ function testLogin(cb){
 
 // exports.findById('5296ab15dbdd4e141d000001',function(err,account){
 // 	console.log(account);
+// });
+
+// var pageParam={
+// 	"iDisplayStart":0,
+// 	"iDisplayLength":20
+// }
+// exports.findAllPage(pageParam,function(err,page){
+// 	console.log(page);
+// });
+
+// exports.updatePasswordById('52a1768bfee2027404000001','456456',function(err){
+// 	console.log(err);
 // });
