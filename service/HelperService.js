@@ -12,8 +12,8 @@ exports.initUser=function(req,res,next){
 	if(!cookies.userRandomId){
 		res.cookie('userRandomId', Math.random(), { expires: new Date(Date.now() + 365*24*60*60*1000), httpOnly: true });
 	}
-	console.log('session web site ='+req.session.website);
-	if(!req.session.website){
+	
+	// if(!req.session.website&&req.params.website!=req.session.website.english_name){
 	    var websiteEnglishName=req.params.website;
 	    websiteService.findByEnglishName(req.params.website,function(err,website){
 
@@ -36,9 +36,9 @@ exports.initUser=function(req,res,next){
 	        return next();
 	      });
 	    });
-  	}else{
-  		return next();
-  	}
+  	// }else{
+  		// return next();
+  	// }
   	
 	
 }

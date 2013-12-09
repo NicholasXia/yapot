@@ -72,17 +72,17 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
+
+
 app.get('/login',routes.login);
 app.get('/logout',routes.logout);
+app.get('/aj/ajAddGood',good.ajAddGood);
+app.get('/aj/ajGetGoodStatus',good.ajGetGoodStatus);
+app.get('/node/ajlist',node.ajList);
 app.get('/u/:website',helperService.initUser,website.index);
 app.get('/u/:website/:channel',helperService.initUser,channel.index);
 app.get('/u/:website/:channel/:id',helperService.initUser,node.details);
-app.get('/aj/ajAddGood',helperService.initUser,good.ajAddGood);
-app.get('/aj/ajGetGoodStatus',helperService.initUser,good.ajGetGoodStatus);
 
-
-//node
-app.get('/node/ajlist',helperService.initUser,node.ajList);
 
 
     
