@@ -66,8 +66,9 @@ exports.find=function(start,number,cb){
 }
 
 exports.findByWebsiteId=function(websiteId,pageParam,cb){
-	var query = nodeDao.find({website_id:websiteId}).sort({'create_date':1});
-	page.pageQuery(query,pageParam,cb);
+	pageParam.sort={'create_date':-1};
+	console.log('website_id='+websiteId);
+	page.pageQuery2(nodeDao,{website_id:websiteId},pageParam,cb);
 }
 
 exports.findByChannelId=function(channelId,pageParam,cb){
@@ -87,6 +88,10 @@ exports.findById=function(id,cb){
 exports.updateByNodeId=function(nodeId,cb){
 	nodeDao.update({"_id":nodeId},{$inc:{'analytics.good_num':1}},{ multi: true },cb);
 }
+// var pageParam={	};
+// pageParam.iDisplayStart=0;
+// pageParam.iDisplayLength=10;
+// exports.findByWebsiteId('52a56062bb55d65430000001',pageParam,function(err,data){console.log(data)});
 
 // exports.updateByNodeId('529e917a9d30229837000001',function(err,numEffect){
 // 	console.log(numEffect);

@@ -37,8 +37,11 @@ exports.index=function(req, res){
 					menu.link='/u/'+website.english_name+'/'+channels[i].englishname;
 					menus.push(menu);
 				}
-				
-				nodeService.find(0,websiteConfig.PER_PAGE_NUM,function(err,articles){
+				var pageParam={	
+				};
+				pageParam.iDisplayStart=0;
+				pageParam.iDisplayLength=websiteConfig.PER_PAGE_NUM;
+				nodeService.findByWebsiteId(website.id,pageParam,function(err,articles){
 					
 					res.render('mobile/index', { menus:menus,articles:articles});
 				});
