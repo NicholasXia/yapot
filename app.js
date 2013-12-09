@@ -172,7 +172,7 @@ app.get('/cms/node/ajAddArticle',ensureEditor,nodeCms.ajAddArticle);
 app.get('/cms/node/ajDeleteArticle',ensureEditor,nodeCms.ajDeleteArticle);
 app.get('/cms/menu/index',ensureEditor,menuCms.index);
 app.get('/cms/menu/ajGetTree',ensureEditor,menuCms.ajGetTree);
-
+app.get('/cms/ajSaveInit',ensureEditor,my.ajSaveInit);
 //ADMIN
 app.get('/cms/admin/index',ensureAdmin,my.indexAdmin);
 app.get('/cms/admin/account/index',ensureAdmin,accountCms.index);

@@ -4,6 +4,9 @@ var websiteService=require('./WebsiteService');
 exports.findAll=function(cb){
 	channelDao.find({},cb);
 }
+exports.findAllByWebsiteId=function(websiteId,cb){
+	channelDao.find({website_id:websiteId},cb);
+}
 
 exports.add=function(websiteId,name,englishname,cb){
 	function cbSave(err,data){

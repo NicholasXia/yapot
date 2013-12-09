@@ -150,7 +150,9 @@ var FormWizard = function () {
             var displayConfirm = function() {
                 $('#tab4 .form-control-static', form).each(function(){
                     var input = $('[name="'+$(this).attr("data-display")+'"]', form);
+                    alert(input);
                     if (input.is(":text") || input.is("textarea")) {
+
                         $(this).html(input.val());
                     } else if (input.is("select")) {
                         $(this).html(input.find('option:selected').text());

@@ -55,7 +55,7 @@ exports.details=function(req,res){
 		if(node==null){
 			res.send('没有发现网站');
 		}else{
-			channelService.findAll(function(err,channels){
+			channelService.findAllByWebsiteId(node.website_id,function(err,channels){
 				var menus=[];
 				menus.push({'name':'首页','link':'/u/'+websiteName});
 				for(var i=0;i<channels.length;i++){

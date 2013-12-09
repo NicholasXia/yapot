@@ -28,7 +28,7 @@ exports.index=function(req, res){
 		if(website==null){
 			res.send('没有发现网站');
 		}else{
-			channelService.findAll(function(err,channels){
+			channelService.findAllByWebsiteId(website.id,function(err,channels){
 				var menus=[];
 				menus.push({'name':'首页','link':'/u/'+website.english_name});
 				for(var i=0;i<channels.length;i++){
