@@ -26,6 +26,8 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 	<% include ../include/theme_css %>
 	<!-- END THEME STYLES -->
 	<link rel="shortcut icon" href="favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="/assets/css/style-mobile.css">
+	
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -48,7 +50,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 		</div>
 		<!-- END SIDEBAR -->
 		<!-- BEGIN PAGE -->
-		<div class="page-content">
+		<div class="page-content" style="min-height:1000px">
 		
 
 			<!-- BEGIN PAGE HEADER-->
@@ -70,13 +72,60 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 					<!-- END PAGE TITLE & BREADCRUMB-->
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-md-5">
+							<div id="iphone-wrapper" class="CONTENT-wrapper">
+					            <div id="iphone-frame">
+					                <div id="iphone">
+					                    <div id="iframe-iphone">
+					                        <iframe name="iphonef" class="iphone" border="0" frameborder="0" vspace="0" hspace="0" marginheight="0" marginwidth="0" src="/u/<%=website.english_name%>" allowtransparency="true"></iframe>
+					                    </div>
+					                </div>
+					                <div id="iphone-shadow"></div>
+					            </div>
+					        </div>
+				</div>
+				<div class="col-md-6">
+					<div class="portlet box purple">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-reorder"></i> 您的网站
+							</div>
+							
+						</div>
+						<div class="portlet-body form">
+							<form role="form" class="form-horizontal">
+								<div class="form-body">
+									<div class="form-group">
+										<label class="col-md-4 control-label" for="inputSuccess">网站名称</label>
+										<div class="col-md-8">
+												<p class="form-control-static"><%=website.name%></p>
+										</div>
+									</div>
+									<div class="form-group has-success">
+										<label class="col-md-4 control-label" for="inputSuccess">网站地址</label>
+										<div class="col-md-8">
+												<p class="form-control-static">/u/<%=website.english_name%></p>
+										</div>
+									</div>
+								
+								</div>
+								<!-- <div class="form-actions fluid">
+									<div class="col-md-offset-4 col-md-8">                        
+										<button type="submit" class="btn blue">保存</button> 
+									</div>
+								</div> -->
+							</form>
+						</div>
+					</div>
+
+				</div>
+
+
+			</div>
 			<!-- END PAGE HEADER-->
 			<!-- BEGIN PAGE CONTENT-->
-			<div class="row">
-				<div class="col-md-12">
-				正在开发中...
-				</div>
-			</div>
+			
 			<!-- END PAGE CONTENT-->
 		</div>
 		<!-- END PAGE -->    

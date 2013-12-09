@@ -18,7 +18,7 @@ exports.index=function(req,res){
 			return res.render("cms/init.ejs",{user:req.user});
 		}
 		req.session.website=website;
-		return res.render("cms/index",{user:req.user,indexActive:'active'});
+		return res.render("cms/index",{user:req.user,indexActive:'active',website:website});
 	});	
 }
 //管理员首页
