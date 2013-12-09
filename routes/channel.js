@@ -25,30 +25,16 @@ exports.index=function(req,res){
 	var englishname=req.params.website;
 	channelService.findByEnglishname(req.params.channel,function(err,channel){
 		if(channel==null){
-			res.send('没有发现网站');
+			return res.send('没有找到该频道');
 		}else{
-			channelService.findAllByWebsiteId(channel.website_id,function(err,channels){
-				var menus=[];
-				menus.push({'name':'首页','link':'/u/'+englishname});
-				for(var i=0;i<channels.length;i++){
-					var menu={};
-					menu.name=channels[i].name;
-					menu.link='/u/'+englishname+'/'+channels[i].englishname;
-					menus.push(menu);
-				}
-
-				var pageParam={	
-				};
-				pageParam.iDisplayStart=0;
-				pageParam.iDisplayLength=websiteConfig.PER_PAGE_NUM;
-
-				nodeService.findByChannelId(channel.id,pageParam,function(err,articles){
-					res.render('mobile/blog',{ menus:menus,articles:articles,channel:channel});
-				});
-				
-			});
-			
+			var pageParam={	
+			};
+			pageParam.iDisplayStart=0;
+			pageParam.iDisplayLength=websiteConfig.PER_PAGE_NUM;
+			nodeService.findByChannelId(channel.id,pageParam,function(err,articles){
+				return res.render('mobile/blog',{ menus:req.session.menus,articles:articles,channel:channel,website:req.session.website});
+			});			
 		}
-		//res.send('hha');
+
 	});
 }

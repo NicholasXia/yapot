@@ -1,3 +1,6 @@
+var websiteService=require('./WebsiteService');
+var channelService=require('./ChannelService');
+
 /**
 Helper Service
 */
@@ -9,5 +12,33 @@ exports.initUser=function(req,res,next){
 	if(!cookies.userRandomId){
 		res.cookie('userRandomId', Math.random(), { expires: new Date(Date.now() + 365*24*60*60*1000), httpOnly: true });
 	}
-	return next();
+	console.log('session web site ='+req.session.website);
+	if(!req.session.website){
+	    var websiteEnglishName=req.params.website;
+	    websiteService.findByEnglishName(req.params.website,function(err,website){
+
+	      console.log('website ='+website);
+	      if(!website){
+	        return res.send('没有发现网站');
+	      }
+
+	      req.session.website=website;
+	      channelService.findAllByWebsiteId(website.id,function(err,channels){
+	        var menus=[];
+	        menus.push({'name':'首页','link':'/u/'+website.english_name});
+	        for(var i=0;i<channels.length;i++){
+	          var menu={};
+	          menu.name=channels[i].name;
+	          menu.link='/u/'+website.english_name+'/'+channels[i].englishname;
+	          menus.push(menu);
+	        }
+	        req.session.menus=menus;
+	        return next();
+	      });
+	    });
+  	}else{
+  		return next();
+  	}
+  	
+	
 }

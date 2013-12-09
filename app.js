@@ -26,6 +26,8 @@ var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 var accountService=require('./service/AccountService');
 var helperService=require('./service/HelperService');
+var websiteService=require('./service/WebsiteService');
+var channelService=require('./service/ChannelService');
 // configure upload middleware
 upload.configure({
     uploadDir: __dirname + '/public/uploads',

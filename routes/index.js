@@ -7,20 +7,20 @@ var websiteConfig=require('../config/website');
 
 exports.index = function(req, res){
 
-  	res.send("hello cms");
+  	return res.send("hello cms");
 };
 
 exports.login=function(req,res){
 	req.logout();
-	res.render('login');
+	return res.render('login');
 }
 
 exports.logout=function(req,res){
 	req.logout();
-  	res.redirect('/login');
+  	return res.redirect('/login');
 }
 
 exports.list=function(req,res){
-	res.render('mobile/blog');
+	return res.render('mobile/blog');
 	//res.send('model='+req.params.channel);
 }

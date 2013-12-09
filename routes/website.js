@@ -23,33 +23,12 @@ var websiteConfig=require('../config/website');
 	
 // }
 exports.index=function(req, res){
-	console.log(req.params.website);
-	websiteService.findByEnglishName(req.params.website,function(err,website){
-		if(website==null){
-			res.send('没有发现网站');
-		}else{
-			channelService.findAllByWebsiteId(website.id,function(err,channels){
-				var menus=[];
-				menus.push({'name':'首页','link':'/u/'+website.english_name});
-				for(var i=0;i<channels.length;i++){
-					var menu={};
-					menu.name=channels[i].name;
-					menu.link='/u/'+website.english_name+'/'+channels[i].englishname;
-					menus.push(menu);
-				}
-				var pageParam={	
-				};
-				pageParam.iDisplayStart=0;
-				pageParam.iDisplayLength=websiteConfig.PER_PAGE_NUM;
-				nodeService.findByWebsiteId(website.id,pageParam,function(err,articles){
-					
-					res.render('mobile/index', { menus:menus,articles:articles});
-				});
-				
-			});
-			
-		}
-		//res.send('hha');
+	var website=req.session.website;
+	var pageParam={};
+	pageParam.iDisplayStart=0;
+	pageParam.iDisplayLength=websiteConfig.PER_PAGE_NUM;
+	nodeService.findByWebsiteId(website.id,pageParam,function(err,articles){
+		return res.render('mobile/index', { menus:req.session.menus,articles:articles,website:req.session.website});
 	});
 	
 }

@@ -46,7 +46,7 @@
 
 		        <header id="header">
 		        	<div id="menu-trigger" class="header-button left icon-menu"></div>
-		        	<h1><a href="javascript:void(0)">中国妇产科网-妇产科医生的家园</a></h1>
+		        	<h1><a href="javascript:void(0)"><%=website.name%></a></h1>
 		        </header>
 
 	        <!-- =Header -->
@@ -68,7 +68,7 @@
 					    		</figure>
 					    		<div class="wrapped-content">
 					    			<p>
-					    				<%=article.article.description%>
+					    				<%-article.article.description%>
 					    			</p>
 					    			<hr>
 					    			<p class="read-more"><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>/<%=article.id%>">查看原文</a></p>
@@ -99,7 +99,7 @@
 					</render>	
   						<% }) %>
   						<div class="text-center" style="margin-bottom: 40px;">
-							<a id="idNext" href="javascript:void(0)" class="button radius">下一部分</a>
+							<a data-website='<%=articles.aaData[0].website_id%>' id="idNext" href="javascript:void(0)" class="button radius">下一部分</a>
 						</div>
 					<% }else{ %>
 		        		<article id="format-aside" class="format-aside">
@@ -145,7 +145,7 @@
 			$("#idNext").click(function(){
 				var start=$("#content article").length;
 
-				var url ='/node/ajlist?start='+start;
+				var url ='/node/ajlist?start='+start+'&websiteId='+$(this).attr('data-website');
 			
 				$.getJSON(url,function(json){
 					var output = Mustache.render($("#idNodeTemplate").html(), json);
