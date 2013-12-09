@@ -23,8 +23,8 @@ exports.pageQuery2=function(dao,queryParam,pageParam,cb){
 		}else{
 			dao.find(queryParam).count(function(err,count){
 				page.sEcho=pageParam.sEcho;
-				page.iTotalRecords=1000;
-				page.iTotalDisplayRecords=1000;
+				page.iTotalRecords=count;
+				page.iTotalDisplayRecords=count;
 				page.aaData=apps;
 				cb(err,page);
 			});

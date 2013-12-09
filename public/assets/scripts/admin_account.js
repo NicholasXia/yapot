@@ -45,11 +45,11 @@ var AdminAccount=function(){
 	var render={
 		accountListTable:function(cb){
 			accountTable=$('#idAccountTable').dataTable({
-               "bProcessing": false,
-                "bFilter": false,
+               "bProcessing": true,
+                "bFilter": true,
                
-                // "bServerSide": true,
-                "sAjaxSource": "/cms/admin/account/ajList",
+                "bServerSide": true,
+                "sAjaxSource": "/cms/admin/account/ajList?random="+Math.random(),
                 "aoColumns": [
                     { "mData": "email"},
                     { "mData": "role" ,
@@ -99,6 +99,7 @@ var AdminAccount=function(){
 				$("#idSuccessMsg > strong").html("保存成功");
 				$("#idSuccessMsg").show();
 				accountTable.fnDraw();
+				alert("accountTabe "+accountTable.fnDraw);
 			}
 			cb();
 			
@@ -210,6 +211,7 @@ var AdminAccount=function(){
 					}else{
 						$("#idSuccessMsg > strong").html("保存密码成功");
 						$("#idSuccessMsg").show();
+
 						accountTable.fnDraw();
 					}
 					cb();
