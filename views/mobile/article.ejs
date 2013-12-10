@@ -59,9 +59,12 @@
                             <h2> <%=node.article.title%></h2>
                         </div>
 
-                        <figure>
-                            <img src=" <%=node.article.img_url%>" alt=""> 
-                        </figure>
+
+                        <%if(node.article.img_url){%>
+				    		<figure>
+				    			<img src="<%=node.article.img_url%>">
+				    		</figre>
+					    <%}%>
 
 		        		<div class="wrapped-content">
 
