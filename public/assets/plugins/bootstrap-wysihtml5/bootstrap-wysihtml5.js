@@ -293,7 +293,7 @@
         initInsertLink: function(toolbar) {
             var self = this;
             var insertLinkModal = toolbar.find('.bootstrap-wysihtml5-insert-link-modal');
-            var urlInput = insertLinkModal.find('.bootstrap-wysihtml5-insert-link-url');
+            var urlInput = insertLinkModal.find('.bootstrap-wysihtml5-insert-link-url1');
             var targetInput = insertLinkModal.find('.bootstrap-wysihtml5-insert-link-target');
             var insertButton = insertLinkModal.find('a.btn-primary');
             var initialValue = urlInput.val();

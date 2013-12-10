@@ -145,7 +145,7 @@ var Node = function () {
                     done: function (e, data) {
                         $.each(data.result.files, function (index, file) {//
                             $("#idImage").attr("src","/uploads/"+file.name);
-                            $("#idImageHidden").value("/uploads/"+file.name);
+                            $("#idImageHidden").val("/uploads/"+file.name);
                         });
                     },
                     progressall: function (e, data) {

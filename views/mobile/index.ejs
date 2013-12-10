@@ -63,9 +63,11 @@
 					    			<p class="title"><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>"><span class="category"><%=article.channel_name%></span><a> <span class="time"><%=article.viewCreateDate%></span></p>
 					    			<h2><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>/<%=article.id%>"><%=article.article.title%></a></h2>
 					    		</div>
+					    		<%if(article.article.img_url){%>
 					    		<figure>
 					    			<img src="<%=article.article.img_url%>">
 					    		</figure>
+					    		<%}%>
 					    		<div class="wrapped-content">
 					    			<p>
 					    				<%-article.article.description%>
