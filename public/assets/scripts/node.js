@@ -145,6 +145,7 @@ var Node = function () {
                     done: function (e, data) {
                         $.each(data.result.files, function (index, file) {//
                             $("#idImage").attr("src","/uploads/"+file.name);
+                            $("#idImageHidden").value("/uploads/"+file.name);
                         });
                     },
                     progressall: function (e, data) {
@@ -178,7 +179,7 @@ var Node = function () {
                     channelId:channelid,
                     title:$("#idTitle").val(),
                     content:$("#idContent").val(),
-                    imgUrl:$("#idImage").attr('src')
+                    imgUrl:$("#idImageHidden").val()
                 }
                 service.saveArticle(params,function(){
 
