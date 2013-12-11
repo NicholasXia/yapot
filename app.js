@@ -163,17 +163,25 @@ app.post('/ajLogin', function(req, res, next) {
 
 app.get('/cms/redirectIndex',ensureAuthenticated,my.redirectIndex);
 app.get('/cms/index',ensureEditor,my.index);
+
 app.get('/cms/channel/index',ensureEditor,channelCms.index);
 app.get('/cms/channel/ajGetTree',ensureEditor,channelCms.ajGetTree);
 app.get('/cms/channel/ajAdd',ensureEditor,channelCms.ajAdd);
 app.get('/cms/channel/ajDelete',ensureEditor,channelCms.ajDelete);
+app.get('/cms/channel/ajGetAll',ensureEditor,channelCms.ajGetAll);
+
+
 app.get('/cms/node/index',ensureEditor,nodeCms.index);
 app.get('/cms/node/ajList',ensureEditor,nodeCms.ajList);
 app.get('/cms/node/addArticle',ensureEditor,nodeCms.addArticle);
 app.get('/cms/node/ajAddArticle',ensureEditor,nodeCms.ajAddArticle);
 app.get('/cms/node/ajDeleteArticle',ensureEditor,nodeCms.ajDeleteArticle);
+
 app.get('/cms/menu/index',ensureEditor,menuCms.index);
 app.get('/cms/menu/ajGetTree',ensureEditor,menuCms.ajGetTree);
+app.get('/cms/menu/addParent',ensureEditor,menuCms.addParent);
+app.get('/cms/menu/deleteParent',ensureEditor,menuCms.deleteParent);
+app.get('/cms/menu/ajFindById',ensureEditor,menuCms.ajFindById);
 app.get('/cms/ajSaveInit',ensureEditor,my.ajSaveInit);
 //ADMIN
 app.get('/cms/admin/index',ensureAdmin,my.indexAdmin);

@@ -11,6 +11,14 @@ exports.ajGetTree=function(req,res){
 	});
 }
 
+exports.ajGetAll=function(req,res){
+	var websiteId=req.session.website.id;
+	channelService.findAllByWebsiteId(websiteId,function(err,channels){
+		res.json(channels);
+	});
+	
+}
+
 exports.ajAdd=function(req,res){
 	var channel=req.query.channel;
 	var english_channel=req.query.english_channel;

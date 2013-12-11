@@ -20,7 +20,7 @@
 	<% include ../include/theme_css %>
 	<!-- END THEME STYLES -->
 	<!-- BEGIN PAGE LEVEL STYLES -->
-
+	<link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-toastr/toastr.min.css" />
 
 	<!-- END PAGE LEVEL STYLES -->
 
@@ -78,10 +78,11 @@
 							<div class="caption"><i class="fa fa-cogs"></i>菜单列表</div>
 							<div class="actions">
 								<div class="btn-group btn-group-solid">
-									<a href="#" data-target="#idAddModal" data-toggle="modal" class="btn btn-sm btn-default"><i class="fa fa-plus"></i>添加 </a>
-									
+									<a href="#" data-target="#idAddModal" data-toggle="modal" class="btn btn-sm btn-default"><i class="fa fa-plus"></i> 添加 </a>
 								</div>
-								
+								<div class="btn-group btn-group-solid">
+									<a data-target="#idRemoveModal" data-toggle="modal"  href="javascript:void(0)"  class="btn btn-sm btn-default"><i class="fa  fa-times"></i> 删除 </a>
+								</div>
 							</div>
 						</div>
 						<div class="portlet-body">
@@ -101,7 +102,7 @@
 				<div class="col-md-9">
 					<div class="portlet green box">
 						<div class="portlet-title">
-							<div class="caption"><i class="fa fa-cogs"></i>频道信息</div>
+							<div class="caption"><i class="fa fa-cogs"></i>菜单信息</div>
 							<div class="tools">
 								<a href="javascript:;" class="collapse"></a>
 							
@@ -109,39 +110,7 @@
 							</div>
 						</div>
 						<div class="portlet-body form">
-							<!-- BEGIN FORM-->
-							<form action="#" class="horizontal-form">
-								<div class="form-body">
-									<h3 class="form-section">菜单信息</h3>
-									<div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label class="control-label">频道名称</label>
-												<input type="text" id="firstName" class="form-control" placeholder="">
-												
-											</div>
-										</div>
-										<!--/span-->
-										<div class="col-md-6">
-											<div class="form-group">
-												<label class="control-label">英文名</label>
-												<input type="text" id="lastName" class="form-control" placeholder="">
-												
-											</div>
-										</div>
-										<!--/span-->
-									</div>
-									<!--/row-->
-									      
-							
-									
-								</div>
-								<div class="form-actions right">
-									<button type="button" class="btn default">删除</button>
-									<button type="submit" class="btn blue"><i class="fa fa-check"></i>保存</button>
-								</div>
-							</form>
-							<!-- END FORM--> 
+							<render id="idMenuInfoRender"></render>
 						</div>
 					</div>
 				</div>
@@ -163,15 +132,10 @@
 									<div class="form-group">
 										<label class="control-label col-md-4">菜单名称<span class="required">*</span></label>
 										<div class="col-md-4">
-											<input type="text" name="channel" data-required="1" class="form-control"/>
+											<input type="text" name="menu_name" data-required="1" class="form-control"/>
 										</div>
 									</div>
-									<div class="form-group">
-										<label class="control-label col-md-4">频道英文名<span class="required">*</span></label>
-										<div class="col-md-4">
-											<input name="english_channel" type="text" class="form-control"/>
-										</div>
-									</div>
+									
 									
 								</div>
 								
@@ -187,9 +151,130 @@
 				</div>
 			</div>
 
+			<!--确认删除MODAL -->
+			<div class="modal fade" id="idRemoveModal" tabindex="-1" role="basic" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+							<h4 class="modal-title">提示</h4>
+						</div>
+						<div class="modal-body">
+							 确认删除菜单？
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn default" data-dismiss="modal">关闭</button>
+							<button id="idRemoveBT" type="button" class="btn blue">删除</button>
+						</div>
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+
+			<!-- Modal -->
+			<div class="modal fade" id="idSelectLinkModal" tabindex="-1" role="basic" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+							<h4 class="modal-title">选择链接</h4>
+						</div>
+						<div class="modal-body">
+							 <div class="tabbable-custom nav-justified">
+								<ul class="nav nav-tabs nav-justified">
+									<li class="active">
+										<a href="#tab_1_1_1" data-toggle="tab">频道</a>
+									</li>
+									<!-- <li class="">
+										<a href="#tab_1_1_2" data-toggle="tab">网页</a>
+									</li> -->
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane active" id="tab_1_1_1">
+										<div class="portlet-body form">
+											<form role="form">
+												<div class="form-body">
+													<div class="form-group">
+														<label>选择频道</label>
+														<select id="idChannelSelect" class="form-control">
+															<option>频道读取中</option>
+														</select>
+													</div>
+												
+												</div>
+												
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn default" data-dismiss="modal">关闭</button>
+							<button id="idSaveLinkBT" type="button" class="btn blue">生成链接</button>
+						</div>
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+
 			<!-- END PAGE CONTENT-->
 		</div>
-		<!-- END PAGE -->    
+		<!-- END PAGE -->   
+
+		<template id="idMenuInfoTpl">
+			<form id="idEditForm" action="#" class="form-horizontal">
+				<div class="form-body">
+					<div class="form-group">
+						<label class="col-md-3 control-label">菜单名称</label>
+						<div class="col-md-4">
+							<input name="menu_name" type="text" value="{{name}}" class="form-control" >
+							
+						</div>
+					</div>
+					
+					<div class="form-group last">
+						<label class="col-md-3 control-label">菜单链接</label>
+
+						<div class="col-md-4">
+							<p id="idLinkText" class="form-control-static">
+								{{link}}
+								{{^link}}
+									请设置一个链接地址
+								{{/link}}
+								<input name="link"/>
+							</p>
+
+						</div>
+						<div class="col-md-4">
+								<button id="idSelectLinkBT" menuobj={{menuobj}} type="button" class="btn btn-sm green"><i class="fa fa-cogs"></i> 设置链接</button>
+						</div>
+					</div>
+					<div class="form-group last">
+						<label class="col-md-3 control-label">菜单类型</label>
+						
+						<div class="col-md-4">
+							<p id="idLinkType" class="form-control-static">
+								{{viewType}}
+								{{^viewType}}
+									还没有设置链接
+								{{/viewType}}
+								<input name="link_type"/>
+							</p>
+						</div>
+						
+					</div>
+				</div>
+				<div class="form-actions fluid">
+					<div class="col-md-offset-3 col-md-9">
+						<button type="submit" class="btn blue">保存</button>
+						
+					</div>
+				</div>
+			</form>
+		</template> 
 	</div>
 	<!-- END CONTAINER -->
 	<!-- BEGIN FOOTER -->
@@ -209,6 +294,8 @@
 
 
 <script type="text/javascript" src="/assets/plugins/jstree/jquery.jstree.js"></script>
+<script type="text/javascript" src="/assets/plugins/jstree/_lib/jquery.hotkeys.js"></script>
+<script src="/assets/plugins/bootstrap-toastr/toastr.min.js"></script>
 
 	<!-- END PAGE LEVEL SCRIPTS -->       
 	<script src="/assets/scripts/app.js"></script>
@@ -219,7 +306,7 @@
 		   // initiate layout and plugins
 		   App.init();
 		   Menu.init();
-		
+
 	});
 	</script>
 	<!-- END JAVASCRIPTS -->
