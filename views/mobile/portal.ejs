@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<!--[if IE 8 ]>    <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js lt-ie9> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+	<head>
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width" />
+	    <title>主页</title>
+	    <meta name="description" content="">
+	    <meta name="keywords" content="">
+	   
+	    
+
+	    
+    <!-- Web App Data -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" name="viewport">
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<!-- =Web App Data -->
+
+
+<%include include/head %>
+	</head>
+	<body class="touch-gesture">
+
+	    
+
+	    
+    <!-- Container -->
+
+	    <div id="container" >
+	    
+
+	    
+        <!-- Main Content-->
+        
+        	
+
+	        <section id="content-container" style="background-image: url(http://ts3.mm.bing.net/th?id=H.4903191654369818&pid=1.7);">
+
+	        	<div id="content" class="page" >
+	        		<div class="wrapped-content">
+
+					
+						<p>
+							<% menus.forEach(function(menu){ %>
+    							<a class="button lightblue large" href="<%=menu.link%>"><%=menu.name%></a>
+  							<% }) %>
+							
+							
+						</p>
+
+                       
+
+                    </div>
+
+                   
+                </div>
+		       
+
+	        </section>
+ 	
+        <!-- =Main Content -->
+	    
+
+	    
+
+	    </div>
+    <!-- =Container -->
+	    
+
+    
+      
+
+	    
+
+
+	<!-- Custom Scripts -->
+	<%include include/js.ejs%>
+
+	<!-- =Custom Scripts -->
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+
+		});
+	</script>
+
+
+	    
+
+	    
+	</body>
+</html>
