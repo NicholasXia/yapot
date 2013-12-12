@@ -182,6 +182,8 @@ app.get('/cms/menu/ajGetTree',ensureEditor,menuCms.ajGetTree);
 app.get('/cms/menu/addParent',ensureEditor,menuCms.addParent);
 app.get('/cms/menu/deleteParent',ensureEditor,menuCms.deleteParent);
 app.get('/cms/menu/ajFindById',ensureEditor,menuCms.ajFindById);
+app.get('/cms/menu/ajUpdate',ensureEditor,menuCms.ajUpdate);
+
 app.get('/cms/ajSaveInit',ensureEditor,my.ajSaveInit);
 //ADMIN
 app.get('/cms/admin/index',ensureAdmin,my.indexAdmin);

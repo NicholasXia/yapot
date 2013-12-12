@@ -7,7 +7,12 @@ var menuSchema = Schema({
 	name:String,//'菜单名'
 	parent_id:String,//'父菜单'
 	link:String,//链接
-	type:Number //类型	
+	type:Number, //类型	
+	channel:{
+		name:String,
+		id:String,
+		englishname:String
+	}
 });
 menuSchema.index({parent_id:1}); 
 menuSchema.virtual('viewType').get(function(){
@@ -20,10 +25,11 @@ menuSchema.virtual('viewType').get(function(){
 	if(this.type==module.exports.LINK_APP){
 		return "APP链接";
 	}
-	return "";
+	return "无类型";
 });
+menuSchema.set('toJSON', { virtuals: true });
 // db is global
 module.exports = db.model('menu', menuSchema);
-module.exports.LINK_TYPE=1;//频道链接
+module.exports.LINK_CHANNEL=1;//频道链接
 module.exports.LINK_PAGE=2;//网页链接
 module.exports.LINK_APP=3;//APP链接

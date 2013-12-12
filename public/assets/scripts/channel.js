@@ -175,6 +175,7 @@ var Channel = function () {
                 },
 
                 submitHandler: function (form) {
+                    // alert($(form).serialize());
                    ajAddChannel(form);
                 }
             });

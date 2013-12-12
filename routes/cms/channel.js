@@ -23,9 +23,17 @@ exports.ajAdd=function(req,res){
 	var channel=req.query.channel;
 	var english_channel=req.query.english_channel;
 	var websiteId=req.session.website.id;
-	channelService.add(websiteId,channel,english_channel,function(err,channel){
-		res.json(channel);
-	});
+	var menuOk=req.query.menuOk;
+	if(menuOk=='ok'){
+		channelService.addAndMenu(websiteId,channel,english_channel,function(err,channel){
+			return res.json(channel);
+		});
+	}else{
+		channelService.add(websiteId,channel,english_channel,function(err,channel){
+			return res.json(channel);
+		});
+	}
+	
 }
 
 exports.ajDelete=function(req,res){

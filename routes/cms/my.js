@@ -1,6 +1,7 @@
 var websiteService=require('../../service/WebsiteService');
 var channelService=require('../../service/ChannelService');
 var nodeService=require('../../service/NodeService');
+
 exports.redirectIndex=function(req,res){
 	if(req.user.role==0){
 		res.redirect('/cms/admin/index');
@@ -34,7 +35,8 @@ exports.ajSaveInit=function(req,res){
 		status:1
 	};
 	websiteService.add(webisite,function(err,website){
-			channelService.add(website.id,req.query.channel_name,req.query.channel_english_name,function(err,channel){
+			channelService.addAndMenu(website.id,req.query.channel_name,req.query.channel_english_name,function(err,channel){
+
 				nodeService.addArticle(website.id,
 					channel.id,
 					req.query.article_name,

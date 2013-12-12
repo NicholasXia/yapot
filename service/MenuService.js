@@ -8,6 +8,7 @@ exports.addParent=function(websiteId,name,link,cb){
 	menuDao.create({website_id:websiteId,name:name,link:link},cbSave);
 }
 
+
 exports.findById=function(id,cb){
 	menuDao.findOne({"_id":id},cb);
 }
@@ -57,10 +58,18 @@ exports.findAllTreeByWebsiteId=function(websiteId,cb){
 
 exports.updateMenuById=function(id,name,link,type,cb){
 	if(type==menuDao.LINK_CHANNEL){//频道链接
+		console.log('更新频道链接');
 		channelService.findByEnglishname(link,function(err,channel){
+			link ='/u/'+ channel.website_english_name+'/'+channel.englishname;
+			var menuChannel={
+				name:channel.name,
+				id:channel.id,
+				englishname:channel.englishname
+			}
+			console.log("channel "+menuChannel);
 			menuDao.update(
 				{"_id":id},
-				{ $set:{name:name,link:link,type:type}},
+				{ $set:{name:name,link:link,type:type,channel:menuChannel}},
 				{ multi: true },cb);
 			});
 	}else{

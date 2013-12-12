@@ -1,6 +1,7 @@
 var channelDao=require('../model/Channel');
 var moment = require('moment');
 var websiteService=require('./WebsiteService');
+var menuService=require('./MenuService');
 exports.findAll=function(cb){
 	channelDao.find({},cb);
 }
@@ -12,6 +13,28 @@ exports.add=function(websiteId,name,englishname,cb){
 	function cbSave(err,data){
 		cb(err,data);
 	}
+	websiteService.findById(websiteId,function(err,website){
+		channelDao.create({
+			website_id:websiteId,
+			website_name:website.name,
+			website_english_name:website.english_name,
+			name:name,
+			englishname:englishname,
+			status:channelDao.ACTIVE
+		},cbSave);
+	});
+	
+}
+
+exports.addAndMenu=function(websiteId,name,englishname,cb){
+	function cbSave(err,channel){
+		menuService.addParent(channel.website_id,channel.englishname,null,function(err,menu){
+			menuService.updateMenuById(menu.id,channel.name,channel.englishname,1,function(err,num){
+				cb(err,channel);
+			});
+			
+		});
+	};
 	websiteService.findById(websiteId,function(err,website){
 		channelDao.create({
 			website_id:websiteId,

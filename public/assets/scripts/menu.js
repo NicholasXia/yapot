@@ -88,7 +88,24 @@ var Menu=function(){
                 }
             });
 			
-		}
+		},
+        updateMenu:function(form,cb){
+            $.ajax({
+                type: "GET",
+                url: "/cms/menu/ajUpdate",
+                data:form.serialize(),        
+                dataType: "json",
+                beforeSend:function(){
+                    
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                   cb({});
+                },
+                success: function(data){
+                   cb(data);
+                }
+            });
+        }
 	};
 	var render={
 
@@ -165,6 +182,7 @@ var Menu=function(){
 					cb();
 				});
 			});
+
 		},
 		clickRemove:function(cb){
 			$("#idRemoveBT").live('click',function(){
@@ -176,7 +194,48 @@ var Menu=function(){
 			var id=$(data.rslt.obj[0]).attr('id');
 			service.findById(id,function(menu){
 				render.menuInfo(menu);
+
+                 $("#idEditForm").validate({
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+                    ignore: "",
+                    rules: {
+                        menu_name: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        menu_name: {
+                            required: "菜单名不能为空"
+                        }
+                    },
+                    highlight: function (element) { // hightlight error inputs
+                        $(element)
+                            .closest('.form-group').addClass('has-error'); // set error class to the control group
+                    },
+                    unhighlight: function (element) { // revert the change done by hightlight
+                        $(element)
+                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    },
+                    success: function (label) {
+                        label
+                            .closest('.form-group').removeClass('has-error'); // set success class to the control group
+                    },
+                    submitHandler: function (form) {
+                        form=$(form);
+
+                        service.updateMenu(form,function(data){
+                                toastr.success('成功', '更新菜单成功！');
+                        });
+
+                    }, 
+                    invalidHandler: function(form, validator) {  //不通过回调 
+                     return false; 
+                    } 
+                });
 			});
+
 		},
 
 		pageLoad:function(cb){
@@ -213,43 +272,11 @@ var Menu=function(){
                 	service.saveMenu(form,function(){
                 		render.menuTree(function(){});
                 	});
+                   // $(form).submit();
                 }
             });
-
-			$("#idEditForm").validate({
-                errorElement: 'span', //default input error message container
-                errorClass: 'help-block', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
-                ignore: "",
-                rules: {
-                    menu_name: {
-                        required: true
-                    }
-                },
-                messages: {
-                    menu_name: {
-                        required: "菜单名不能为空"
-                      
-                    }
-                },
-                highlight: function (element) { // hightlight error inputs
-                    $(element)
-                        .closest('.form-group').addClass('has-error'); // set error class to the control group
-                },
-                unhighlight: function (element) { // revert the change done by hightlight
-                    $(element)
-                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
-                },
-                success: function (label) {
-                    label
-                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
-                },
-                submitHandler: function (form) {
-                	service.saveMenu(form,function(){
-                		render.menuTree(function(){});
-                	});
-                }
-            });
+      
+			
 		}
 	};
 

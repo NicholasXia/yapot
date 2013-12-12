@@ -150,11 +150,11 @@ var Node = function () {
                     },
                     progressall: function (e, data) {
                         var progress = parseInt(data.loaded / data.total * 100, 10);
-                        $('#idProgressBar').css(
+                        $('#idProgressBar > .progress-bar').css(
                             'width',
                             progress + '%'
                         );
-                        $('#idProgressBar').attr(
+                        $('#idProgressBar > .progress-bar').attr(
                             'aria-valuenow',
                             progress
                         );

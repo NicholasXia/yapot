@@ -31,3 +31,15 @@ exports.deleteParent=function(req,res){
 		return res.json(menu);
 	});
 }
+
+exports.ajUpdate=function(req,res){
+	var id=req.query.id;
+	var name=req.query.menu_name;
+	var link=req.query.link;
+	var type=req.query.link_type;
+	console.log('link_type '+type);
+	menuService.updateMenuById(id,name,link,type,function(err,num){
+		if(err) return res.json(err);
+		return res.json(num);
+	});
+}

@@ -231,21 +231,24 @@
 						<label class="col-md-3 control-label">菜单名称</label>
 						<div class="col-md-4">
 							<input name="menu_name" type="text" value="{{name}}" class="form-control" >
-							
+							<input name="id" type="text" value="{{_id}}" class="form-control" >
 						</div>
 					</div>
 					
 					<div class="form-group last">
 						<label class="col-md-3 control-label">菜单链接</label>
 
-						<div class="col-md-4">
-							<p id="idLinkText" class="form-control-static">
-								{{link}}
+						<div id="idLinkText"  class="col-md-4">
+							<p class="form-control-static">
+								{{#channel.name}}
+									{{channel.name}}
+								{{/channel.name}}
 								{{^link}}
 									请设置一个链接地址
 								{{/link}}
-								<input name="link"/>
+								
 							</p>
+							<input type="hidden" name="link" value='{{link}}'/>
 
 						</div>
 						<div class="col-md-4">
@@ -255,14 +258,15 @@
 					<div class="form-group last">
 						<label class="col-md-3 control-label">菜单类型</label>
 						
-						<div class="col-md-4">
-							<p id="idLinkType" class="form-control-static">
+						<div id="idLinkType" class="col-md-4">
+							<p  class="form-control-static">
 								{{viewType}}
-								{{^viewType}}
+								{{^link}}
 									还没有设置链接
-								{{/viewType}}
-								<input name="link_type"/>
+								{{/link}}
+								
 							</p>
+							<input type="hidden" name="link_type" value="{{type}}"/>
 						</div>
 						
 					</div>
