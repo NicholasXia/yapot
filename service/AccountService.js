@@ -4,7 +4,7 @@ var page=require("../model/Page");
 var moment = require('moment');
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
-
+var fs = require('fs');
 //添加一个账号
 exports.add=function(user,cb){
 	
@@ -13,6 +13,21 @@ exports.add=function(user,cb){
 	}
 	user.password=CryptoJS.MD5(user.password)+"";
 	accountDao.create(user,cbSave);
+}
+//添加账户并且声称用户的目录
+exports.addAndMakeFolder=function(user,cb){
+	exports.add(user,function(err,account){
+		fs.mkdir(__dirname.replace('service','')+'/public/users/'+account.id,function(err){
+			fs.mkdir(__dirname.replace('service','')+'/views/users/'+account.id,function(err){
+				fs.mkdir(__dirname.replace('service','')+'/public/users/'+account.id+'/skin',function(err){
+					fs.mkdir(__dirname.replace('service','')+'/public/users/'+account.id+'/upload',function(err){
+						cb(err,account);
+					});
+				});
+			});
+		});
+		
+	});
 }
 
 //登录
@@ -92,3 +107,5 @@ function testLogin(cb){
 // exports.updatePasswordById('52a1768bfee2027404000001','456456',function(err){
 // 	console.log(err);
 // });
+
+

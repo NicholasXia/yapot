@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<!--[if IE 8 ]>    <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js lt-ie9> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+	<%include header %>
+	<body class="touch-gesture">  
+    <!-- Container -->
+	    <div id="container">
+        <!-- Main Content-->
+        	<%include slider %>
+	        <section id="content-container">
+		        <header id="header">
+		        	<div id="menu-trigger" class="header-button left icon-menu"></div>
+		        	<h1><a href="javascript:history.go(-1)">返回</a></h1>
+		        </header>
+		        <div id="content" class="blog blog-single blog-standard">
+		        	
+		        	<article class="format-video">
+                        <div class="wrapped-content">
+                            <p class="title"><span class="category"><%=node.channel_name%></span> <span class="time"><%=node.viewCreateDate%></span></p>
+                            <h2> <%=node.article.title%></h2>
+                        </div>
+
+
+                        <%if(node.article.img_url){%>
+				    		<figure>
+				    			<img src="<%=node.article.img_url%>">
+				    		</figre>
+					    <%}%>
+
+		        		<div class="wrapped-content">
+
+                           <%-node.article.content%>
+
+                        </div>
+                        <div class="wrapped-content">
+
+                            <p class="text-center share-widget">
+                               <a id="idGood" href="javascript:;" class="button round large icon-thumbs-up-1"><span id="idLabelGood">赞</span>(<span id="idGoodNum">
+                               	<%if(node.analytics.good_num){%>
+                               	<%=node.analytics.good_num%>
+                               	<%}else{%>0<%}%>
+                               	</span>)</a>
+                            </p>
+        		        </div>
+    		        </article>
+		        </div>
+
+	        </section>
+ 	
+        <!-- =Main Content -->
+	    
+
+	    
+
+	    </div>
+    <!-- =Container -->
+    <input id="idWebsiteId" type='hidden' value='<%=node.website_id%>'></input>
+	<input id="idChannelId" type='hidden' value='<%=node.channel_id%>'></input>
+	<input id="idNodeId" type='hidden' value='<%=node.id%>'></input>
+	<!-- Custom Scripts -->
+	<%include include/footer.ejs%>
+
+	<!-- =Custom Scripts -->
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$.getJSON('/aj/ajGetGoodStatus',{nodeid:$("#idNodeId").val(),random:Math.random() },function(json){
+				// alert(json.status+" "+$("#idNodeId").val());
+				if(json.status==1){//赞开启
+					$("#idGood").click(function(){
+						$("#idGood").unbind('click');
+						$("#idLabelGood").html('已赞');
+						var goodNum= parseInt($("#idGoodNum").html())+1;
+						$("#idGoodNum").html(goodNum);
+						var params={
+							websiteid:$("#idWebsiteId").val(),
+							channelid:$("#idChannelId").val(),
+							nodeid:$("#idNodeId").val(),
+							random:Math.random()
+						}
+						$.getJSON('/aj/ajAddGood',params,function(json){
+							
+						});
+					});
+				}else{
+					$("#idLabelGood").html('已赞过');
+				}
+			});
+		});
+	</script>
+	</body>
+</html>

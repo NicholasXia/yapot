@@ -144,8 +144,8 @@ var Node = function () {
                     dataType: 'json',
                     done: function (e, data) {
                         $.each(data.result.files, function (index, file) {//
-                            $("#idImage").attr("src","/uploads/"+file.name);
-                            $("#idImageHidden").val("/uploads/"+file.name);
+                            $("#idImage").attr("src",file.url);
+                            $("#idImageHidden").val(file.url);
                         });
                     },
                     progressall: function (e, data) {

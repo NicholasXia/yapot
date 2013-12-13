@@ -27,7 +27,8 @@ exports.ajAdd=function(req,res){
 		role:req.query.role,
 		status:1
 	};
-	accountService.add(account,function(err,data){
+	accountService.addAndMakeFolder(account,function(err,data){
+		if(err) return res.json(err);
 		return res.json(data);
 	});
 }

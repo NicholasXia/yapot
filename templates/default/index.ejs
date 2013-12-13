@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]>    <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js lt-ie9> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+	<%include header %>
+	<body class="touch-gesture">
+
+    <!-- Container -->
+
+	    <div id="container">
+
+        <!-- Main Content-->
+
+   		<%include slider %>
+
+	        <section id="content-container" class="dark">
+
+	        		   <!-- Header -->
+
+		        <header id="header">
+		        	<div id="menu-trigger" class="header-button left icon-menu"></div>
+		        	<h1><a href="javascript:void(0)"><%=website.name%></a></h1>
+		        </header>
+	        <!-- =Header -->
+		        <div id="content" class="blog">
+		        	<% if (articles.aaData.length!=0) { %>
+		        		<render id="idRenderNode">
+					   	<% articles.aaData.forEach(function(article){ %>
+					   		<%if(article.article.title!=null){%>
+	    					<article class="format-standard">
+					    		<div class="wrapped-content">
+					    			<p class="title"><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>"><span class="category"><%=article.channel_name%></span><a> <span class="time"><%=article.viewCreateDate%></span></p>
+					    			<h2><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>/<%=article.id%>"><%=article.article.title%></a></h2>
+					    		</div>
+					    		<%if(article.article.img_url){%>
+						    		<figure>
+						    			<img src="<%=article.article.img_url%>">
+						    		</figure>
+					    		<%}%>
+					    		<div class="wrapped-content">
+					    			<p>
+					    				<%-article.article.description%>
+					    			</p>
+					    			<hr>
+					    			<p class="read-more"><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>/<%=article.id%>">查看原文</a></p>
+					    		</div>
+					    	</article>	
+					    	<%}%>
+
+						<%if(article.video.title!=null){%>
+	    					<article class="format-standard">
+					    		<div class="wrapped-content">
+					    			<p class="title"><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>"><span class="category"><%=article.channel_name%></span><a> <span class="time"><%=article.viewCreateDate%></span></p>
+					    			<h2><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>/<%=article.id%>"><%=article.video.title%></a></h2>
+					    		</div>
+					    		<figure>
+					    			<img src="<%=article.article.img_url%>">
+					    		</figure>
+					    		<div class="wrapped-content">
+					    			<p>
+					    				<%=article.video.description%>
+					    			</p>
+					    			<hr>
+					    			<p class="read-more"><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>/<%=article.id%>">查看原文</a></p>
+					    		</div>
+					    	</article>	
+					    <%}%>
+					    	
+
+						
+  						<% }) %>
+  						</render>	
+  						
+  						<div class="text-center" style="margin-bottom: 40px;">
+							<a data-website='<%=articles.aaData[0].website_id%>' id="idNext" href="javascript:void(0)" class="button radius">下一部分</a>
+						</div>
+					<% }else{ %>
+		        		<article id="format-aside" class="format-aside">
+			            <p class="icon-bg icon-attach"></p>
+				        <div class="wrapped-content">
+				            <p>
+				            	当前频道，没有任何文章...
+				            </p>
+				        </div>
+				    </article>
+				   <%}%>
+
+		        </div>
+
+	        </section>
+
+        <!-- =Main Content -->
+	    
+
+	    </div>
+    <!-- =Container -->
+	    
+	
+	<!-- Custom Scripts -->
+
+	<%include footer%>
+
+
+	<!-- =Custom Scripts -->
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#idNext").click(function(){
+				var start=$("#content article").length;
+
+				var url ='/node/ajlist?start='+start+'&websiteId='+$(this).attr('data-website');
+			
+				$.getJSON(url,function(json){
+					var output = Mustache.render($("#idNodeTemplate").html(), json);
+					if(json.aaData.length==0){
+						$("#idNext").text("已经没有文章了...");
+						$("#idNext").unbind('click');
+					}
+					$("#idRenderNode").append(output);
+				});
+			});
+			
+		});
+	</script>
+
+	    
+
+	    
+	<template id="idNodeTemplate">
+		{{#aaData}}
+		<article class="format-standard">
+    		<div class="wrapped-content">
+    			<p class="title">
+    				<a href="/u/{{website_english_name}}/{{channel_english_name}}"><span class="category">{{channel_name}}</span> <span class="time">{{viewCreateDate}}</span>
+    				</a>
+
+    				</p>
+    			<h2>
+    				<a href="/u/{{website_english_name}}/{{channel_english_name}}/{{id}}">
+    				{{#article}}
+    				{{article.title}}
+    				{{/article}}
+    				{{#video}}
+    				{{video.title}}
+    				{{/video}}
+    			</a></h2>
+    				
+
+    		</div>
+    		{{#article.img_url}}
+    		<figure>		
+    			<img src="{{article.img_url}}">
+    		</figure>
+    		{{/article.img_url}}
+
+    		{{#video.img_url}}
+    		<figure>		
+    			<img src="{{video.img_url}}">
+    		</figure>
+    		{{/video.img_url}}
+
+    		<div class="wrapped-content">
+    			<p>
+    				{{#video}}
+    				{{video.description}}
+    				{{/video}}
+    				{{#article}}
+    				{{article.description}}
+    				{{/article}}
+    			</p>
+    			<hr>
+    			<p class="read-more"><a href="/u/{{website_english_name}}/{{channel_english_name}}/{{id}}">查看原文</a></p>
+    		</div>
+    	</article>
+	    {{/aaData}}
+
+	</template>
+
+
+	    
+	</body>
+</html>

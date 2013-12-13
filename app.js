@@ -16,6 +16,7 @@ var my=require('./routes/cms/my')
 var nodeCms=require('./routes/cms/node');
 var menuCms=require('./routes/cms/menu');
 var accountCms=require('./routes/cms/account');
+var tplCms=require('./routes/cms/tpl');
 var http = require('http');
 var path = require('path');
 var upload = require('jquery-file-upload-middleware');
@@ -30,8 +31,8 @@ var websiteService=require('./service/WebsiteService');
 var channelService=require('./service/ChannelService');
 // configure upload middleware
 upload.configure({
-    uploadDir: __dirname + '/public/uploads',
-    uploadUrl: '/uploads',
+    // uploadDir: __dirname + '/public/uploads',
+    // uploadUrl: '/uploads',
     imageVersions: {
         thumbnail: {
             width: 80,
@@ -46,10 +47,22 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'templates')));
 // app.use(express.bodyParser());
 app.use(express.favicon());
 app.use(express.logger('dev'));
-app.use('/upload', upload.fileHandler());
+// app.use('/upload', upload.fileHandler());
+app.use('/upload', function (req, res, next) {
+      console.log("upload user id="+req.id);
+      upload.fileHandler({
+          uploadDir: function () {
+              return __dirname + '/public/users/' + req.query.id+"/upload/"
+          },
+          uploadUrl: function () {
+              return '/users/' + req.query.id+"/upload/"
+          }
+      })(req, res, next);
+});
 
 app.use(express.bodyParser());
 app.use(express.methodOverride());
@@ -83,9 +96,6 @@ app.get('/u/:website',helperService.initUser,website.index);
 app.get('/u/:website/:channel',helperService.initUser,channel.index);
 app.get('/u/:website/:channel/:id',helperService.initUser,node.details);
 
-
-
-    
 passport.use(new LocalStrategy({
 		usernameField: 'email',
     	passwordField: 'password'
@@ -185,6 +195,8 @@ app.get('/cms/menu/ajFindById',ensureEditor,menuCms.ajFindById);
 app.get('/cms/menu/ajUpdate',ensureEditor,menuCms.ajUpdate);
 
 app.get('/cms/ajSaveInit',ensureEditor,my.ajSaveInit);
+app.get('/cms/tpl/ajGetAll',ensureEditor,tplCms.ajGetAll);
+
 //ADMIN
 app.get('/cms/admin/index',ensureAdmin,my.indexAdmin);
 app.get('/cms/admin/account/index',ensureAdmin,accountCms.index);
@@ -203,7 +215,7 @@ function ensureEditor(req,res,next){
     }
     return next(); 
   }
-  res.redirect('/login')
+  return res.redirect('/login');
 }
 
 function ensureAdmin(req,res,next){
@@ -213,7 +225,7 @@ function ensureAdmin(req,res,next){
     }
     return next(); 
   }
-  res.redirect('/login')
+  return res.redirect('/login');
 }
 		
 function ensureAuthenticated(req, res, next) {
@@ -221,6 +233,6 @@ function ensureAuthenticated(req, res, next) {
    
     return next(); 
   }
-  res.redirect('/login')
+  return res.redirect('/login');
 }
 

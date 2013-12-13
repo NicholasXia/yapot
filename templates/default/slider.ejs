@@ -1,0 +1,20 @@
+<!-- Sidebar -->
+<aside id="sidemenu-container">
+	<div id="sidemenu">
+		 <div id="author-profile">
+			<div class="author-profile-content">
+				<p class="title"><%=website.name%></p>
+				<p class="subtitle"></p>
+			</div>
+		</div> 
+    	<nav id="nav-container">
+    		<ul class="nav">
+    			<% menus.forEach(function(menu){ %>
+					<li><a href="<%=menu.link%>"><%=menu.name%></a></li>
+				<% }) %>
+    		</ul>
+    	</nav>
+	</div>
+</aside>
+
+<!-- =Sidebar -->

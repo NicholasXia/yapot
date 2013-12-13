@@ -29,37 +29,15 @@ exports.ajList=function(req,res){
 	
 }
 
-// exports.details=function(req,res){
-// 	var websiteName=req.params.website;
-// 	var channelName=req.params.channel;
-// 	var nodeId=req.params.id;
-// 	console.log(nodeId);
-// 	nodeService.findById(nodeId,function(err,node){
-// 		console.log(node.article.content);
-// 		if(node==null){
-// 			res.send('没有发现网站');
-// 		}else{
-// 			menuService.findAll(function(err,menus){
-// 				console.log(node.article);
-// 				console.log(node.video);
-// 				if(node.article.title!=null){
-// 					res.render('mobile/article',{menus:menus,node:node});
-// 				}
-// 				else if(node.video.title!=null){
-// 					res.render('mobile/video',{menus:menus,node:node});
-// 				}
-// 		 });
-// 		}
-// 	});
-// }
-
 exports.details=function(req,res){
 	var websiteName=req.params.website;
 	var channelName=req.params.channel;
 	var nodeId=req.params.id;
-	
+	var website=req.session.website;
+	var renderArticle='users/'+website.account_id+'/article';
+	var renderVideo='users/'+website.account_id+'/video';
 	nodeService.findById(nodeId,function(err,node){
-	
+		
 		if(node==null){
 			res.send('没有发现网站');
 		}else{

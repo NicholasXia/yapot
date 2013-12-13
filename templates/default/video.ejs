@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<!--[if IE 8 ]>    <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js lt-ie9> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+	
+
+
+	<%include header %>
+
+	<body class="touch-gesture">
+    <!-- Container -->
+
+	    <div id="container">
+
+        <!-- Main Content-->
+        	<%include slider %>
+	        <section id="content-container">
+
+	        	<!-- Header -->
+
+		        <header id="header">
+		        	<div id="menu-trigger" class="header-button left icon-menu"></div>
+		        	<h1><a href="javascript:history.go(-1)">返回</a></h1>
+		        </header>
+
+	        	<!-- =Header -->
+
+		        <div id="content" class="blog blog-single blog-standard">
+		        	
+		        	<article class="format-video">
+                        <div class="wrapped-content">
+                            <p class="title"><span class="category"><%=node.channel_name%></span> <span class="time"><%=node.viewCreateDate%></span></p>
+                            <h2> <%=node.video.title%></h2>
+                        </div>
+              
+                        <figure class="">
+                            <video  controls="controls" preload="none"  style="width: 100%; height: 100%;">
+						    <!-- MP4 for Safari, IE9, iPhone, iPad, Android, and Windows Phone 7 -->
+						    <source type="video/mp4" src="<%=node.video.url%>" />
+						</video> 
+                        </figure>
+
+		        		<div class="wrapped-content">
+
+                           <%=node.video.content%>
+
+                        </div>
+    		        	</article>
+		        </div>
+
+	        </section>
+
+        <!-- =Main Content -->
+	    
+
+	    
+
+	    </div>
+    <!-- =Container -->	
+	<!-- Custom Scripts -->
+	<%include footer %>
+
+	<!-- =Custom Scripts -->
+	<script src="/users/<%=website.account_id%>/js/script.js/js/plugins/johndyer/build/mediaelement-and-player.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('video,audio').mediaelementplayer();
+		});
+	</script>   
+	</body>
+</html>

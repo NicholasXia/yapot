@@ -1,7 +1,7 @@
 var websiteService=require('../../service/WebsiteService');
 var channelService=require('../../service/ChannelService');
 var nodeService=require('../../service/NodeService');
-
+var tplService=require('../../service/TplService');
 exports.redirectIndex=function(req,res){
 	if(req.user.role==0){
 		res.redirect('/cms/admin/index');
@@ -34,7 +34,8 @@ exports.ajSaveInit=function(req,res){
 		english_name:req.query.website_english_name,
 		status:1
 	};
-	websiteService.add(webisite,function(err,website){
+	tplService.copyTplByNameAccount(req.query.tplname,webisite.account_id,function(err){
+		websiteService.add(webisite,function(err,website){
 			channelService.addAndMenu(website.id,req.query.channel_name,req.query.channel_english_name,function(err,channel){
 
 				nodeService.addArticle(website.id,
@@ -45,7 +46,11 @@ exports.ajSaveInit=function(req,res){
 						return res.json({'success':1});
 				});
 			});
+		});
+
 	});
+
+	
 }
 
 
