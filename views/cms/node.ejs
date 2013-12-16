@@ -35,7 +35,6 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 
 	<!-- END PAGE LEVEL STYLES -->
 
-	<link rel="shortcut icon" href="favicon.ico" />
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -154,7 +153,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 											<a href="javascript:;" class="collapse"></a>
 											<a href="#portlet-config" data-toggle="modal" class="config"></a>
 											<a href="javascript:;" class="reload"></a>
-											<a href="javascript:;" class="remove"></a>
+										
 										</div>
 									</div>
 									<div class="portlet-body form">
@@ -226,6 +225,94 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 								</div>
 			</template>
 
+			<template id="idAddVideoTpl" style="display:none">
+				<div class="portlet box purple">
+									<div class="portlet-title">
+										<div class="caption"><i class="fa fa-reorder"></i>添加视频</div>
+										<div class="tools">
+											<a href="javascript:;" class="collapse"></a>
+											<a href="#portlet-config" data-toggle="modal" class="config"></a>
+											<a href="javascript:;" class="reload"></a>
+								
+										</div>
+									</div>
+									<div class="portlet-body form">
+										<!-- BEGIN FORM-->
+										<form action="#" class="form-horizontal">
+											
+											<div class="form-body">
+												<div class="form-group">
+													<label class="col-md-3 control-label">标题</label>
+													<div class="col-md-4">
+														<input id="idVideoTitle" type="text" class="form-control" placeholder="输入文章标题">
+														
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-md-3 control-label">视频地址(支持mp4格式)</label>
+													<div class="col-md-4">
+														<input id="idVideoUrl" type="text" class="form-control" placeholder="输入文章标题">
+														
+													</div>
+												</div>
+
+												<div class="form-group">
+													<label class="col-md-3 control-label">图片</label>
+														
+
+									
+								
+														<div class="controls col-md-4">
+														<div class="thumbnail">
+															<input type="hidden" id="idImageVideoHidden" value="">
+										<img id="idImageVideo" src="data:image/png;base64,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" alt="100%x200" >
+										<div class="caption">
+											
+											<p>
+														<div class="fileupload fileupload-new" data-provides="fileupload">
+															<span class="btn default btn-file">
+															<span class="fileupload-new"><i class="fa fa-paper-clip"></i> 上传图片</span>
+															<span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+															<input id="videofileupload" type="file" class="default" name="file" data-url="/upload/<%=user.id%>?id=<%=user.id%>"/>
+															</span>
+															<span class="fileupload-preview" style="margin-left:5px;"></span>
+															<a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none; margin-left:5px;"></a>
+														</div></p>
+										</div>
+										<div id="idVideoProgressBar" class="progress progress-striped">
+											<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+												
+											</div>
+										</div>
+										</div>
+
+
+												
+
+													</div>
+												</div>
+											
+												
+												<div class="form-group">
+													<label class="col-md-3 control-label">视频描述</label>
+													<div class="col-md-9">
+														<textarea data-provide="markdown" rows="10" id="idVideoContent" class="form-control"   ></textarea>
+													</div>
+												</div>
+												
+											</div>
+											<div class="form-actions nobg fluid">
+												<div class="col-md-offset-3 col-md-9">
+													<button id="idSaveVideo" type="button" class="btn green">保存</button>
+													                              
+												</div>
+											</div>
+										</form>
+										<!-- END FORM--> 
+									</div>
+								</div>
+			</template>
+
 			<template id="idInfotpl" style="display:none">
 				<div class="portlet green box">
 				<div class="portlet-title">
@@ -238,8 +325,8 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 									<i class="fa fa-angle-down"></i>
 									</a>
 									<ul class="dropdown-menu pull-right">
-										<li><a channel={{channelStr}}   id="idAddArticle" href="javascript:;"><i class="fa fa-pencil"></i> 添加图文</a></li>
-										<li><a channelid='{{channel_id}}'   href="#idAddNode"><i class="fa fa-pencil"></i> 添加视频</a></li>
+										<li><a channel='{{channelStr}}'  id="idAddArticle" href="javascript:;"><i class="fa fa-pencil"></i> 添加图文</a></li>
+										<li><a channel='{{channelStr}}' id="idAddVideo"    href="javascript:;"><i class="fa fa-pencil"></i> 添加视频</a></li>
 										
 									
 									</ul>

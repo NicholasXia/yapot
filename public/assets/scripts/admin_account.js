@@ -99,7 +99,7 @@ var AdminAccount=function(){
 				$("#idSuccessMsg > strong").html("保存成功");
 				$("#idSuccessMsg").show();
 				accountTable.fnDraw();
-				alert("accountTabe "+accountTable.fnDraw);
+				// alert("accountTabe "+accountTable.fnDraw);
 			}
 			cb();
 			

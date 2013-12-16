@@ -27,7 +27,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 	<!-- END THEME STYLES -->
 	<link rel="shortcut icon" href="favicon.ico" />
 	<link rel="stylesheet" type="text/css" href="/assets/css/style-mobile.css">
-	
+	<link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-fileupload/bootstrap-fileupload.css" />
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -94,27 +94,65 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 							
 						</div>
 						<div class="portlet-body form">
-							<form role="form" class="form-horizontal">
+							<form action="#" id="idWebsiteForm" role="form" class="form-horizontal">
+								<input name="id" type="hidden" value="<%=website.id%>"/>
+								<input name="imgurl" type="hidden" id="idImageHidden" value="<%=website.imgurl%>">
 								<div class="form-body">
+									<div class="alert alert-danger display-hide">
+										<button class="close" data-close="alert"></button>
+										保存失败
+									</div>
+									<div class="alert alert-success display-hide">
+										<button class="close" data-close="alert"></button>
+										保存成功
+									</div>
+
 									<div class="form-group">
 										<label class="col-md-4 control-label" for="inputSuccess">网站名称</label>
-										<div class="col-md-8">
-												<p class="form-control-static"><%=website.name%></p>
+										<div class="col-md-5">
+												<input name="website_name" class="form-control" type="text" value="<%=website.name%>"/>
+												<!-- <p class="form-control-static"><%=website.name%></p> -->
 										</div>
 									</div>
-									<div class="form-group has-success">
-										<label class="col-md-4 control-label" for="inputSuccess">网站地址</label>
+									<div class="form-group">
+										<label class="col-md-4 control-label">网站地址</label>
 										<div class="col-md-8">
 												<p class="form-control-static">/u/<%=website.english_name%></p>
 										</div>
 									</div>
-								
+									<div class="form-group">
+										<label class="col-md-4 control-label">图片</label>
+										<div class="controls col-md-4">
+											<div class="thumbnail">
+												
+												<img id="idImage" src="<%=website.imgurl%>"  >
+												<div class="caption">
+													<p>
+														<div class="fileupload fileupload-new" data-provides="fileupload">
+															<span class="btn default btn-file">
+															<span class="fileupload-new"><i class="fa fa-paper-clip"></i> 上传图片</span>
+															<span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+															<input id="fileupload" type="file" class="default" name="file" data-url="/upload/<%=user.id%>?id=<%=user.id%>"/>
+															</span>
+															<span class="fileupload-preview" style="margin-left:5px;"></span>
+															<a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none; margin-left:5px;"></a>
+														</div>
+													</p>
+												</div>
+												<div id="idProgressBar" class="progress progress-striped">
+													<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+														
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
-								<!-- <div class="form-actions fluid">
+								<div class="form-actions fluid">
 									<div class="col-md-offset-4 col-md-8">                        
 										<button type="submit" class="btn blue">保存</button> 
 									</div>
-								</div> -->
+								</div>
 							</form>
 						</div>
 					</div>
@@ -139,11 +177,87 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 	<%include ../include/ie.ejs %>
 	<%include ../include/core_plugin.ejs %>
 	<!-- END CORE PLUGINS -->
+	<script type="text/javascript" src="/assets/plugins/jquery-file-upload/js/vendor/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="/assets/plugins/jquery-file-upload/js/jquery.iframe-transport.js"></script>
+	<script type="text/javascript" src="/assets/plugins/jquery-file-upload/js/jquery.fileupload.js"></script>
+	<script type="text/javascript" src="/assets/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="/assets/plugins/jquery-validation/dist/additional-methods.min.js"></script>
 	<script src="/assets/scripts/app.js"></script>   
 	<script src="/assets/plugins/moment.min.js"></script>      
 	<script>
 		jQuery(document).ready(function() {    
 		   App.init();
+		   	$('#fileupload').fileupload({
+	            dataType: 'json',
+	            done: function (e, data) {
+	                $.each(data.result.files, function (index, file) {//
+	                    $("#idImage").attr("src",file.url);
+	                    $("#idImageHidden").val(file.url);
+	                });
+	            },
+	            progressall: function (e, data) {
+	                var progress = parseInt(data.loaded / data.total * 100, 10);
+	                $('#idProgressBar > .progress-bar').css(
+	                    'width',
+	                    progress + '%'
+	                );
+	                $('#idProgressBar > .progress-bar').attr(
+	                    'aria-valuenow',
+	                    progress
+	                );
+	            }
+            });
+		   	var form1= $("#idWebsiteForm");
+		   	var error1 = $('.alert-danger', form1);
+            var success1 = $('.alert-success', form1);
+            form1.validate({
+	                errorElement: 'span', //default input error message container
+	                errorClass: 'help-block', // default input error message class
+	                focusInvalid: false, // do not focus the last invalid input
+	                ignore: "",
+	                rules: {
+	                    website_name: {
+	                        required: true
+	                     
+	                    }
+	                },
+	                messages: {
+		                website_name: {
+		                    required: "请填写网站名称"
+		                   
+		                }
+	            	},
+
+	                invalidHandler: function (event, validator) { //display error alert on form submit              
+	                    success1.hide();
+	                    error1.show();
+	                    App.scrollTo(error1, -200);
+	                },
+
+	                highlight: function (element) { // hightlight error inputs
+	                    $(element)
+	                        .closest('.form-group').addClass('has-error'); // set error class to the control group
+	                },
+
+	                unhighlight: function (element) { // revert the change done by hightlight
+	                    $(element)
+	                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
+	                },
+
+	                success: function (label) {
+	                    label
+	                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
+	                },
+
+	                submitHandler: function (form) {
+	                    
+	                   	$.getJSON('/cms/website/ajUpdate',$(form).serialize(),function(data){
+	                   		success1.show();
+	                    	error1.hide();
+	                    	$("iframe").attr('src',$("iframe").attr('src'));
+	                   	});
+	                }
+            	});
 		});
 	</script>
 	<!-- END JAVASCRIPTS -->

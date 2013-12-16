@@ -41,3 +41,18 @@ exports.ajDeleteArticle=function(req,res){
 		res.json(err);
 	});
 }
+//websiteId,channelId,title,content,imgUrl,videoUrl
+exports.ajAddVideo=function(req,res){
+	var websiteId=req.session.website.id;
+	console.log(req.query.channelId);
+	nodeService.addVideo(
+		websiteId,
+		req.query.channelId,
+		req.query.title,
+		req.query.content,
+		req.query.videoUrl,
+		req.query.imgUrl,
+		function(err,video){
+			res.json(video);
+		});
+}

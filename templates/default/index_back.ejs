@@ -6,6 +6,7 @@
 <!--<![endif]-->
 	<%include header %>
 	<body class="touch-gesture">
+
     <!-- Container -->
 
 	    <div id="container">
@@ -16,24 +17,17 @@
 
 	        <section id="content-container" class="dark">
 
-	        		        <!-- Header -->
+	        		   <!-- Header -->
 
 		        <header id="header">
 		        	<div id="menu-trigger" class="header-button left icon-menu"></div>
-		        	<h1><a href="javascript:void(0)"><%=channel.name%></a></h1>
-		        	<!-- <div id="" class="header-button right icon-menu"></div> -->
-		        	<input id="idChannelId" type='hidden' value='<%=channel.id%>'/>
+		        	<h1><a href="javascript:void(0)"><%=website.name%></a></h1>
 		        </header>
-
 	        <!-- =Header -->
-
 		        <div id="content" class="blog">
-		        	
-		        
-		        	
 		        	<% if (articles.aaData.length!=0) { %>
 		        		<render id="idRenderNode">
-					   <% articles.aaData.forEach(function(article){ %>
+					   	<% articles.aaData.forEach(function(article){ %>
 					   		<%if(article.article.title!=null){%>
 	    					<article class="format-standard">
 					    		<div class="wrapped-content">
@@ -41,42 +35,46 @@
 					    			<h2><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>/<%=article.id%>"><%=article.article.title%></a></h2>
 					    		</div>
 					    		<%if(article.article.img_url){%>
-					    		<figure>
-					    			<img src="<%=article.article.img_url%>">
-					    		</figure>
+						    		<figure>
+						    			<img src="<%=article.article.img_url%>">
+						    		</figure>
 					    		<%}%>
 					    		<div class="wrapped-content">
 					    			<p>
-					    				<%=article.article.title%>
+					    				<%-article.article.description%>
 					    			</p>
 					    			<hr>
 					    			<p class="read-more"><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>/<%=article.id%>">查看原文</a></p>
 					    		</div>
 					    	</article>	
-							<%}%>
-					    	<%if(article.video.title!=null){%>
-		    					<article class="format-standard">
-						    		<div class="wrapped-content">
-						    			<p class="title"><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>"><span class="category"><%=article.channel_name%></span><a> <span class="time"><%=article.viewCreateDate%></span></p>
-						    			<h2><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>/<%=article.id%>"><%=article.video.title%></a></h2>
-						    		</div>
-						    		<figure>
-						    			<img src="<%=article.video.img_url%>">
-						    		</figure>
-						    		<div class="wrapped-content">
-						    			<p>
-						    				<%=article.video.description%>
-						    			</p>
-						    			<hr>
-						    			<p class="read-more"><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>/<%=article.id%>">查看原文</a></p>
-						    		</div>
-						    	</article>	
 					    	<%}%>
 
+						<%if(article.video.title!=null){%>
+	    					<article class="format-standard">
+					    		<div class="wrapped-content">
+					    			<p class="title"><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>"><span class="category"><%=article.channel_name%></span><a> <span class="time"><%=article.viewCreateDate%></span></p>
+					    			<h2><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>/<%=article.id%>"><%=article.video.title%></a></h2>
+					    		</div>
+					    		<figure>
+					    			<img src="<%=article.article.img_url%>">
+					    		</figure>
+					    		<div class="wrapped-content">
+					    			<p>
+					    				<%=article.video.description%>
+					    			</p>
+					    			<hr>
+					    			<p class="read-more"><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>/<%=article.id%>">查看原文</a></p>
+					    		</div>
+					    	</article>	
+					    <%}%>
+					    	
+
+						
   						<% }) %>
   						</render>	
+  						
   						<div class="text-center" style="margin-bottom: 40px;">
-							<a id="idNext" href="javascript:void(0)" class="button radius">下一部分</a>
+							<a data-website='<%=articles.aaData[0].website_id%>' id="idNext" href="javascript:void(0)" class="button radius">下一部分</a>
 						</div>
 					<% }else{ %>
 		        		<article id="format-aside" class="format-aside">
@@ -89,8 +87,6 @@
 				    </article>
 				   <%}%>
 
-					
-
 		        </div>
 
 	        </section>
@@ -98,18 +94,9 @@
         <!-- =Main Content -->
 	    
 
-	    
-
 	    </div>
     <!-- =Container -->
 	    
-
- 
-      
-
-	
-
-
 	
 	<!-- Custom Scripts -->
 
@@ -122,7 +109,7 @@
 			$("#idNext").click(function(){
 				var start=$("#content article").length;
 
-				var url ='/node/ajlist?start='+start+"&channelid="+$("#idChannelId").val();
+				var url ='/node/ajlist?start='+start+'&websiteId='+$(this).attr('data-website');
 			
 				$.getJSON(url,function(json){
 					var output = Mustache.render($("#idNodeTemplate").html(), json);
@@ -144,15 +131,43 @@
 		{{#aaData}}
 		<article class="format-standard">
     		<div class="wrapped-content">
-    			<p class="title"><span class="category">{{channel_name}}</span> <span class="time">{{viewCreateDate}}</span></p>
-    			<h2><a href="/u/{{website_english_name}}/{{channel_english_name}}/{{id}}">{{article.title}}</a></h2>
+    			<p class="title">
+    				<a href="/u/{{website_english_name}}/{{channel_english_name}}"><span class="category">{{channel_name}}</span> <span class="time">{{viewCreateDate}}</span>
+    				</a>
+
+    				</p>
+    			<h2>
+    				<a href="/u/{{website_english_name}}/{{channel_english_name}}/{{id}}">
+    				{{#article}}
+    				{{article.title}}
+    				{{/article}}
+    				{{#video}}
+    				{{video.title}}
+    				{{/video}}
+    			</a></h2>
+    				
+
     		</div>
-    		<figure>
+    		{{#article.img_url}}
+    		<figure>		
     			<img src="{{article.img_url}}">
     		</figure>
+    		{{/article.img_url}}
+
+    		{{#video.img_url}}
+    		<figure>		
+    			<img src="{{video.img_url}}">
+    		</figure>
+    		{{/video.img_url}}
+
     		<div class="wrapped-content">
     			<p>
-    				{{article.title}}
+    				{{#video}}
+    				{{video.description}}
+    				{{/video}}
+    				{{#article}}
+    				{{article.description}}
+    				{{/article}}
     			</p>
     			<hr>
     			<p class="read-more"><a href="/u/{{website_english_name}}/{{channel_english_name}}/{{id}}">查看原文</a></p>
@@ -161,6 +176,8 @@
 	    {{/aaData}}
 
 	</template>
+
+
 	    
 	</body>
 </html>

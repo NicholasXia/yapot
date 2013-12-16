@@ -22,6 +22,18 @@ exports.index=function(req,res){
 		return res.render("cms/index",{user:req.user,indexActive:'active',website:website});
 	});	
 }
+
+exports.ajUpdate=function(req,res){
+	var id= req.query.id;
+	var website={
+		name:req.query.website_name,
+		imgurl:req.query.imgurl
+	}
+	websiteService.updateById(id,website,function(err){
+		return res.json(err);
+	});
+}
+
 //管理员首页
 exports.indexAdmin=function(req,res){
 	res.render("cms/admin/index",{user:req.user,indexActive:'active'});
@@ -32,6 +44,7 @@ exports.ajSaveInit=function(req,res){
 		account_id:req.user.id,
 		name:req.query.website_name,
 		english_name:req.query.website_english_name,
+		imgurl:req.query.website_image,
 		status:1
 	};
 	tplService.copyTplByNameAccount(req.query.tplname,webisite.account_id,function(err){

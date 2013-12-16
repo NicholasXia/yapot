@@ -25,6 +25,26 @@ var Node = function () {
                 }
              });
         },
+        saveVideo:function(params,cb){
+            $.ajax({
+                type: "GET",
+                url: "/cms/node/ajAddVideo",
+                data: params,
+                dataType: "json",
+                beforeSend:function(){
+                    
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                   
+                     cb({'error':1});
+                },
+                success: function(data){
+                   
+                    cb();
+                   
+                }
+             });
+        },
         deleteArticle:function(params,cb){
     
             $.ajax({
@@ -131,6 +151,45 @@ var Node = function () {
                 cb();
             });
         },
+        clickAddVideo:function(cb){
+            $("#idAddVideo").live('click',function(){
+                var output = Mustache.render($("#idAddVideoTpl").html(), {});
+                $("#idInfo").html(output);
+                //富文本
+                // $("#idVideoContent").markdown({autofocus:false,savable:false});
+                $('#idVideoContent').wysihtml5();
+
+                //文件上传
+                $('#videofileupload').fileupload({
+                    dataType: 'json',
+                    done: function (e, data) {
+                        $.each(data.result.files, function (index, file) {//
+                            $("#idImageVideo").attr("src",file.url);
+                            $("#idImageVideoHidden").val(file.url);
+                        });
+                    },
+                    progressall: function (e, data) {
+                        var progress = parseInt(data.loaded / data.total * 100, 10);
+                        $('#idVideoProgressBar > .progress-bar').css(
+                            'width',
+                            progress + '%'
+                        );
+                        $('#idVideoProgressBar > .progress-bar').attr(
+                            'aria-valuenow',
+                            progress
+                        );
+                    }
+                });
+                var channelStr=$(this).attr('channel');
+                event.clickSaveVideo(channelStr,function(err){
+                    $("#idError").hide();
+                    $("#idSuccess >alert-heading").html("添加成功");
+                    $("#idSuccess >p").html("保存文章成功");
+                    $("#idSuccess").show();
+                });
+            });
+            cb();
+        },
         clickAddArticle:function(cb){
             $("#idAddArticle").live('click',function(){
                 var output = Mustache.render($("#idAddArticleTpl").html(), {});
@@ -169,6 +228,25 @@ var Node = function () {
                 });
             });
             cb();
+        },
+        clickSaveVideo:function(channelStr,cb){
+           
+            var channelObj=jQuery.parseJSON(channelStr);
+            var channelid=channelObj._id;
+            $("#idSaveVideo").live('click',function(){
+                var params={
+                    channelId:channelid,
+                    title:$("#idVideoTitle").val(),
+                    content:$("#idVideoContent").val(),
+                    videoUrl:$("#idVideoUrl").val(),
+                    imgUrl:$("#idImageVideoHidden").val()
+                }
+                service.saveVideo(params,function(){
+
+                    render.nodeList(channelStr);
+                    cb();
+                })  
+             })
         },
         clickSaveArticle:function(channelStr,cb){
            
@@ -229,6 +307,9 @@ var Node = function () {
                 event.loadPage(function(){
                     event.clickChannel(function(){
                         event.clickAddArticle(function(){
+
+                        });
+                         event.clickAddVideo(function(){
 
                         });
                         event.clickDeleteArticle(function(){

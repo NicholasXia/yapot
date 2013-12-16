@@ -33,7 +33,7 @@ exports.deleteNodeById=function(id,cb){
 	});
 }
 
-exports.addVideo=function(websiteId,channelId,title,content,videoUrl,cb){
+exports.addVideo=function(websiteId,channelId,title,content,videoUrl,imgUrl,cb){
 	function cbSave(err,data){
 		cb(err,data);
 	}
@@ -49,6 +49,7 @@ exports.addVideo=function(websiteId,channelId,title,content,videoUrl,cb){
 			node.video.title=title;
 			node.video.content=content;
 			node.video.url=videoUrl;
+			node.video.img_url=imgUrl;
 			node.create_date=new moment();
 			node.status=nodeDao.ACTIVE;
 			nodeDao.create(node,cbSave);
