@@ -119,7 +119,7 @@ var Node = function () {
                       "mRender":function(data,type,full){
                         var articleUrl="/u/"+full.website_english_name+"/"+full.channel_english_name+"/"+full.id;
                         var deleteButton="<a class='deleteArticle' nodeid=\""+data+"\" href=\"#\" class=\"btn default btn-xs black\"><i class=\"fa fa-trash-o\"></i> 删除</a>";
-                        var updateButton="<a href=\"#\" class=\"btn default btn-xs purple\"><i class=\"fa fa-edit\"></i> 更新</a>";
+                        var updateButton="<a class='updateNode' href=\"#\" class=\"btn default btn-xs purple\"><i class=\"fa fa-edit\"></i> 更新</a>";
                         var viewButton="<a href=\""+articleUrl+"\" target=\"_blank\" class=\"btn default btn-xs red-stripe\">预览</a>";
                         return deleteButton+"&nbsp"+updateButton+"&nbsp"+viewButton;
                       }
@@ -286,6 +286,9 @@ var Node = function () {
                 });
             });
             cb();
+        },
+        clickUpdateArticle:function(cb){
+
         }
     }
 
@@ -303,7 +306,7 @@ var Node = function () {
     return {
         //main function to initiate the module
         init: function () {
-            aalert.onAlert();
+          
                 event.loadPage(function(){
                     event.clickChannel(function(){
                         event.clickAddArticle(function(){
