@@ -11,10 +11,12 @@ var node=require('./routes/node');
 var website=require('./routes/website');
 var channel=require('./routes/channel');
 var good=require('./routes/good');
+var pager=require('./routes/pager');
 var channelCms=require('./routes/cms/channel');
 var my=require('./routes/cms/my')
 var nodeCms=require('./routes/cms/node');
 var menuCms=require('./routes/cms/menu');
+var pagerCms=require('./routes/cms/pager')
 var accountCms=require('./routes/cms/account');
 var tplCms=require('./routes/cms/tpl');
 var http = require('http');
@@ -93,6 +95,7 @@ app.get('/aj/ajAddGood',good.ajAddGood);
 app.get('/aj/ajGetGoodStatus',good.ajGetGoodStatus);
 app.get('/node/ajlist',node.ajList);
 app.get('/u/:website',helperService.initUser,website.index);
+app.get('/u/:website/p/:id',helperService.initUser,pager.details);
 app.get('/u/:website/:channel',helperService.initUser,channel.index);
 app.get('/u/:website/:channel/:id',helperService.initUser,node.details);
 
@@ -193,6 +196,12 @@ app.get('/cms/node/ajGetById',ensureEditor,nodeCms.ajGetById);
 app.get('/cms/node/ajUpdateArticle',ensureEditor,nodeCms.ajUpdateArticle);
 app.get('/cms/node/ajUpdateVideo',ensureEditor,nodeCms.ajUpdateVideo);
 
+app.get('/cms/pager/index',ensureEditor,pagerCms.index);
+app.get('/cms/pager/ajGetTree',ensureEditor,pagerCms.ajGetTree);
+app.get('/cms/pager/ajAdd',ensureEditor,pagerCms.ajAdd);
+app.get('/cms/pager/ajDelete',ensureEditor,pagerCms.ajDelete);
+app.get('/cms/pager/ajFindById',ensureEditor,pagerCms.ajFindById);
+app.get('/cms/pager/ajUpdate',ensureEditor,pagerCms.ajUpdate);
 
 app.get('/cms/menu/index',ensureEditor,menuCms.index);
 app.get('/cms/menu/ajGetTree',ensureEditor,menuCms.ajGetTree);

@@ -2,11 +2,12 @@ if(!global.db){
 	require('./MongoConnect');
 }
 var Schema = require('mongoose').Schema;
-var pageSchema = Schema({ 
-	name:String,//'菜单名'
-	parent_id:String,//'父菜单'
-	link:String //链接
+var pagerSchema = Schema({ 
+	website_id:String,//网站ID
+	website_name:String,//网站名
+	website_english_name:String,//网站英文名
+	name:String,//Page名称
+	content:String,//Page内容
 });
-menuSchema.index({parent_id:1}); 
 // db is global
-module.exports = db.model('menu', menuSchema);
+module.exports = db.model('pager', pagerSchema);

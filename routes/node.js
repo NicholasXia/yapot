@@ -42,10 +42,10 @@ exports.details=function(req,res){
 			res.send('没有发现网站');
 		}else{
 			if(node.article.title!=null){
-				res.render('mobile/article',{menus:req.session.menus,node:node,website:req.session.website});
+				res.render(renderArticle,{menus:req.session.menus,node:node,website:req.session.website});
 			}
 			else if(node.video.title!=null){
-				res.render('mobile/video',{menus:req.session.menus,node:node,website:req.session.website});
+				res.render(renderVideo,{menus:req.session.menus,node:node,website:req.session.website});
 			}
 		}
 	});

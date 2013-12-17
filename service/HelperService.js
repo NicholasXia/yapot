@@ -19,7 +19,7 @@ exports.initUser=function(req,res,next){
 
 	      console.log('website ='+website);
 	      if(!website){
-	        return res.send('没有发现网站');
+	        return res.send('没有发现网站111');
 	      }
 	      website.url="http://"+req.host+"/u/"+website.english_name;
 	      req.session.website=website;
