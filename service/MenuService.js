@@ -60,6 +60,7 @@ exports.updateMenuById=function(id,name,link,type,cb){
 	if(type==menuDao.LINK_CHANNEL){//频道链接
 		console.log('更新频道链接');
 		channelService.findByEnglishname(link,function(err,channel){
+			console.log("link ="+link+" channel "+channel);
 			link ='/u/'+ channel.website_english_name+'/'+channel.englishname;
 			var menuChannel={
 				name:channel.name,
