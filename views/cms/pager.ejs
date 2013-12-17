@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+	<meta charset="utf-8" />
+	<title>页面</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	<meta name="MobileOptimized" content="320">
+	<!-- BEGIN GLOBAL MANDATORY STYLES -->          
+	<% include ../include/global_css %>
+	<!-- END GLOBAL MANDATORY STYLES -->
+	<!-- BEGIN THEME STYLES --> 
+	<% include ../include/theme_css %>
+	<!-- END THEME STYLES -->
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-toastr/toastr.min.css" />
+	<link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
+	<!-- END PAGE LEVEL STYLES -->
+
+	<link rel="shortcut icon" href="favicon.ico" />
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+	<!-- BEGIN HEADER -->   
+	<div class="header navbar navbar-inverse navbar-fixed-top">
+		<!-- BEGIN TOP NAVIGATION BAR -->
+		<% include ../include/top %>
+		<!-- END TOP NAVIGATION BAR -->
+	</div>
+	<!-- END HEADER -->
+	<div class="clearfix"></div>
+	<!-- BEGIN CONTAINER -->   
+	<div class="page-container">
+		<!-- BEGIN SIDEBAR -->
+		<div class="page-sidebar navbar-collapse collapse">
+			<!-- BEGIN SIDEBAR MENU -->        	
+			<%include ../include/menu.ejs%>
+			<!-- END SIDEBAR MENU -->
+		</div>
+		<!-- END SIDEBAR -->
+		<!-- BEGIN PAGE -->
+		<div class="page-content">
+
+
+			<!-- BEGIN PAGE HEADER-->
+			<div class="row">
+				<div class="col-md-12">
+					<!-- BEGIN PAGE TITLE & BREADCRUMB-->			
+					<h3 class="page-title">
+						页面				<small>管理网站的页面</small>
+					</h3>
+					<ul class="page-breadcrumb breadcrumb">
+				
+						<li>
+							<i class="fa fa-home"></i>
+							<a href="/cms/pager/index">页面</a> 
+							<!-- <i class="fa fa-angle-right"></i> -->
+						</li>
+				
+					</ul>
+					<!-- END PAGE TITLE & BREADCRUMB-->
+				</div>
+			</div>
+			<!-- END PAGE HEADER-->
+			<!-- BEGIN PAGE CONTENT-->
+			<div class="row">
+				<div class="col-md-3">
+					<div class="portlet blue box">
+						<div class="portlet-title">
+							<div class="caption"><i class="fa fa-cogs"></i>页面列表</div>
+							<div class="actions">
+								<div class="btn-group btn-group-solid">
+									<a href="#" data-target="#idAddModal" data-toggle="modal" class="btn btn-sm btn-default"><i class="fa fa-plus"></i> 添加 </a>
+								</div>
+								<div class="btn-group btn-group-solid">
+									<a data-target="#idRemoveModal" data-toggle="modal"  href="#"  class="btn btn-sm btn-default"><i class="fa  fa-times"></i> 删除 </a>
+								</div>
+							</div>
+						</div>
+						<div class="portlet-body">
+							<div class="scroller" style="height:350px" data-always-visible="1" data-rail-visible="0">
+
+							
+							<div id="idPagerTree" class="demo" >
+								
+							</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="col-md-9">
+					<div class="portlet green box">
+						<div class="portlet-title">
+							<div class="caption"><i class="fa fa-cogs"></i>页面信息</div>
+							<div class="tools">
+								<a href="javascript:;" class="collapse"></a>
+							
+								
+							</div>
+						</div>
+						<div class="portlet-body form">
+							<render id="idPagerInfoRender"></render>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 添加页面MODAL -->
+			<div id="idAddModal" class="modal fade" tabindex="-1" data-width="400">
+				<div class="modal-dialog modal-wide">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+							<h4 class="modal-title">添加页面</h4>
+						</div>
+						<form action="#" id="idAddForm" class="form-horizontal">
+
+						<div class="modal-body form">
+							
+								<div class="form-body">
+									
+									<div class="form-group">
+										<label class="control-label col-md-3">页面名称<span class="required">*</span></label>
+										<div class="col-md-4">
+											<input type="text" name="name" data-required="1" class="form-control"/>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-md-3">页面内容<span class="required">*</span></label>
+										<div class="col-md-9">
+											<textarea  name="content" rows="5"  class="content form-control"></textarea>
+										</div>
+									</div>
+									
+									
+									
+								</div>
+								
+							
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" data-dismiss="modal" class="btn">关闭</button>
+							<button type="submit" class="btn red">保存</button>
+						</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<!--确认删除MODAL -->
+			<div class="modal fade" id="idRemoveModal" tabindex="-1" role="basic" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+							<h4 class="modal-title">提示</h4>
+						</div>
+						<div class="modal-body">
+							 确认删除菜单？
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn default" data-dismiss="modal">关闭</button>
+							<button id="idRemoveBT" type="button" class="btn blue">删除</button>
+						</div>
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+
+			
+
+			<!-- END PAGE CONTENT-->
+		</div>
+		<!-- END PAGE -->   
+
+		<template id="idPagerInfoTpl">
+			<form id="idEditForm" action="#" class="form-horizontal">
+				<div class="form-body">
+					<div class="form-group">
+						<label class="col-md-3 control-label">页面名称</label>
+						<div class="col-md-4">
+							<input name="name" type="text" value="{{name}}" class="form-control" >
+							<input type="hidden" name="id" type="text" value="{{_id}}" class="form-control" >
+						</div>
+					</div>
+					
+					
+					<div class="form-group last">
+						<label class="col-md-3 control-label">页面内容</label>
+						<div class="col-md-9">
+							<textarea  name="content" rows="20"  class="content form-control">{{content}}</textarea>
+						</div>
+					</div>
+				</div>
+				<div class="form-actions fluid">
+					<div class="col-md-offset-3 col-md-9">
+						<button type="submit" class="btn blue">保存</button>
+						<a target='_blank' class="btn blue" href="/u/{{website_english_name}}/p/{{_id}}">查看</a>
+					</div>
+				</div>
+			</form>
+		</template> 
+	</div>
+	<!-- END CONTAINER -->
+	<!-- BEGIN FOOTER -->
+	<%include ../include/footer.ejs %>
+	<!-- END FOOTER -->
+	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+	<!-- BEGIN CORE PLUGINS -->   
+	<%include ../include/ie.ejs %>
+	<%include ../include/core_plugin.ejs %>
+	<!-- END CORE PLUGINS -->
+	
+
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+	
+	<script type="text/javascript" src="/assets/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="/assets/plugins/jquery-validation/dist/additional-methods.min.js"></script>
+
+
+<script type="text/javascript" src="/assets/plugins/jstree/jquery.jstree.js"></script>
+<script type="text/javascript" src="/assets/plugins/jstree/_lib/jquery.hotkeys.js"></script>
+<script src="/assets/plugins/bootstrap-toastr/toastr.min.js"></script>
+	<script type="text/javascript" src="/assets/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script> 
+	<script type="text/javascript" src="/assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
+	<!-- END PAGE LEVEL SCRIPTS -->       
+	<script src="/assets/scripts/app.js"></script>
+	<script src="/assets/scripts/pager.js"></script>
+
+	<script>
+		jQuery(document).ready(function() {       
+		   // initiate layout and plugins
+		   App.init();
+		   Pager.init();
+
+	});
+	</script>
+	<!-- END JAVASCRIPTS -->
+
+</body>
+<!-- END BODY -->
+</html>

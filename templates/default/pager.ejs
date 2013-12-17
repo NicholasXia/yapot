@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<!--[if IE 8 ]>    <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js lt-ie9> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+	<%include header %>
+	<body class="touch-gesture">  
+    <!-- Container -->
+	    <div id="container">
+        <!-- Main Content-->
+        	<%include slider %>
+	        <section id="content-container">
+		        <header id="header">
+		        	<div id="menu-trigger" class="header-button left icon-menu"></div>
+		        
+		        </header>
+		        <div id="content" class="blog blog-single blog-standard">
+		        	<article class="format-video">
+		        	<div class="wrapped-content">
+		        		<%-pager.content%>
+		        	</div>
+		        	</article>
+		        </div>
+
+	        </section>
+ 	
+        <!-- =Main Content -->
+	    
+
+	    
+
+	    </div>
+    <!-- =Container -->
+
+	<!-- Custom Scripts -->
+	<%include footer.ejs%>
+	</body>
+</html>
