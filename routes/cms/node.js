@@ -56,3 +56,37 @@ exports.ajAddVideo=function(req,res){
 			res.json(video);
 		});
 }
+
+
+exports.ajGetById=function(req,res){
+	var nodeid=req.query.nodeid;
+	nodeService.findById(nodeid,function(err,node){
+		res.json(node);
+	});
+}
+
+exports.ajUpdateArticle=function(req,res){
+	var nodeid=req.query.nodeid;
+	var article={
+		title:req.query.title,
+		content:req.query.content,
+		img_url:req.query.img_url
+	};
+	nodeService.updateArticleById(nodeid,article,function(err,num){
+		res.json(num);
+	});
+}
+
+exports.ajUpdateVideo=function(req,res){
+	var nodeid=req.query.nodeid;
+	var video={
+		title:req.query.title,
+		content:req.query.content,
+		img_url:req.query.img_url,
+		url:req.query.url
+	};
+	nodeService.updateVideoById(nodeid,video,function(err,num){
+		res.json(num);
+	});
+}
+

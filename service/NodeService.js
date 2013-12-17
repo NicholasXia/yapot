@@ -89,6 +89,16 @@ exports.findById=function(id,cb){
 exports.updateByNodeId=function(nodeId,cb){
 	nodeDao.update({"_id":nodeId},{$inc:{'analytics.good_num':1}},{ multi: true },cb);
 }
+
+exports.updateArticleById=function(nodeId,article,cb){
+	nodeDao.update({"_id":nodeId},{$set:{'article':article}},{ multi: false },cb);
+}
+
+exports.updateVideoById=function(nodeId,video,cb){
+	console.log("nodeid "+nodeId);
+	nodeDao.update({"_id":nodeId},{$set:{'video':video}},{ multi: false },cb);
+}
+
 // var pageParam={	};
 // pageParam.iDisplayStart=0;
 // pageParam.iDisplayLength=10;

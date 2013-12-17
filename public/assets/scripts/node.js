@@ -69,6 +69,25 @@ var Node = function () {
                    
                 }
              });
+        },
+        getNodeById:function(nodeid,cb){
+             $.getJSON('/cms/node/ajGetById',{nodeid:nodeid},function(json){
+                cb(json);
+             });
+        },
+        updateArticle:function(form,cb){
+            var form = $(form);
+            $.getJSON('/cms/node/ajUpdateArticle',form.serialize(),function(json){
+                cb(json);
+            });
+            
+        },
+        updateVideo:function(form,cb){
+            var form = $(form);
+            $.getJSON('/cms/node/ajUpdateVideo',form.serialize(),function(json){
+                cb(json);
+            });
+            
         }
     };
     var render={
@@ -119,7 +138,7 @@ var Node = function () {
                       "mRender":function(data,type,full){
                         var articleUrl="/u/"+full.website_english_name+"/"+full.channel_english_name+"/"+full.id;
                         var deleteButton="<a class='deleteArticle' nodeid=\""+data+"\" href=\"#\" class=\"btn default btn-xs black\"><i class=\"fa fa-trash-o\"></i> 删除</a>";
-                        var updateButton="<a class='updateNode' href=\"#\" class=\"btn default btn-xs purple\"><i class=\"fa fa-edit\"></i> 更新</a>";
+                        var updateButton="<a href='javascript:;' nodeid=\""+data+"\" class='btn default btn-xs updateNode' href=\"#\" class=\"btn default btn-xs purple\"><i class=\"fa fa-edit\"></i> 更新</a>";
                         var viewButton="<a href=\""+articleUrl+"\" target=\"_blank\" class=\"btn default btn-xs red-stripe\">预览</a>";
                         return deleteButton+"&nbsp"+updateButton+"&nbsp"+viewButton;
                       }
@@ -127,6 +146,68 @@ var Node = function () {
                 ]
                 ,"aaSorting": [[1,'desc']]
             });
+        },
+        updateArticle:function(node,cb){
+            var output = Mustache.render($("#idUpdateArticleTpl").html(), node);
+            $("#idUpdateArticleModal render").html(output);
+            $("#idUpdateArticleModal .content").wysihtml5();
+            $("#idUpdateArticleModal").modal('show');
+            $('#idUpdateArticleModal .clsfileupload').fileupload({
+                    dataType: 'json',
+                    done: function (e, data) {
+                        $.each(data.result.files, function (index, file) {//
+                            $("#idUpdateArticleModal .imageSrc").attr("src",file.url);
+                            $("#idUpdateArticleModal .imageHidden").val(file.url);
+                        });
+                    },
+                    progressall: function (e, data) {
+                        var progress = parseInt(data.loaded / data.total * 100, 10);
+                        $('#idUpdateArticleModal .progress-bar').css(
+                            'width',
+                            progress + '%'
+                        );
+                        $('#idUpdateArticleModal .progress-bar').attr(
+                            'aria-valuenow',
+                            progress
+                        );
+                    }
+                });
+
+            event.clickSaveUpdateArticle(function(){
+                cb();
+            });
+            
+        },
+        updateVideo:function(node,cb){
+            var output = Mustache.render($("#idUpdateVideoTpl").html(), node);
+            $("#idUpdateVideoModal render").html(output);
+            $("#idUpdateVideoModal .content").wysihtml5();
+            $("#idUpdateVideoModal").modal('show');
+            $('#idUpdateVideoModal .clsfileupload').fileupload({
+                dataType: 'json',
+                done: function (e, data) {
+                    $.each(data.result.files, function (index, file) {//
+                        $("#idUpdateVideoModal .imageSrc").attr("src",file.url);
+                        $("#idUpdateVideoModal .imageHidden").val(file.url);
+                    });
+                },
+                progressall: function (e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    $('#idUpdateVideoModal .progress-bar').css(
+                        'width',
+                        progress + '%'
+                    );
+                    $('#idUpdateVideoModal .progress-bar').attr(
+                        'aria-valuenow',
+                        progress
+                    );
+                }
+            });
+
+            event.clickSaveUpdateVideo(function(){
+                cb();
+            });
+
         }
     };
 
@@ -262,7 +343,6 @@ var Node = function () {
                     imgUrl:$("#idImageHidden").val()
                 }
                 service.saveArticle(params,function(){
-
                     render.nodeList(channelStr);
                     cb();
                 })  
@@ -290,7 +370,131 @@ var Node = function () {
             cb();
         },
         clickUpdateArticle:function(cb){
+            $(".updateNode").die().live('click',function(){
+                service.getNodeById($(this).attr('nodeid'),function(node){
+                   if(node.article.title){
+                        render.updateArticle(node,function(){
+                        });
+                   }
+                   if(node.video.title){
+                        render.updateVideo(node,function(){
+                        });
+                   }
+                });
+            });
+        },
+        clickSaveUpdateArticle:function(cb){
+            // $("#idUpdateArticleModal .saveArticle").click(function(){
+                 $("#idUpdateArticleModal form").validate({
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+                    ignore: "",
+                    rules: {
+                        title: {
+                            required: true
+                        },
+                        content: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        title: {
+                            required: "图文标题不能为空"
+                          
+                        },
+                        content: {
+                            required: "图文正文不能为空"
+                        }
+                    },
 
+             
+
+                    highlight: function (element) { // hightlight error inputs
+                        $(element)
+                            .closest('.form-group').addClass('has-error'); // set error class to the control group
+                    },
+
+                    unhighlight: function (element) { // revert the change done by hightlight
+                        $(element)
+                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    },
+
+                    success: function (label) {
+                        label
+                            .closest('.form-group').removeClass('has-error'); // set success class to the control group
+                    },
+
+                    submitHandler: function (form) {
+                        service.updateArticle(form,function(num){
+                            toastr.options =Config.toastrOpt;
+                            toastr.success('成功', '修改文章成功！');   
+                            $("#idUpdateArticleModal").modal('hide');
+                        });
+                    }
+                });
+                cb();
+            // });
+        },
+        clickSaveUpdateVideo:function(cb){
+            // $("#idUpdateArticleModal .saveArticle").click(function(){
+                 $("#idUpdateVideoModal form").validate({
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+                    ignore: "",
+                    rules: {
+                        title: {
+                            required: true
+                        },
+                        content: {
+                            required: true
+                        },
+                        url: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        title: {
+                            required: "图文标题不能为空"
+                          
+                        },
+                        content: {
+                            required: "图文正文不能为空"
+                        },
+                        url: {
+                            required: "视频地址不能为空",
+                            url:"视频地址格式不正确"
+                        }
+                    },
+
+             
+
+                    highlight: function (element) { // hightlight error inputs
+                        $(element)
+                            .closest('.form-group').addClass('has-error'); // set error class to the control group
+                    },
+
+                    unhighlight: function (element) { // revert the change done by hightlight
+                        $(element)
+                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    },
+
+                    success: function (label) {
+                        label
+                            .closest('.form-group').removeClass('has-error'); // set success class to the control group
+                    },
+
+                    submitHandler: function (form) {
+                        service.updateVideo(form,function(num){
+                            toastr.options =Config.toastrOpt;
+                            toastr.success('成功', '修改视频成功！');   
+                            $("#idUpdateVideoModal").modal('hide');
+                        });
+                    }
+                });
+                cb();
+            // });
         }
     }
 
@@ -301,7 +505,7 @@ var Node = function () {
           
                 event.loadPage(function(){
                     event.clickChannel(function(){
-                    
+                        
                     });
                     event.clickAddArticle(function(){
 
@@ -310,6 +514,9 @@ var Node = function () {
 
                     });
                     event.clickDeleteArticle(function(){
+
+                    });
+                    event.clickUpdateArticle(function(){
 
                     });
                 });

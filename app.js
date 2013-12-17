@@ -189,6 +189,10 @@ app.get('/cms/node/addArticle',ensureEditor,nodeCms.addArticle);
 app.get('/cms/node/ajAddArticle',ensureEditor,nodeCms.ajAddArticle);
 app.get('/cms/node/ajDeleteArticle',ensureEditor,nodeCms.ajDeleteArticle);
 app.get('/cms/node/ajAddVideo',ensureEditor,nodeCms.ajAddVideo);
+app.get('/cms/node/ajGetById',ensureEditor,nodeCms.ajGetById);
+app.get('/cms/node/ajUpdateArticle',ensureEditor,nodeCms.ajUpdateArticle);
+app.get('/cms/node/ajUpdateVideo',ensureEditor,nodeCms.ajUpdateVideo);
+
 
 app.get('/cms/menu/index',ensureEditor,menuCms.index);
 app.get('/cms/menu/ajGetTree',ensureEditor,menuCms.ajGetTree);
