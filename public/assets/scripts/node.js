@@ -139,7 +139,8 @@ var Node = function () {
         clickChannel:function(cb){
 
             var lastSelect=null;
-            $(".tree-item-name").live('click',function(){
+            $(".tree-item-name").die().live('click',function(){
+          
                 if(lastSelect!=null){
                     $(lastSelect).css('font-weight','normal');
                 }
@@ -191,7 +192,7 @@ var Node = function () {
             cb();
         },
         clickAddArticle:function(cb){
-            $("#idAddArticle").live('click',function(){
+            $("#idAddArticle").die().live('click',function(){
                 var output = Mustache.render($("#idAddArticleTpl").html(), {});
                 $("#idInfo").html(output);
                 //富文本
@@ -252,7 +253,8 @@ var Node = function () {
            
             var channelObj=jQuery.parseJSON(channelStr);
             var channelid=channelObj._id;
-            $("#idSaveArticle").live('click',function(){
+            $("#idSaveArticle").die().live('click',function(){
+          
                 var params={
                     channelId:channelid,
                     title:$("#idTitle").val(),
@@ -292,16 +294,6 @@ var Node = function () {
         }
     }
 
-    var aalert={
-        onAlert:function(){
-          
-            $(".page-title").click(function(){
-                toastr.success('dd','dd');
-            });
-        }
-    }
-
-
     //公开方法
     return {
         //main function to initiate the module
@@ -309,15 +301,16 @@ var Node = function () {
           
                 event.loadPage(function(){
                     event.clickChannel(function(){
-                        event.clickAddArticle(function(){
+                    
+                    });
+                    event.clickAddArticle(function(){
 
-                        });
-                         event.clickAddVideo(function(){
+                    });
+                    event.clickAddVideo(function(){
 
-                        });
-                        event.clickDeleteArticle(function(){
+                    });
+                    event.clickDeleteArticle(function(){
 
-                        });
                     });
                 });
               
