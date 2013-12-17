@@ -15,6 +15,7 @@ exports.index=function(req,res){
 	console.log("bull shit!!!! ");
 	websiteService.findByAccountId(req.user.id,function(err,website){
 		console.log("website "+website);
+		website.url="/u/"+website.english_name;
 		if(!website){
 			return res.render("cms/init.ejs",{user:req.user});
 		}

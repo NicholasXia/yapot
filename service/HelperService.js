@@ -21,7 +21,7 @@ exports.initUser=function(req,res,next){
 	      if(!website){
 	        return res.send('没有发现网站');
 	      }
-
+	      website.url="http://"+req.host+"/u/"+website.english_name;
 	      req.session.website=website;
 	      channelService.findAllByWebsiteId(website.id,function(err,channels){
 	        var menus=[];
