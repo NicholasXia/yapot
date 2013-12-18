@@ -89,6 +89,23 @@ var Menu=function(){
             });
 			
 		},
+        findPagers:function(cb){
+            $.ajax({
+                type: "GET",
+                url: "/cms/pager/ajGetByWebsiteId",        
+                dataType: "json",
+                beforeSend:function(){
+                    
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                   cb({});
+                },
+                success: function(data){
+                   cb(data);
+                }
+            });
+            
+        },
         updateMenu:function(form,cb){
             $.ajax({
                 type: "GET",
@@ -155,7 +172,20 @@ var Menu=function(){
 				$("#idChannelSelect").append("<option value='"+channels[i].englishname+"'>"+channels[i].name+"</option>");
 			}
 			
-		}
+		},
+        pagerSelect:function(pagers){
+             $("#idPagerSelect").html("");
+            if(pagers){
+               
+                for(var i =0 ;i<pagers.length;i++){
+                    $("#idPagerSelect").append("<option value='"+pagers[i]._id+"'>"+pagers[i].name+"</option>");
+                }
+            }else{
+                 $("#idPagerSelect").append("<option>没有页面</option>");
+            }
+           
+            
+        }
 	};
 	var event={
 		clickSaveMenu:function(){
@@ -163,24 +193,41 @@ var Menu=function(){
 		},
 		clickSaveLink:function(){
 			$("#idSaveLinkBT").bind('click',function(){
-				var channelName=$("#idChannelSelect > option:selected").text();
-				var channelEnglishName=$("#idChannelSelect > option:selected").val();
-				$("#idLinkText>p").html(channelName);
-				$("#idLinkText>input").val(channelEnglishName);
-				$("#idLinkType>p").html("频道链接");
-				$("#idLinkType>input").val("1");
-				$("#idSelectLinkModal").modal('hide');
+                if($("#tab_1_1_1").hasClass('active')){
+                    var channelName=$("#idChannelSelect > option:selected").text();
+                    var channelEnglishName=$("#idChannelSelect > option:selected").val();
+                    $("#idLinkText>p").html(channelName);
+                    $("#idLinkText>input").val(channelEnglishName);
+                    $("#idLinkType>p").html("频道链接");
+                    $("#idLinkType>input").val("1");
+                   
+                }else if($("#tab_1_1_2").hasClass('active')){
+                    var pagerName =$("#idPagerSelect > option:selected").text();
+                    var pagerId=$("#idPagerSelect > option:selected").val();
+                    $("#idLinkText>p").html(pagerName);
+                    $("#idLinkText>input").val(pagerId);
+                    $("#idLinkType>p").html("页面链接");
+                    $("#idLinkType>input").val("2");
+                }
+
+                $("#idSelectLinkModal").modal('hide');
+                
+
+				
 			});
 		},
 
 		clickSelectLink:function(cb){
-			$("#idSelectLinkBT").live('click',function(){
+			$("#idSelectLinkBT").die().live('click',function(){
 				var menuinfo= JSON.parse($(this).attr('menuobj'));
 				$("#idSelectLinkModal").modal('show');
 				service.findChannels(function(channels){
 					render.channelSelect(channels);
-					cb();
 				});
+                service.findPagers(function(pagers){
+                    render.pagerSelect(pagers);
+                });
+                cb();
 			});
 
 		},

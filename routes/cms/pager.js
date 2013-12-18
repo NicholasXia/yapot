@@ -36,3 +36,10 @@ exports.ajUpdate=function(req,res){
 		return res.json(num);
 	});
 }
+
+exports.ajGetByWebsiteId=function(req,res){
+	var websiteId=req.session.website.id;
+	pagerService.findByWebsiteId(websiteId,function(err,pagers){
+		return res.json(pagers);
+	});
+}

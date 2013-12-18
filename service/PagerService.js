@@ -16,6 +16,10 @@ exports.findAllTreeByWebsiteId=function(websiteId,cb){
 	});
 }
 
+exports.findByWebsiteId=function(websiteId,cb){
+	pagerDao.find({website_id:websiteId},cb);
+}
+
 exports.add=function(websiteId,pager,cb){
 	function cbSave(err,data){
 		cb(err,data);

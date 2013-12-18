@@ -187,6 +187,7 @@
 		<!-- END PAGE -->   
 
 		<template id="idPagerInfoTpl">
+
 			<form id="idEditForm" action="#" class="form-horizontal">
 				<div class="form-body">
 					<div class="form-group">
@@ -201,7 +202,7 @@
 					<div class="form-group last">
 						<label class="col-md-3 control-label">页面内容</label>
 						<div class="col-md-9">
-							<textarea  name="content" rows="20"  class="content form-control">{{content}}</textarea>
+							 <script id="editor"  name="content" type="text/plain" style="height:500px;">{{&content}}</script>
 						</div>
 					</div>
 				</div>
@@ -214,6 +215,8 @@
 			</form>
 		</template> 
 	</div>
+
+
 	<!-- END CONTAINER -->
 	<!-- BEGIN FOOTER -->
 	<%include ../include/footer.ejs %>
@@ -234,8 +237,8 @@
 <script type="text/javascript" src="/assets/plugins/jstree/jquery.jstree.js"></script>
 <script type="text/javascript" src="/assets/plugins/jstree/_lib/jquery.hotkeys.js"></script>
 <script src="/assets/plugins/bootstrap-toastr/toastr.min.js"></script>
-	<script type="text/javascript" src="/assets/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script> 
-	<script type="text/javascript" src="/assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
+<script type="text/javascript" src="/assets/plugins/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="/assets/plugins/ueditor/ueditor.all.min.js"></script>
 	<!-- END PAGE LEVEL SCRIPTS -->       
 	<script src="/assets/scripts/app.js"></script>
 	<script src="/assets/scripts/pager.js"></script>
@@ -244,6 +247,9 @@
 		jQuery(document).ready(function() {       
 		   // initiate layout and plugins
 		   App.init();
+		 
+		 
+
 		   Pager.init();
 
 	});

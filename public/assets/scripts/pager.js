@@ -1,6 +1,6 @@
 var Pager=function(){
 	var pagerTree={};
-
+    var editUe;
 	var service={
 		deletePager:function(id,cb){
 		
@@ -145,7 +145,12 @@ var Pager=function(){
 	
 		pagerInfo:function(pager){
 			var output = Mustache.render($("#idPagerInfoTpl").html(), pager);
+   
 			$("#idPagerInfoRender").html(output);
+            var editor = new UE.ui.Editor();
+            editor.render("editor");
+            
+            
             // $("#idPagerInfoRender textarea").wysihtml5({"html": true});
 		},
 		channelSelect:function(channels){

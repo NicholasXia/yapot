@@ -1,6 +1,7 @@
 var menuDao=require('../model/Menu');
 var moment = require('moment');
 var channelService=require('./ChannelService');
+var pagerService=require('./PagerService');
 exports.addParent=function(websiteId,name,link,cb){
 	function cbSave(err,data){
 		cb(err,data);
@@ -56,6 +57,10 @@ exports.findAllTreeByWebsiteId=function(websiteId,cb){
 	});
 }
 
+exports.findByWebsiteId=function(websiteId,cb){
+	menuDao.find({website_id:websiteId},cb);
+}
+
 exports.updateMenuById=function(id,name,link,type,cb){
 	if(type==menuDao.LINK_CHANNEL){//频道链接
 		console.log('更新频道链接');
@@ -72,9 +77,21 @@ exports.updateMenuById=function(id,name,link,type,cb){
 				{"_id":id},
 				{ $set:{name:name,link:link,type:type,channel:menuChannel}},
 				{ multi: true },cb);
-			});
-	}else{
-		cb();
+		});
+	}else if(type==menuDao.LINK_PAGE){
+		pagerService.findById(link,function(err,pager){
+			link ='/u/'+ pager.website_english_name+'/p/'+link;
+			console.log("pager "+pager);
+			var updatePager={
+				id:pager.id,
+				name:pager.name
+			}
+			menuDao.update(
+				{"_id":id},
+				{ $set:{name:name,link:link,type:type,pager:updatePager}},
+				{ multi: true },cb);
+		});
+		
 	}
 	
 }

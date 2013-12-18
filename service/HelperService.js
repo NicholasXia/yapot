@@ -1,6 +1,6 @@
 var websiteService=require('./WebsiteService');
 var channelService=require('./ChannelService');
-
+var menuService=require('./MenuService');
 /**
 Helper Service
 */
@@ -23,16 +23,28 @@ exports.initUser=function(req,res,next){
 	      }
 	      website.url="http://"+req.host+"/u/"+website.english_name;
 	      req.session.website=website;
-	      channelService.findAllByWebsiteId(website.id,function(err,channels){
-	        var menus=[];
-	        menus.push({'name':'首页','link':'/u/'+website.english_name});
-	        for(var i=0;i<channels.length;i++){
+	      // channelService.findAllByWebsiteId(website.id,function(err,channels){
+	      //   var menus=[];
+	      //   menus.push({'name':'首页','link':'/u/'+website.english_name});
+	      //   for(var i=0;i<channels.length;i++){
+	      //     var menu={};
+	      //     menu.name=channels[i].name;
+	      //     menu.link='/u/'+website.english_name+'/'+channels[i].englishname;
+	      //     menus.push(menu);
+	      //   }
+	      //   req.session.menus=menus;
+	      //   return next();
+	      // });
+	      menuService.findByWebsiteId(website.id,function(err,menus){
+	      	var menusAry=[];
+	        menusAry.push({'name':'首页','link':'/u/'+website.english_name});
+	        for(var i=0;i<menus.length;i++){
 	          var menu={};
-	          menu.name=channels[i].name;
-	          menu.link='/u/'+website.english_name+'/'+channels[i].englishname;
-	          menus.push(menu);
+	          menu.name=menus[i].name;
+	          menu.link=menus[i].link;
+	          menusAry.push(menu);
 	        }
-	        req.session.menus=menus;
+	        req.session.menus=menusAry;
 	        return next();
 	      });
 	    });

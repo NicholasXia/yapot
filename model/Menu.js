@@ -12,6 +12,10 @@ var menuSchema = Schema({
 		name:String,
 		id:String,
 		englishname:String
+	},
+	pager:{
+		name:String,
+		id:String
 	}
 });
 menuSchema.index({parent_id:1}); 

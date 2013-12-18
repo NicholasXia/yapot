@@ -186,9 +186,9 @@
 									<li class="active">
 										<a href="#tab_1_1_1" data-toggle="tab">频道</a>
 									</li>
-									<!-- <li class="">
-										<a href="#tab_1_1_2" data-toggle="tab">网页</a>
-									</li> -->
+									<li class="">
+										<a href="#tab_1_1_2" data-toggle="tab">页面</a>
+									</li>
 								</ul>
 								<div class="tab-content">
 									<div class="tab-pane active" id="tab_1_1_1">
@@ -199,6 +199,22 @@
 														<label>选择频道</label>
 														<select id="idChannelSelect" class="form-control">
 															<option>频道读取中</option>
+														</select>
+													</div>
+												
+												</div>
+												
+											</form>
+										</div>
+									</div>
+									<div class="tab-pane" id="tab_1_1_2">
+										<div class="portlet-body form">
+											<form role="form">
+												<div class="form-body">
+													<div class="form-group">
+														<label>选择页面</label>
+														<select id="idPagerSelect" class="form-control">
+															<option>页面读取中</option>
 														</select>
 													</div>
 												
@@ -242,13 +258,18 @@
 							<p class="form-control-static">
 								{{#channel.name}}
 									{{channel.name}}
+									<input type="hidden" name="link" value='{{channel.englishname}}'/>
 								{{/channel.name}}
+								{{#pager.name}}
+									{{pager.name}}
+									<input type="hidden" name="link" value='{{pager.id}}'/>
+								{{/pager.name}}
 								{{^link}}
 									请设置一个链接地址
 								{{/link}}
 								
 							</p>
-							<input type="hidden" name="link" value='{{channel.englishname}}'/>
+							
 
 						</div>
 						<div class="col-md-4">

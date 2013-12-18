@@ -202,6 +202,8 @@ app.get('/cms/pager/ajAdd',ensureEditor,pagerCms.ajAdd);
 app.get('/cms/pager/ajDelete',ensureEditor,pagerCms.ajDelete);
 app.get('/cms/pager/ajFindById',ensureEditor,pagerCms.ajFindById);
 app.get('/cms/pager/ajUpdate',ensureEditor,pagerCms.ajUpdate);
+app.get('/cms/pager/ajGetByWebsiteId',ensureEditor,pagerCms.ajGetByWebsiteId);
+
 
 app.get('/cms/menu/index',ensureEditor,menuCms.index);
 app.get('/cms/menu/ajGetTree',ensureEditor,menuCms.ajGetTree);
