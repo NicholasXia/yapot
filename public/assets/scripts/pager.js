@@ -293,7 +293,8 @@ var Pager=function(){
             });
             
            // $("#idAddForm .content").wysihtml5({"html": true});
-      
+            var editor = new UE.ui.Editor();
+            editor.render("addeditor");
 			
 		}
 	};

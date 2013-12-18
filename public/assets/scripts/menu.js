@@ -196,18 +196,18 @@ var Menu=function(){
                 if($("#tab_1_1_1").hasClass('active')){
                     var channelName=$("#idChannelSelect > option:selected").text();
                     var channelEnglishName=$("#idChannelSelect > option:selected").val();
-                    $("#idLinkText>p").html(channelName);
-                    $("#idLinkText>input").val(channelEnglishName);
+                    $("#idLinkText>p span").html(channelName);
+                    $("#idLinkText input").val(channelEnglishName);
                     $("#idLinkType>p").html("频道链接");
-                    $("#idLinkType>input").val("1");
+                    $("#idLinkType input").val("1");
                    
                 }else if($("#tab_1_1_2").hasClass('active')){
                     var pagerName =$("#idPagerSelect > option:selected").text();
                     var pagerId=$("#idPagerSelect > option:selected").val();
-                    $("#idLinkText>p").html(pagerName);
-                    $("#idLinkText>input").val(pagerId);
+                    $("#idLinkText>p span").html(pagerName);
+                    $("#idLinkText input").val(pagerId);
                     $("#idLinkType>p").html("页面链接");
-                    $("#idLinkType>input").val("2");
+                    $("#idLinkType input").val("2");
                 }
 
                 $("#idSelectLinkModal").modal('hide');

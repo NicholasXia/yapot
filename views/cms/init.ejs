@@ -34,6 +34,8 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 	<link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-fileupload/bootstrap-fileupload.css" />
 	<link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css">
 	<link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
+	<script type="text/javascript" src="/assets/plugins/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" src="/assets/plugins/ueditor/ueditor.all.min.js"></script>
 	<!-- END THEME STYLES -->
 	<link rel="shortcut icon" href="favicon.ico" />
 </head>
@@ -209,7 +211,8 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 												<div class="form-group">
 													<label class="col-md-3 control-label">正文</label>
 													<div class="col-md-9">
-														<textarea data-provide="markdown" rows="10" id="idContent" name="article_content" class="form-control"   ></textarea>
+													<!-- 	<textarea data-provide="markdown" rows="10" id="idContent" name="article_content" class="form-control"   ></textarea> -->
+														<script id="idContent"  name="article_content" type="text/plain" style="height:500px;"></script>
 													</div>
 												</div>
 											</div>
@@ -335,7 +338,9 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 	<script>
 		jQuery(document).ready(function() {    
 		   App.init();
-		   $('#idContent').wysihtml5();
+		   // $('#idContent').wysihtml5();
+		   var editor = new UE.ui.Editor();
+            editor.render("idContent");
 		   	//网站封面上传
             $('#websitefileupload').fileupload({
                 dataType: 'json',

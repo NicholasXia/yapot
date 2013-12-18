@@ -79,6 +79,7 @@ exports.updateMenuById=function(id,name,link,type,cb){
 				{ multi: true },cb);
 		});
 	}else if(type==menuDao.LINK_PAGE){
+		console.log('link id='+link);
 		pagerService.findById(link,function(err,pager){
 			link ='/u/'+ pager.website_english_name+'/p/'+link;
 			console.log("pager "+pager);

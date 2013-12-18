@@ -55,13 +55,13 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 // app.use('/upload', upload.fileHandler());
 app.use('/upload', function (req, res, next) {
-      console.log("upload user id="+req.id);
+      console.log("upload "+__dirname + '/public/users/' + req.query.id+"/upload/");
       upload.fileHandler({
           uploadDir: function () {
-              return __dirname + '/public/users/' + req.query.id+"/upload/"
+              return __dirname + '/public/users/' + req.query.id+"/upload/";
           },
           uploadUrl: function () {
-              return '/users/' + req.query.id+"/upload/"
+              return '/users/' + req.query.id+"/upload/";
           }
       })(req, res, next);
 });

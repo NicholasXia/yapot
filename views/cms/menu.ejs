@@ -257,15 +257,16 @@
 						<div id="idLinkText"  class="col-md-4">
 							<p class="form-control-static">
 								{{#channel.name}}
-									{{channel.name}}
+									<span>{{channel.name}}</span>
 									<input type="hidden" name="link" value='{{channel.englishname}}'/>
 								{{/channel.name}}
 								{{#pager.name}}
-									{{pager.name}}
+									<span>{{pager.name}}</span>
 									<input type="hidden" name="link" value='{{pager.id}}'/>
 								{{/pager.name}}
 								{{^link}}
-									请设置一个链接地址
+									<span>请设置一个链接地址</span>
+									<input type="text" name="link" value='hidden'/>
 								{{/link}}
 								
 							</p>

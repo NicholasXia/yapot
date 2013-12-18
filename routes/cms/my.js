@@ -14,12 +14,12 @@ exports.redirectIndex=function(req,res){
 exports.index=function(req,res){
 	console.log("bull shit!!!! ");
 	websiteService.findByAccountId(req.user.id,function(err,website){
-		console.log("website "+website);
-		website.url="/u/"+website.english_name;
 		if(!website){
 			return res.render("cms/init.ejs",{user:req.user});
 		}
 		req.session.website=website;
+		console.log("website "+website);
+		website.url="/u/"+website.english_name;
 		return res.render("cms/index",{user:req.user,indexActive:'active',website:website});
 	});	
 }

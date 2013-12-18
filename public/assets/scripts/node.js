@@ -150,7 +150,12 @@ var Node = function () {
         updateArticle:function(node,cb){
             var output = Mustache.render($("#idUpdateArticleTpl").html(), node);
             $("#idUpdateArticleModal render").html(output);
-            $("#idUpdateArticleModal .content").wysihtml5();
+            // $("#idUpdateArticleModal .content").wysihtml5();
+            var editor = new UE.ui.Editor();
+                editor.render("idUpdateArticleContent");
+
+
+
             $("#idUpdateArticleModal").modal('show');
             $('#idUpdateArticleModal .clsfileupload').fileupload({
                     dataType: 'json',
@@ -181,7 +186,10 @@ var Node = function () {
         updateVideo:function(node,cb){
             var output = Mustache.render($("#idUpdateVideoTpl").html(), node);
             $("#idUpdateVideoModal render").html(output);
-            $("#idUpdateVideoModal .content").wysihtml5();
+            // $("#idUpdateVideoModal .content").wysihtml5();
+             var editor = new UE.ui.Editor();
+                editor.render("idUpdateVideoContent");
+            
             $("#idUpdateVideoModal").modal('show');
             $('#idUpdateVideoModal .clsfileupload').fileupload({
                 dataType: 'json',
@@ -239,8 +247,9 @@ var Node = function () {
                 $("#idInfo").html(output);
                 //富文本
                 // $("#idVideoContent").markdown({autofocus:false,savable:false});
-                $('#idVideoContent').wysihtml5();
-
+                // $('#idVideoContent').wysihtml5();
+                var editor = new UE.ui.Editor();
+                editor.render("idVideoContent");
                 //文件上传
                 $('#videofileupload').fileupload({
                     dataType: 'json',
@@ -278,7 +287,11 @@ var Node = function () {
                 $("#idInfo").html(output);
                 //富文本
                 // $("#idContent").markdown({autofocus:false,savable:false});
-                $('#idContent').wysihtml5();
+                // $('#idContent').wysihtml5();
+                var editor = new UE.ui.Editor();
+                editor.render("idContent");
+
+
 
                 //文件上传
                 $('#fileupload').fileupload({
@@ -339,7 +352,8 @@ var Node = function () {
                 var params={
                     channelId:channelid,
                     title:$("#idTitle").val(),
-                    content:$("#idContent").val(),
+                    // content:$("#idContent").val(),
+                    content:UE.getEditor('idContent').getContent(),
                     imgUrl:$("#idImageHidden").val()
                 }
                 service.saveArticle(params,function(){

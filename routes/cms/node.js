@@ -7,7 +7,8 @@ var nodeObj={
 exports.index=function(req,res){
 	var pageRender={};
 	pageRender.user=req.user;
-	pageRender.nodeManActive='active';
+	// pageRender.nodeManActive='active';
+	pageRender.nodeActive='active';
 	_.extend(pageRender,nodeObj);
 	res.render("cms/node",pageRender);
 }
