@@ -193,15 +193,15 @@ app.post('/cms/node/ajAddArticle',ensureEditor,nodeCms.ajAddArticle);
 app.get('/cms/node/ajDeleteArticle',ensureEditor,nodeCms.ajDeleteArticle);
 app.post('/cms/node/ajAddVideo',ensureEditor,nodeCms.ajAddVideo);
 app.get('/cms/node/ajGetById',ensureEditor,nodeCms.ajGetById);
-app.get('/cms/node/ajUpdateArticle',ensureEditor,nodeCms.ajUpdateArticle);
-app.get('/cms/node/ajUpdateVideo',ensureEditor,nodeCms.ajUpdateVideo);
+app.post('/cms/node/ajUpdateArticle',ensureEditor,nodeCms.ajUpdateArticle);
+app.post('/cms/node/ajUpdateVideo',ensureEditor,nodeCms.ajUpdateVideo);
 
 app.get('/cms/pager/index',ensureEditor,pagerCms.index);
 app.get('/cms/pager/ajGetTree',ensureEditor,pagerCms.ajGetTree);
-app.get('/cms/pager/ajAdd',ensureEditor,pagerCms.ajAdd);
+app.post('/cms/pager/ajAdd',ensureEditor,pagerCms.ajAdd);
 app.get('/cms/pager/ajDelete',ensureEditor,pagerCms.ajDelete);
 app.get('/cms/pager/ajFindById',ensureEditor,pagerCms.ajFindById);
-app.get('/cms/pager/ajUpdate',ensureEditor,pagerCms.ajUpdate);
+app.post('/cms/pager/ajUpdate',ensureEditor,pagerCms.ajUpdate);
 app.get('/cms/pager/ajGetByWebsiteId',ensureEditor,pagerCms.ajGetByWebsiteId);
 
 

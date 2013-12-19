@@ -32,7 +32,7 @@ var Pager=function(){
 		savePager:function(form,cb){
 		var form = $(form);
             $.ajax({
-                type: "GET",
+                type: "POST",
                 url: "/cms/pager/ajAdd",
                 data: form.serialize(),
                 dataType: "json",
@@ -91,7 +91,7 @@ var Pager=function(){
 		},
         updatePager:function(form,cb){
             $.ajax({
-                type: "GET",
+                type: "POST",
                 url: "/cms/pager/ajUpdate",
                 data:form.serialize(),        
                 dataType: "json",

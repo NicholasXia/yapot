@@ -67,11 +67,11 @@ exports.ajGetById=function(req,res){
 }
 
 exports.ajUpdateArticle=function(req,res){
-	var nodeid=req.query.nodeid;
+	var nodeid=req.body.nodeid;
 	var article={
-		title:req.query.title,
-		content:req.query.content,
-		img_url:req.query.img_url
+		title:req.body.title,
+		content:req.body.content,
+		img_url:req.body.img_url
 	};
 	nodeService.updateArticleById(nodeid,article,function(err,num){
 		res.json(num);
@@ -79,12 +79,12 @@ exports.ajUpdateArticle=function(req,res){
 }
 
 exports.ajUpdateVideo=function(req,res){
-	var nodeid=req.query.nodeid;
+	var nodeid=req.body.nodeid;
 	var video={
-		title:req.query.title,
-		content:req.query.content,
-		img_url:req.query.img_url,
-		url:req.query.url
+		title:req.body.title,
+		content:req.body.content,
+		img_url:req.body.img_url,
+		url:req.body.url
 	};
 	nodeService.updateVideoById(nodeid,video,function(err,num){
 		res.json(num);

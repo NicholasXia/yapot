@@ -7,7 +7,7 @@ $(function(){
 
 	//---------------------------------------------------------------------- mmenu
 	$('nav#menu').mmenu({
-		searchfield : true,
+	//	searchfield : true,
 		slidingSubmenus: true
 	});
 

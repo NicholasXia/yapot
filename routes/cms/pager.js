@@ -13,7 +13,7 @@ exports.ajGetTree=function(req,res){
 }
 
 exports.ajAdd=function(req,res){
-	pagerService.add(req.session.website.id,req.query,function(err,pager){
+	pagerService.add(req.session.website.id,req.body,function(err,pager){
 		return res.json(pager);
 	});
 }
@@ -32,7 +32,7 @@ exports.ajFindById=function(req,res){
 
 exports.ajUpdate=function(req,res){
 
-	pagerService.update(req.query.id,req.query,function(err,num){
+	pagerService.update(req.body.id,req.body,function(err,num){
 		return res.json(num);
 	});
 }

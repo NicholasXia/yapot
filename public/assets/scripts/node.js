@@ -77,16 +77,54 @@ var Node = function () {
         },
         updateArticle:function(form,cb){
             var form = $(form);
-            $.getJSON('/cms/node/ajUpdateArticle',form.serialize(),function(json){
-                cb(json);
-            });
+           // $.getJSON('/cms/node/ajUpdateArticle',form.serialize(),function(json){
+           //     cb(json);
+           // });
+            
+            $.ajax({
+                type: "POST",
+                url: "/cms/node/ajUpdateArticle",
+                data: form.serialize(),
+                dataType: "json",
+                beforeSend:function(){
+                    
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                   
+                     cb({'error':1});
+                },
+                success: function(json){
+                   
+                   cb(json);
+                   
+                }
+             });
             
         },
         updateVideo:function(form,cb){
             var form = $(form);
-            $.getJSON('/cms/node/ajUpdateVideo',form.serialize(),function(json){
-                cb(json);
-            });
+           // $.getJSON('/cms/node/ajUpdateVideo',form.serialize(),function(json){
+           //     cb(json);
+           // });
+            
+            $.ajax({
+                type: "POST",
+                url: "/cms/node/ajUpdateVideo",
+                data: form.serialize(),
+                dataType: "json",
+                beforeSend:function(){
+                    
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                   
+                     cb({'error':1});
+                },
+                success: function(json){
+                   
+                   cb(json);
+                   
+                }
+             });
             
         }
     };
