@@ -31,8 +31,8 @@ exports.ajList=function(req,res){
 
 exports.ajAddArticle=function(req,res){
 	var websiteId=req.session.website.id;
-	console.log(req.query.channelId);
-	nodeService.addArticle(websiteId,req.query.channelId,req.query.title,req.query.content,req.query.imgUrl,function(err,article){
+	console.log(req.body.channelId);
+	nodeService.addArticle(websiteId,req.body.channelId,req.body.title,req.body.content,req.body.imgUrl,function(err,article){
 		res.json(article);
 	});
 }
@@ -45,14 +45,14 @@ exports.ajDeleteArticle=function(req,res){
 //websiteId,channelId,title,content,imgUrl,videoUrl
 exports.ajAddVideo=function(req,res){
 	var websiteId=req.session.website.id;
-	console.log(req.query.channelId);
+	console.log(req.body.channelId);
 	nodeService.addVideo(
 		websiteId,
-		req.query.channelId,
-		req.query.title,
-		req.query.content,
-		req.query.videoUrl,
-		req.query.imgUrl,
+		req.body.channelId,
+		req.body.title,
+		req.body.content,
+		req.body.videoUrl,
+		req.body.imgUrl,
 		function(err,video){
 			res.json(video);
 		});

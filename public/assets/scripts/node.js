@@ -7,7 +7,7 @@ var Node = function () {
         },
         saveArticle:function(params,cb){
             $.ajax({
-                type: "GET",
+                type: "POST",
                 url: "/cms/node/ajAddArticle",
                 data: params,
                 dataType: "json",
@@ -27,7 +27,7 @@ var Node = function () {
         },
         saveVideo:function(params,cb){
             $.ajax({
-                type: "GET",
+                type: "POST",
                 url: "/cms/node/ajAddVideo",
                 data: params,
                 dataType: "json",
