@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html>
+	<%include header%>
+	<body class="o-page">
+		<div id="page">
+			<div id="header">
+				<a href="#menu"></a>
+				<span id="Logo" class="svg">
+					
+				</span>
+				<a class="backBtn" href="javascript:history.back();"></a>
+			</div>
+			<div class="subHeader"><i class="i-blog i-small"></i>
+				<%=channel.name%>
+				<input id="idChannelId" type='hidden' value='<%=channel.id%>'/>
+			</div>
+			<div id="content">
+				<% if (articles.aaData.length!=0) { %>
+				<render id="idRenderNode">
+					<% articles.aaData.forEach(function(article){ %>
+						<!--图文-->
+						<%if(article.article.title!=null){%> 
+							<article>
+								<h2><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>/<%=article.id%>"><%=article.article.title%></a></h2>
+								<%if(article.article.img_url){%>
+						    		
+						    			<img src="<%=article.article.img_url%>" />
+						   
+						    	<%}%>
+								
+								<p>
+									<%-article.article.description%>
+								</p>
+								<div class="a-meta">
+									<a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>"><%=article.channel_name%></a> 
+									<i class="i-calendar i-small"></i><%=article.viewCreateDate%>
+								</div>
+							</article>
+						<%}%>
+						<!--视频-->
+						<%if(article.video.title!=null){%> 
+							<article>
+								<h2><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>/<%=article.id%>"><%=article.video.title%></a></h2>
+								<%if(article.video.img_url){%>
+						    
+						    			<img src="<%=article.video.img_url%>" />
+						    	
+						    	<%}%>
+								
+								<p>
+									<%-article.video.description%>
+								</p>
+								<div class="a-meta">
+									<a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>"><%=article.channel_name%></a> 
+									<i class="i-calendar i-small"></i><%=article.viewCreateDate%>
+								</div>
+							</article>
+						<%}%>
+					<%})%>
+					</render>
+					<div class="text-center" style="margin-bottom: 40px;">
+							<a id="idNext" href="javascript:void(0)" class="o-buttons b-big green">下一部分</a>
+					</div>
+					
+				<% }else{ %>
+					<article>
+						<h2>没有任何文章。。</h2>
+					</article>
+				<% }%>
+
+			
+		
+				
+		
+
+			</div>
+			
+			<%include slider%>
+		</div>
+		<%include footer%>
+	</body>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#idNext").click(function(){
+				var start=$("#content article").length;
+
+				var url ='/node/ajlist?start='+start+"&channelid="+$("#idChannelId").val();
+			
+				$.getJSON(url,function(json){
+					
+					if(json.aaData.length==0){
+						$("#idNext").text("已经没有文章了...");
+						$("#idNext").unbind('click');
+					}else{
+						var output = Mustache.render($("#idNodeTemplate").html(), json);
+						$("#idRenderNode").append(output);
+					}
+					
+				});
+			});
+			
+		});
+	</script>
+
+	<template id="idNodeTemplate">
+		{{#aaData}}
+	
+			<!--图文-->
+			{{#article.title}}
+				<article>
+					<h2><a href="/u/{{website_english_name}}/{{channel_english_name}}/{{id}}">{{article.title}}</a></h2>
+					{{#article.img_url}}
+			    		<img src="{{article.img_url}}" />
+			    	{{/article.img_url}}
+				
+					<p>
+						{{{article.description}}}
+					</p>
+					<div class="a-meta">
+						<a href="/u/{{website_english_name}}/{{channel_english_name}}">{{channel_name}}</a> 
+						<i class="i-calendar i-small"></i>{{viewCreateDate}}
+					</div>
+				</article>
+			{{/article.title}}
+			<!--视频-->
+			{{#video.title}}
+				<article>
+					<h2><a href="/u/{{website_english_name}}/{{channel_english_name}}/{{id}}">{{video.title}}</a></h2>
+					{{#video.img_url}}
+			    		<img src="{{video.img_url}}" />
+			    	{{/video.img_url}}
+					
+					<p>
+						{{{video.description}}}
+					</p>
+					<div class="a-meta">
+						<a href="/u/{{website_english_name}}/{{channel_english_name}}">{{channel_name}}</a> 
+						<i class="i-calendar i-small"></i>{{viewCreateDate}}
+					</div>
+				</article>
+			{{/video.title}}
+
+		{{/aaData}}
+	</template>
+</html>

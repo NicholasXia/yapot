@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html>
+	<%include header%>
+	<body class="o-page">
+		<div id="page">
+			<div id="header">
+				<a href="#menu"></a>
+				<span id="Logo" class="svg">
+					
+				</span>
+				<a class="backBtn" href="javascript:history.back();"></a>
+			</div>
+			
+			<div id="content">
+				
+				<article>
+					 <%if(node.article.img_url){%>
+				    		<img src="<%=node.article.img_url%>">
+				   
+					  <%}%>
+					
+					<h2><a href="#"> <%=node.article.title%></a></h2>
+					<p>
+						<%-node.article.content%>
+					</p>
+					<div class="a-meta">
+									<a href="/u/<%=node.website_english_name%>/<%=node.channel_english_name%>"><%=node.channel_name%></a> 
+									<i class="i-calendar i-small"></i><%=node.viewCreateDate%>
+								</div>
+					<div class="article-comments">
+						 <p class="text-center share-widget">
+                               <a id="idGood" href="javascript:;" class="o-buttons b-big green"><span id="idLabelGood">赞</span>(<span id="idGoodNum">
+                               	<%if(node.analytics.good_num){%>
+                               	<%=node.analytics.good_num%>
+                               	<%}else{%>0<%}%>
+                               	</span>)</a>
+                            </p>
+					</div>
+				</article>
+
+			</div>
+			
+			<%include slider%>
+		</div>
+		<%include footer%>
+
+		<input id="idWebsiteId" type='hidden' value='<%=node.website_id%>'></input>
+		<input id="idChannelId" type='hidden' value='<%=node.channel_id%>'></input>
+		<input id="idNodeId" type='hidden' value='<%=node.id%>'></input>
+		<script type="text/javascript">
+		$(document).ready(function(){
+			$.getJSON('/aj/ajGetGoodStatus',{nodeid:$("#idNodeId").val(),random:Math.random() },function(json){
+				// alert(json.status+" "+$("#idNodeId").val());
+				if(json.status==1){//赞开启
+					$("#idGood").click(function(){
+						$("#idGood").unbind('click');
+						$("#idLabelGood").html('已赞');
+						var goodNum= parseInt($("#idGoodNum").html())+1;
+						$("#idGoodNum").html(goodNum);
+						var params={
+							websiteid:$("#idWebsiteId").val(),
+							channelid:$("#idChannelId").val(),
+							nodeid:$("#idNodeId").val(),
+							random:Math.random()
+						}
+						$.getJSON('/aj/ajAddGood',params,function(json){
+							
+						});
+					});
+				}else{
+					$("#idLabelGood").html('已赞过');
+				}
+			});
+			});
+		</script>
+	</body>
+</html>

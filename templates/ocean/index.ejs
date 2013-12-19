@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<%include header%>
+	<body class="o-page">
+		<div id="page">
+			<!-- Header -->
+			
+			<div class="subHeader"><i class="i-home i-small"></i>欢迎访问</div>
+			
+			<!-- Banner -->
+			<div class="bannerPane">
+			  <section class="slider">
+				<div class="flexslider">
+				  <ul class="slides">
+					<li>
+						<img src="<%=website.imgurl%>" />
+					</li>
+				  </ul>
+				</div>
+			  </section>
+			</div>
+			<!-- End Banner -->
+			
+			<!-- Content -->
+		
+			<div class="block">
+				联邦制药
+			</div>
+			
+			<div class="exploreSiteFullPane">
+				<% menus.forEach(function(menu){ %>
+					<a href="<%=menu.link%>" class="explorePane active">
+						<span class="i-pane i-blue">
+							<i class="i-home"></i>
+						</span>
+						<h4><%=menu.name%></h4>
+					</a>
+				<% }) %>
+			</div>
+			
+			
+			
+			<!-- Menu navigation -->
+			
+		</div>
+	
+	</body>
+</html>

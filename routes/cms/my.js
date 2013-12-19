@@ -50,13 +50,15 @@ exports.ajSaveInit=function(req,res){
 	};
 	tplService.copyTplByNameAccount(req.query.tplname,webisite.account_id,function(err){
 		websiteService.add(webisite,function(err,website){
+			console.log("添加网站成功");
 			channelService.addAndMenu(website.id,req.query.channel_name,req.query.channel_english_name,function(err,channel){
-
+				console.log("添加菜单成功");
 				nodeService.addArticle(website.id,
 					channel.id,
 					req.query.article_name,
 					req.query.article_content,
 					req.query.article_image,function(){
+						console.log("初始化成功");
 						return res.json({'success':1});
 				});
 			});

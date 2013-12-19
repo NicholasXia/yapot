@@ -8,7 +8,7 @@ exports.index=function(req,res){
 	// res.send('model='+req.params.channel);
 	var englishname=req.params.website;
 	var website=req.session.website;
-	channelService.findByEnglishname(req.params.channel,function(err,channel){
+	channelService.findByEnglishname(website.id,req.params.channel,function(err,channel){
 		if(channel==null){
 			return res.send('没有找到该频道');
 		}else{

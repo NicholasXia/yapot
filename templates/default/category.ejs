@@ -47,7 +47,7 @@
 					    		<%}%>
 					    		<div class="wrapped-content">
 					    			<p>
-					    				<%=article.article.title%>
+					    				<%-article.article.description%>
 					    			</p>
 					    			<hr>
 					    			<p class="read-more"><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>/<%=article.id%>">查看原文</a></p>
@@ -65,7 +65,7 @@
 						    		</figure>
 						    		<div class="wrapped-content">
 						    			<p>
-						    				<%=article.video.description%>
+						    				<%-article.video.description%>
 						    			</p>
 						    			<hr>
 						    			<p class="read-more"><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>/<%=article.id%>">查看原文</a></p>
@@ -142,22 +142,46 @@
 	    
 	<template id="idNodeTemplate">
 		{{#aaData}}
-		<article class="format-standard">
-    		<div class="wrapped-content">
-    			<p class="title"><span class="category">{{channel_name}}</span> <span class="time">{{viewCreateDate}}</span></p>
-    			<h2><a href="/u/{{website_english_name}}/{{channel_english_name}}/{{id}}">{{article.title}}</a></h2>
-    		</div>
-    		<figure>
-    			<img src="{{article.img_url}}">
-    		</figure>
-    		<div class="wrapped-content">
-    			<p>
-    				{{article.title}}
-    			</p>
-    			<hr>
-    			<p class="read-more"><a href="/u/{{website_english_name}}/{{channel_english_name}}/{{id}}">查看原文</a></p>
-    		</div>
-    	</article>
+			{{#article.title}}
+			<article class="format-standard">
+	    		<div class="wrapped-content">
+	    			<p class="title"><span class="category">{{channel_name}}</span> <span class="time">{{viewCreateDate}}</span></p>
+	    			<h2><a href="/u/{{website_english_name}}/{{channel_english_name}}/{{id}}">{{article.title}}</a></h2>
+	    		</div>
+	    		{{#article.img_url}}
+	    		<figure>
+	    			<img src="{{article.img_url}}">
+	    		</figure>
+	    		{{/article.img_url}}
+	    		<div class="wrapped-content">
+	    			<p>
+	    				{{{article.description}}}
+	    			</p>
+	    			<hr>
+	    			<p class="read-more"><a href="/u/{{website_english_name}}/{{channel_english_name}}/{{id}}">查看原文</a></p>
+	    		</div>
+	    	</article>
+	    	{{/article.title}}
+	    	{{#video.title}}
+			<article class="format-standard">
+	    		<div class="wrapped-content">
+	    			<p class="title"><span class="category">{{channel_name}}</span> <span class="time">{{viewCreateDate}}</span></p>
+	    			<h2><a href="/u/{{website_english_name}}/{{channel_english_name}}/{{id}}">{{video.title}}</a></h2>
+	    		</div>
+	    		{{#video.img_url}}
+	    		<figure>
+	    			<img src="{{video.img_url}}">
+	    		</figure>
+	    		{{/video.img_url}}
+	    		<div class="wrapped-content">
+	    			<p>
+	    				{{{video.title}}}
+	    			</p>
+	    			<hr>
+	    			<p class="read-more"><a href="/u/{{website_english_name}}/{{channel_english_name}}/{{id}}">查看原文</a></p>
+	    		</div>
+	    	</article>
+	    	{{/video.title}}
 	    {{/aaData}}
 
 	</template>

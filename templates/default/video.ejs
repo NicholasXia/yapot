@@ -45,9 +45,20 @@
 
 		        		<div class="wrapped-content">
 
-                           <%=node.video.content%>
+                           <%-node.video.content%>
 
                         </div>
+
+                         <div class="wrapped-content">
+
+                            <p class="text-center share-widget">
+                               <a id="idGood" href="javascript:;" class="button round large icon-thumbs-up-1"><span id="idLabelGood">赞</span>(<span id="idGoodNum">
+                               	<%if(node.analytics.good_num){%>
+                               	<%=node.analytics.good_num%>
+                               	<%}else{%>0<%}%>
+                               	</span>)</a>
+                            </p>
+        		        </div>
     		        	</article>
 		        </div>
 
@@ -61,13 +72,38 @@
 	    </div>
     <!-- =Container -->	
 	<!-- Custom Scripts -->
+	<input id="idWebsiteId" type='hidden' value='<%=node.website_id%>'></input>
+	<input id="idChannelId" type='hidden' value='<%=node.channel_id%>'></input>
+	<input id="idNodeId" type='hidden' value='<%=node.id%>'></input>
 	<%include footer %>
 
 	<!-- =Custom Scripts -->
-	<script src="/users/<%=website.account_id%>/js/script.js/js/plugins/johndyer/build/mediaelement-and-player.min.js"></script>
+	<script src="/users/<%=website.account_id%>/skin/js/plugins/johndyer/build/mediaelement-and-player.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$('video,audio').mediaelementplayer();
+			$.getJSON('/aj/ajGetGoodStatus',{nodeid:$("#idNodeId").val(),random:Math.random() },function(json){
+				// alert(json.status+" "+$("#idNodeId").val());
+				if(json.status==1){//赞开启
+					$("#idGood").click(function(){
+						$("#idGood").unbind('click');
+						$("#idLabelGood").html('已赞');
+						var goodNum= parseInt($("#idGoodNum").html())+1;
+						$("#idGoodNum").html(goodNum);
+						var params={
+							websiteid:$("#idWebsiteId").val(),
+							channelid:$("#idChannelId").val(),
+							nodeid:$("#idNodeId").val(),
+							random:Math.random()
+						}
+						$.getJSON('/aj/ajAddGood',params,function(json){
+							
+						});
+					});
+				}else{
+					$("#idLabelGood").html('已赞过');
+				}
+			});
 		});
 	</script>   
 	</body>

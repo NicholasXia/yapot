@@ -28,8 +28,11 @@ exports.add=function(websiteId,name,englishname,cb){
 
 exports.addAndMenu=function(websiteId,name,englishname,cb){
 	function cbSave(err,channel){
+		console.log(channel);
 		menuService.addParent(channel.website_id,channel.englishname,null,function(err,menu){
-			menuService.updateMenuById(menu.id,channel.name,channel.englishname,1,function(err,num){
+			console.log("生成菜单成功 "+menu);
+			menuService.updateMenuById(menu.id,channel.website_id,channel.name,channel.englishname,1,function(err,num){
+				console.log("更新菜单和频道");
 				cb(err,channel);
 			});
 			
@@ -56,8 +59,8 @@ exports.deleteById=function(channelId,cb){
 	channelDao.remove({"_id":channelId},cb);
 }
 
-exports.findByEnglishname=function(englishname,cb){
-	channelDao.findOne({"englishname":englishname},cb);
+exports.findByEnglishname=function(websiteId,englishname,cb){
+	channelDao.findOne({"website_id":websiteId,"englishname":englishname},cb);
 }
 
 exports.findAllTree=function(websiteId,cb){

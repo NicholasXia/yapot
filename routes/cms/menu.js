@@ -37,8 +37,9 @@ exports.ajUpdate=function(req,res){
 	var name=req.query.menu_name;
 	var link=req.query.link;
 	var type=req.query.link_type;
+	var websiteId=req.session.website.id;
 	console.log('link_type '+type);
-	menuService.updateMenuById(id,name,link,type,function(err,num){
+	menuService.updateMenuById(id,websiteId,name,link,type,function(err,num){
 		if(err) return res.json(err);
 		return res.json(num);
 	});

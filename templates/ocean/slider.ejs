@@ -1,0 +1,11 @@
+<nav id="menu">
+	<ul>
+		<% menus.forEach(function(menu){ %>
+			<li>
+				<a href="<%=menu.link%>">
+					<i class="i-home i-small"></i><%=menu.name%>
+				</a>
+			</li>
+		<% }) %>
+	</ul>
+</nav>

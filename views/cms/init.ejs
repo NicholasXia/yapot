@@ -571,12 +571,9 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             	$("#tab4 .thumbnail").eq(0).css("border-width","thick");
             	$("#tab4 .thumbnail").eq(0).css("border-color","#EB0975");
             	$("#tab4 input").val(data.tpls[0].name);
-            	var $last ;
+            	var $last =$("#tab4 .thumbnail").eq(0);
             	$("#tab4 .thumbnail").click(function(){
-            		
-            		if($last){	
-            			$(this).css("border-color","#ddd");
-            		}
+            		$last.css("border-color","#ddd");
             		$("#tab4 input").val($(this).find("h3").html());
             		$(this).css("border-width","thick");
             		$(this).css("border-color","#EB0975");
