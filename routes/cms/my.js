@@ -12,7 +12,6 @@ exports.redirectIndex=function(req,res){
 }
 
 exports.index=function(req,res){
-	console.log("bull shit!!!! ");
 	websiteService.findByAccountId(req.user.id,function(err,website){
 		if(!website){
 			return res.render("cms/init.ejs",{user:req.user});

@@ -4,12 +4,14 @@ if(!global.db){
 }
 var Schema = require('mongoose').Schema;
 var wxAccountSchema = Schema({ 
-	email: String,//登录邮箱
-	name:String,//用户名
-	password:String,//密码
-	reg_date:Date,//注册邮箱
-	exp_date:Date,//过期时间
-	role:Number,//角色
+	name:String,//公众账号名称
+	weixinhao:String,//微信号
+	type:Number,//公众账号类型 1，订阅号，2，服务号
+	reg_date:Date,//注册时间
+	app:{
+		appid:String,//服务号ID
+		secret:String,//服务号密码
+		token:String //服务号访问凭证
+	}
 	status:Number
 });
-accountSchema.index({wxAccountSchema:1},{unique:true}); 
