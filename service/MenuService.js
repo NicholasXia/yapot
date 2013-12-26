@@ -61,7 +61,7 @@ exports.findByWebsiteId=function(websiteId,cb){
 	menuDao.find({website_id:websiteId},cb);
 }
 
-exports.updateMenuById=function(id,websiteId,name,link,type,cb){
+exports.updateMenuById=function(id,websiteId,name,link,type,icon,cb){
 	if(type==menuDao.LINK_CHANNEL){//频道链接
 		console.log('更新频道链接');
 		channelService.findByEnglishname(websiteId,link,function(err,channel){
@@ -75,7 +75,7 @@ exports.updateMenuById=function(id,websiteId,name,link,type,cb){
 			console.log("channel "+menuChannel);
 			menuDao.update(
 				{"_id":id},
-				{ $set:{name:name,link:link,type:type,channel:menuChannel}},
+				{ $set:{name:name,icon:icon,link:link,type:type,channel:menuChannel}},
 				{ multi: true },cb);
 		});
 	}else if(type==menuDao.LINK_PAGE){
@@ -89,7 +89,7 @@ exports.updateMenuById=function(id,websiteId,name,link,type,cb){
 			}
 			menuDao.update(
 				{"_id":id},
-				{ $set:{name:name,link:link,type:type,pager:updatePager}},
+				{ $set:{name:name,icon:icon,link:link,type:type,pager:updatePager}},
 				{ multi: true },cb);
 		});
 		

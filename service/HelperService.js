@@ -37,11 +37,12 @@ exports.initUser=function(req,res,next){
 	      // });
 	      menuService.findByWebsiteId(website.id,function(err,menus){
 	      	var menusAry=[];
-	        menusAry.push({'name':'首页','link':'/u/'+website.english_name});
+	        menusAry.push({'name':'首页','link':'/u/'+website.english_name,'icon':'fa fa-home'});
 	        for(var i=0;i<menus.length;i++){
 	          var menu={};
 	          menu.name=menus[i].name;
 	          menu.link=menus[i].link;
+	          menu.icon=menus[i].icon;
 	          menusAry.push(menu);
 	        }
 	        req.session.menus=menusAry;

@@ -7,6 +7,7 @@ var menuSchema = Schema({
 	name:String,//'菜单名'
 	parent_id:String,//'父菜单'
 	link:String,//链接
+	icon:String,//ICON代码
 	type:Number, //类型	
 	channel:{
 		name:String,

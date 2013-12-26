@@ -231,6 +231,24 @@ var Menu=function(){
 			});
 
 		},
+
+        clickSelectIcon:function(cb){
+            $("#idSelectIconBT").die().live('click',function(){
+                $("#idSelectIconModal").modal('show');
+            });
+           
+        },
+
+        clickSaveIcon:function(){
+            $("#idSelectIconModal .fa-item").die().live('click',function(){
+                var icon=$(this).find('i').attr('class');
+       
+                $("#idIconText").val(icon);
+                $("#idIconI").attr('class',icon+" fa-2x");
+                $("#idSelectIconModal").modal('hide');
+            });
+        },
+
 		clickRemove:function(cb){
 			$("#idRemoveBT").live('click',function(){
 				$("#idMenuTree").jstree("remove");
@@ -334,6 +352,9 @@ var Menu=function(){
 				});
 				event.clickSelectLink(function(){
 				});
+                event.clickSelectIcon(function(){
+                });
+                event.clickSaveIcon();
 				event.clickSaveLink();
 			});
 			
