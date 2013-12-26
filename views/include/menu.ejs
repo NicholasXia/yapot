@@ -21,48 +21,86 @@
 					<a href="/cms/index">
 					<i class="fa fa-home"></i> 
 					<span class="title">首页</span>	
-					<span class="selected"></span>
+					<%if(locals.indexActive){%>
+						<span class="selected"></span>
+					<%}%>
 					</a>
 				</li>
 				<li class="<%if(locals.nodeActive){%>start <%=nodeActive%><%}%> ">
 					<a href="/cms/node/index">
 					<i class="fa fa-pencil-square-o"></i> 
-					<span class="title">文章</span>					
-					<!-- <span class="selected"></span> -->
-				
+					<span class="title">文章</span>		
+					<%if(locals.nodeActive){%>			
+						<span class="selected"></span>
+					<%}%>
 					</a>
-				<!-- 	<ul class="sub-menu">
-						<li class="<%if(locals.nodeManActive){%>start <%=nodeManActive%><%}%> ">
-							<a href="/cms/node/index">
-							文章管理							
-						</a>
-						</li>
-			
-					
-					</ul> -->
+	
 				</li>
 				<li class="<%if(locals.pagerActive){%>start <%=pagerActive%><%}%> ">
 					<a href="/cms/pager/index">
 					<i class="fa fa-file-o"></i> 
-					<span class="title">页面</span>					
-					<!-- <span class="selected"></span> -->
-				
+					<span class="title">页面</span>		
+					<%if(locals.pagerActive){%>			
+						<span class="selected"></span>
+					<%}%>
 					</a>
 				</li>
-				<li class="<%if(locals.channelActive){%>start <%=channelActive%><%}%> ">
-					<a href="/cms/channel/index">
-					<i class="fa fa-archive"></i> 
-					<span class="title">频道</span>					
-					<!-- <span class="selected"></span> -->
-				
+				<li class="<%if(locals.tplActive){%>start <%=tplActive%><%}%> ">
+					<a href="/cms/pager/index">
+					<i class="fa fa-picture-o"></i> 
+					<span class="title">外观</span>		
+					<%if(locals.pagerActive){%>			
+						<span class="selected"></span>
+					<%}%>
 					</a>
+					<ul class="sub-menu">
+						<li class="<%if(locals.editTplActive){%>start <%=editTplActive%><%}%> ">
+							<a href="/cms/tpl/index">
+							<i class="fa fa-archive"></i> 
+							<span class="title">选择模板</span>	
+							<%if(locals.editTplActive){%>				
+								<span class="selected"></span>
+							<%}%>
+							</a>
+						</li>
+						<!-- <li class="<%if(locals.menuActive){%>start <%=menuActive%><%}%> ">
+							<a href="/cms/menu/index">
+							<i class="fa fa-list-ul"></i> 
+							<span class="title">模板编辑</span>					
+							</a>
+						</li> -->
+					
+					</ul>
 				</li>
 				
-				<li class="<%if(locals.menuActive){%>start <%=menuActive%><%}%> ">
-					<a href="/cms/menu/index">
-					<i class="fa fa-list-ul"></i> 
-					<span class="title">菜单</span>					
+				
+
+				<li class="<%if(locals.settingActive){%>start <%=settingActive%><%}%> ">
+					<a href="#">
+					<i class="fa fa-cogs"></i> 
+				
+					<span class="title">高级设置</span>	
+					<%if(locals.settingActive){%>				
+						<span class="selected"></span>
+					<%}%>
 					</a>
+					<ul class="sub-menu">
+						<li class="<%if(locals.channelActive){%>start <%=channelActive%><%}%> ">
+							<a href="/cms/channel/index">
+							<i class="fa fa-archive"></i> 
+							<span class="title">频道</span>					
+							<!-- <span class="selected"></span> -->
+						
+							</a>
+						</li>
+						<li class="<%if(locals.menuActive){%>start <%=menuActive%><%}%> ">
+							<a href="/cms/menu/index">
+							<i class="fa fa-list-ul"></i> 
+							<span class="title">菜单</span>					
+							</a>
+						</li>
+					
+					</ul>
 				</li>
 		
 			</ul>

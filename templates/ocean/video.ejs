@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 	<%include header%>
-	<link rel="stylesheet" type="text/css" href="/users/<%=website.account_id%>/skin/js/johndyer/build/mediaelementplayer.min.css">
+	<link rel="stylesheet" type="text/css" href="/users/<%=website.account_id%>/skin/<%=website.tplname%>/js/johndyer/build/mediaelementplayer.min.css">
 	<body class="o-page">
 		<div id="page">
 			<div id="header">
@@ -48,7 +48,7 @@
 		<input id="idWebsiteId" type='hidden' value='<%=node.website_id%>'></input>
 		<input id="idChannelId" type='hidden' value='<%=node.channel_id%>'></input>
 		<input id="idNodeId" type='hidden' value='<%=node.id%>'></input>
-		<script src="/users/<%=website.account_id%>/skin/js/johndyer/build/mediaelement-and-player.min.js"></script>
+		<script src="/users/<%=website.account_id%>/skin/<%=website.tplname%>/js/johndyer/build/mediaelement-and-player.min.js"></script>
 		<script type="text/javascript">
 		$(document).ready(function(){
 			$('video,audio').mediaelementplayer();

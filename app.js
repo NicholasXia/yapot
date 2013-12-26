@@ -47,6 +47,7 @@ upload.configure({
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
+
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'templates')));
@@ -214,6 +215,9 @@ app.get('/cms/menu/ajUpdate',ensureEditor,menuCms.ajUpdate);
 
 app.get('/cms/ajSaveInit',ensureEditor,my.ajSaveInit);
 app.get('/cms/tpl/ajGetAll',ensureEditor,tplCms.ajGetAll);
+app.get('/cms/tpl/index',ensureEditor,tplCms.index);
+app.get('/cms/tpl/ajSelectTpl',ensureEditor,tplCms.ajSelectTpl);
+
 
 //ADMIN
 app.get('/cms/admin/index',ensureAdmin,my.indexAdmin);

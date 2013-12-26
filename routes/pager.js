@@ -1,7 +1,7 @@
 var pagerService= require('../service/PagerService');
 exports.details=function(req,res){
 	var website=req.session.website;
-	var renderArticle='users/'+website.account_id+'/pager';
+	var renderArticle='users/'+website.account_id+'/'+website.tplname+'/pager';
 	console.log('req.params.id '+req.params.id);
 	pagerService.findById(req.params.id,function(err,pager){
 		if(pager){

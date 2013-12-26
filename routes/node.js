@@ -34,8 +34,8 @@ exports.details=function(req,res){
 	var channelName=req.params.channel;
 	var nodeId=req.params.id;
 	var website=req.session.website;
-	var renderArticle='users/'+website.account_id+'/article';
-	var renderVideo='users/'+website.account_id+'/video';
+	var renderArticle='users/'+website.account_id+'/'+website.tplname+'/article';
+	var renderVideo='users/'+website.account_id+'/'+website.tplname+'/video';
 	nodeService.findById(nodeId,function(err,node){
 		
 		if(node==null){

@@ -23,7 +23,14 @@ exports.updateById=function(id,website,cb){
 		if(numAffected==0) cb('{error:1}');
 		cb();
 	});
+}
 
+exports.updateTplById=function(id,tplname,cb){
+	websiteDao.update({"_id":id},{$set:{tplname:tplname}},{multi:false},function(err,numAffected){
+		if(err) cb(err);
+		if(numAffected==0) cb('{error:1}');
+		cb();
+	});
 }
 
 //Test Code

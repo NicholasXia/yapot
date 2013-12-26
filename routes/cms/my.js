@@ -45,6 +45,7 @@ exports.ajSaveInit=function(req,res){
 		name:req.query.website_name,
 		english_name:req.query.website_english_name,
 		imgurl:req.query.website_image,
+		tplname:req.query.tplname,
 		status:1
 	};
 	tplService.copyTplByNameAccount(req.query.tplname,webisite.account_id,function(err){

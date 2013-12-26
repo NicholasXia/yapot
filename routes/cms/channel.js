@@ -1,7 +1,12 @@
 var channelService=require('../../service/ChannelService');
+var renderObj={
+	settingActive:'active'
+}
 exports.index=function(req,res){
 	// console.log(req.user);
-	res.render("cms/channel",{user:req.user,channelActive:'active'});
+	renderObj.user=req.user;
+	renderObj.channelActive='active';
+	res.render("cms/channel",renderObj);
 }
 
 exports.ajGetTree=function(req,res){

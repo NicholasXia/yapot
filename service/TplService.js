@@ -1,6 +1,7 @@
 var fs =require('fs');
 var ncp =require('ncp');
 var async=require('async');
+var websiteService = require('./WebsiteService');
 exports.getAll=function(cb){
 	var templates=[];
 	var tplPath = __dirname.replace('service','')+'/templates/';
@@ -22,9 +23,19 @@ exports.getAll=function(cb){
 // });
 
 exports.copyTplByNameAccount=function(name,accountId,fcb){
+
+
 	var tplPath = __dirname.replace('service','')+'/templates/'+name;
-	var desPathFile = __dirname.replace('service','')+'/views/users/'+accountId;
-	var desPathFolder = __dirname.replace('service','')+'/public/users/'+accountId+"/skin/";
+	var desPathFile = __dirname.replace('service','')+'/views/users/'+accountId+"/"+name;
+	var desPathFolder = __dirname.replace('service','')+'/public/users/'+accountId+"/skin/"+name;
+	// if()
+	if(fs.existsSync(desPathFile)){
+		return fcb();
+	}
+
+	fs.mkdirSync(desPathFile);
+	fs.mkdirSync(desPathFolder);
+	
 	fs.readdir(tplPath,function(err,files){
 		async.eachSeries(files,function(file,cb){
 			if(file.indexOf('ejs')!=-1){
@@ -47,3 +58,4 @@ exports.copyTplByNameAccount=function(name,accountId,fcb){
 // exports.copyTplByNameAccount('default','52aaa12e26ea200824000002',function(err){
 // 	console.log(err);
 // });
+

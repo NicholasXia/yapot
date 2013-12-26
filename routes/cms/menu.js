@@ -1,10 +1,13 @@
 var menuService=require('../../service/MenuService');
 var _=require('underscore');
+var renderObj={
+	settingActive:'active'
+}
 exports.index=function(req,res){
 	var pageRender={};
 	pageRender.user=req.user;
 	pageRender.menuActive='active';
-	_.extend(pageRender,pageRender);
+	_.extend(pageRender,renderObj);
 	return res.render('cms/menu',pageRender);
 }
 

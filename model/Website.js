@@ -8,6 +8,7 @@ var websiteSchema = Schema({
 	english_name:String,//网站地址域名
 	imgurl:String,//网站图片
 	des:String,//网站描述
+	tplname:String,//模板名称
 	status:Number
 
 });

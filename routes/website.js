@@ -7,7 +7,7 @@ var websiteConfig=require('../config/website');
 exports.index=function(req, res){
 	var website=req.session.website;
 	var pageParam={};
-	var rendPage='users/'+website.account_id+'/index';
+	var rendPage='users/'+website.account_id+'/'+website.tplname+'/index';
 	pageParam.iDisplayStart=0;
 	pageParam.iDisplayLength=websiteConfig.PER_PAGE_NUM;
 	nodeService.findByWebsiteId(website.id,pageParam,function(err,articles){

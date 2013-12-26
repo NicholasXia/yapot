@@ -5,12 +5,6 @@ exports.index=function(req,res){
 }
 
 exports.ajList=function(req,res){
-	// var pageParam={
-	// 	"iDisplayStart":req.query.start,
-	// 	"iDisplayLength":config.PER_PAGE_NUM
-	// }
-	// console.log("pageParam "+pageParam.iDisplayStart);
-	// console.log("pageParam "+pageParam.iDisplayLength);
 	accountService.findAllPage(req.query,function(err,page){
 		return res.json(page);
 	});

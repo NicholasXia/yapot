@@ -14,7 +14,7 @@ exports.index=function(req,res){
 		}else{
 			var pageParam={	
 			};
-			var rendPage='users/'+website.account_id+'/category';
+			var rendPage='users/'+website.account_id+'/'+website.tplname+'/category';
 			pageParam.iDisplayStart=0;
 			pageParam.iDisplayLength=websiteConfig.PER_PAGE_NUM;
 			nodeService.findByChannelId(channel.id,pageParam,function(err,articles){
