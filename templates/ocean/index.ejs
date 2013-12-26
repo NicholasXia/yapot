@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<%include header%>
+	
 	<body class="o-page">
 		<div id="page">
 			<!-- Header -->
@@ -30,8 +31,8 @@
 			<div class="exploreSiteFullPane">
 				<% menus.forEach(function(menu){ %>
 					<a href="<%=menu.link%>" class="explorePane active">
-						<span class="i-pane i-blue">
-							<i class="i-home"></i>
+						<span class="">
+							<i class="<%=menu.icon%> fa-5x"></i>
 						</span>
 						<h4><%=menu.name%></h4>
 					</a>

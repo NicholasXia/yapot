@@ -4,8 +4,9 @@
 <!--[if (gt IE 9)|!(IE)]><!-->
 <html lang="en" class="no-js">
 <!--<![endif]-->
-	<%include header %>
-	<body >
+    <%include header %>
+  
+    <body >
 
         
 
@@ -22,32 +23,33 @@
 
             <section id="content-container">
 
-                	  
+                      
                 <div id="content" class="blog blog-single blog-standard">
-                	<article class="format-video">
+                    <article class="format-video">
                        
 
                         <figure>
                             <img src="<%=website.imgurl%>" alt="Layoffs hit HTC America as the company struggles to turn itself around">
                         </figure>
 
-		        		
+                        
 
                                
 
                        
-    		        	</article>
+                        </article>
 
 
                     <div class="wrapped-content">
 
-						<h3><%=website.name%></h3>
-						<p>
+                        <h3><%=website.name%></h3>
+                        <p>
 
-			    			<% menus.forEach(function(menu){ %>
-								<a href="<%=menu.link%>" class="button red"><%=menu.name%></a>
-							<% }) %>
-						</p>
+                            <% menus.forEach(function(menu){ %>
+                               
+                                <a href="<%=menu.link%>" class="button red"> <i class="<%=menu.icon%> fa-2x"></i></br><%=menu.name%></a>
+                            <% }) %>
+                        </p>
 
                         <hr>
                     </div>
@@ -60,24 +62,24 @@
 
         
 
-	    </div>
+        </div>
     <!-- =Container -->
-	    
+        
 
 
       
 
-	    
+        
 
 
 
-	
-	<%include footer%>
+    
+    <%include footer%>
 
 
 
-	    
+        
 
-	    
-	</body>
+        
+    </body>
 </html>
