@@ -55,6 +55,17 @@ exports.copyTplByNameAccount=function(name,accountId,fcb){
 	});
 }
 
+exports.getTplFileByAccountId=function(accountId,tplName,fileName,cb){
+	var desPath=__dirname.replace('service','')+'/views/users/'+accountId+'/'+tplName+"/";
+	var file={};
+	fs.readFile(desPath+fileName, function (err, data) {
+		file.tplname=tplName;
+		file.name=fileName;
+		file.content=data+"";
+	  	cb(file);
+	});	
+}
+
 exports.getTplsTreeByAccountId=function(accountId,tplName,cb){
 	var desPath=__dirname.replace('service','')+'/views/users/'+accountId+'/'+tplName;
 	fs.readdir(desPath,function(err,files){
@@ -76,8 +87,19 @@ exports.getTplsTreeByAccountId=function(accountId,tplName,cb){
 	
 }
 
+exports.saveTplByAccountId=function(accountId,tplname,filename,content,cb){
+	var fliePath=__dirname.replace('service','')+'/views/users/'+accountId+'/'+tplname+"/"+filename;
+	fs.writeFile(fliePath, content, function (err) {
+	  cb({'ok':'ok'})
+	});
+}
+
 // exports.getTplsTreeByAccountId('52bcf092db400bac36000001','ocean',function(tree){
 // 	console.log(tree);
+// });
+
+// exports.getTplFileByAccountId('52bcf092db400bac36000001','ocean','index.ejs',function(file){
+// 	console.log(file);
 // });
 
 // exports.copyTplByNameAccount('default','52aaa12e26ea200824000002',function(err){

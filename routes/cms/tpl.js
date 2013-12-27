@@ -48,3 +48,23 @@ exports.ajGetTree=function(req,res){
 		});
 	});
 }
+
+exports.ajGetByFileName=function(req,res){
+	var accountId=req.user.id;
+	var filename=req.query.filename;
+	websiteService.findByAccountId(accountId,function(err,website){
+		tplService.getTplFileByAccountId(accountId,website.tplname,filename,function(file){
+			return res.json(file);
+		});
+	});
+}
+
+exports.ajSaveTpl=function(req,res){
+	var accountId=req.user.id;
+	var tplname=req.body.tplname;
+	var filename=req.body.filename;
+	var content=req.body.content;
+	tplService.saveTplByAccountId(accountId,tplname,filename,content,function(data){
+		res.json(data);
+	});
+}

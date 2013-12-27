@@ -120,7 +120,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 							<render id="idInfo">
 								<div class="portlet green box">
 									<div class="portlet-title">
-										<div class="caption"><i class="fa fa-cogs"></i>文章列表</div>
+										<div class="caption"><i class="fa fa-cogs"></i>模板文件代码</div>
 										<div class="tools">
 											<a href="javascript:;" class="collapse"></a>
 											
@@ -129,7 +129,10 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 									</div>
 									<div class="portlet-body form">
 										<div class="form-body">
-											<h3 class="form-section">请选择左侧的频道</h3>
+											<render id="idTplInfoRender">
+												<h3 class="form-section">请选择左侧的模板文件</h3>
+											</render>
+											
 
 										</div>
 									</div>
@@ -140,66 +143,23 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 
 		
 
-			<template id="idUpdateVideoTpl" style="display:none">
-				<form action="#" class="form-horizontal" role="form">	
-				<input type="hidden" name="img_url" class="imageHidden" value="{{video.img_url}}">	
-				<input type="hidden" name="nodeid" value="{{id}}">	
-					<div class="form-body">
+			<template id="idHtmlTpl" style="display:none">
+				<form id="idSaveForm" action="#" class="form-horizontal" role="form">	
+				<input type="hidden" name="filename" value="{{name}}">	
+				<input type="hidden" name="tplname" value="{{tplname}}">
+					<div class="form-body">				
 						<div class="form-group">
-							<label class="col-md-3 control-label">标题</label>
-							<div class="col-md-4">
-								<input name="title" type="text" class="form-control" placeholder="输入文章标题" value="{{video.title}}">
-								
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-3 control-label">视频地址(mp4)</label>
-							<div class="col-md-4">
-								<input name="url" type="text" class="form-control" placeholder="" value="{{video.url}}">
-								
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-3 control-label">图片</label>
-							<div class="controls col-md-4">
-								<div class="thumbnail">
-									
-									<img class="imageSrc" src="{{video.img_url}}" alt="100%x200" >
-									<div class="caption">
-										<p>
-											<div class="fileupload fileupload-new" data-provides="fileupload">
-												<span class="btn default btn-file">
-												<span class="fileupload-new"><i class="fa fa-paper-clip"></i> 上传图片</span>
-												<span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
-												<input class="clsfileupload" type="file" class="default" name="file" data-url="/upload/<%=user.id%>?id=<%=user.id%>"/>
-												</span>
-												<span class="fileupload-preview" style="margin-left:5px;"></span>
-												<a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none; margin-left:5px;"></a>
-											</div>
-										</p>
-									</div>
-									<div class="progress progress-striped">
-										<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-											
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-									
-										
-						<div class="form-group">
-							<label class="col-md-3 control-label">正文</label>
-							<div class="col-md-9">
-							<!-- 	<textarea id="idUpdateVideoContent" name="content" rows="5"  class="content form-control">{{&video.content}}</textarea> -->
-								<script id="idUpdateVideoContent"  name="content" type="text/plain" style="height:500px;">{{&video.content}}</script>
+							<label class="col-md-1 control-label">正文</label>
+							<div class="col-md-11">
+							<textarea id="idUpdateVideoContent" name="content" rows="50"  class="content form-control">{{content}}</textarea>
+				
 							</div>
 						</div>
 									
 					</div>
 					<div class="form-actions nobg fluid">
 						<div class="col-md-offset-3 col-md-9">
-							<button class="saveVideo btn green" type="submit" class="btn green">保存</button>
+							<button id="idSaveBT" class="btn green" type="button" class="btn green">保存</button>
 							                              
 						</div>
 					</div>

@@ -219,6 +219,8 @@ app.get('/cms/tpl/index',ensureEditor,tplCms.index);
 app.get('/cms/tpl/ajSelectTpl',ensureEditor,tplCms.ajSelectTpl);
 app.get('/cms/tpl/edit',ensureEditor,tplCms.edit);
 app.get('/cms/tpls/ajGetTree',ensureEditor,tplCms.ajGetTree);
+app.get('/cms/tpls/ajGetByFileName',ensureEditor,tplCms.ajGetByFileName);
+app.post('/cms/tpls/ajSaveTpl',ensureEditor,tplCms.ajSaveTpl);
 
 //ADMIN
 app.get('/cms/admin/index',ensureAdmin,my.indexAdmin);

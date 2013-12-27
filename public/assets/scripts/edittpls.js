@@ -1,5 +1,30 @@
 var Edittpls=function(){
-	var service={};
+	var service={
+
+		selectByName:function(filename,cb){
+			$.getJSON('/cms/tpls/ajGetByFileName',{filename:filename},function(file){
+				cb(file)
+			});
+		},
+		save:function(form,cb){
+			 $.ajax({
+                type: "POST",
+                url: "/cms/tpls/ajSaveTpl",
+                data:form.serialize(),        
+                dataType: "json",
+                beforeSend:function(){
+                    
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                   cb({});
+                },
+                success: function(data){
+                   cb(data);
+                }
+            });
+			
+		}
+	};
 	var render={
 		tplsTree:function(cb){
 			$("#idTplTree").jstree({
@@ -24,7 +49,7 @@ var Edittpls=function(){
 
 			.one("reopen.jstree", function (event, data) { })
 			.one("reselect.jstree", function (event, data) {})
-			.bind("select_node.jstree", event.selectMenuTree)
+			.bind("select_node.jstree", event.selectTplTree)
 			.bind("remove.jstree", function (e, data) {
 			
 
@@ -35,6 +60,10 @@ var Edittpls=function(){
 			// menuTree= jQuery.jstree._reference("#idMenuTree");
 
 			
+		},
+		tplinfo:function(file){
+			var output = Mustache.render($("#idHtmlTpl").html(), file);
+			$("#idTplInfoRender").html(output);
 		}
 	};
 	var event={
@@ -42,12 +71,30 @@ var Edittpls=function(){
 			render.tplsTree(function(){
 				cb();
 			});
+		},
+		selectTplTree:function(e,data){
+
+			var filename=$(data.rslt.obj[0]).attr('id');
+			service.selectByName(filename,function(file){
+				render.tplinfo(file);
+			});
+		},
+		clickSave:function(cb){
+			$("#idSaveForm button").die().live('click',function(){
+				service.save($("#idSaveForm"),function(){
+					toastr.success('', '保存成功...');
+				});
+				
+			});
+			cb();
 		}
 	};
 	return {
 		init:function(){
 			event.pageLoad(function(){
-
+				event.clickSave(function(){
+					
+				});
 			});
 		}
 	}
