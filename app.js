@@ -213,7 +213,7 @@ app.get('/cms/menu/deleteParent',ensureEditor,menuCms.deleteParent);
 app.get('/cms/menu/ajFindById',ensureEditor,menuCms.ajFindById);
 app.get('/cms/menu/ajUpdate',ensureEditor,menuCms.ajUpdate);
 
-app.get('/cms/ajSaveInit',ensureEditor,my.ajSaveInit);
+app.post('/cms/ajSaveInit',ensureEditor,my.ajSaveInit);
 app.get('/cms/tpl/ajGetAll',ensureEditor,tplCms.ajGetAll);
 app.get('/cms/tpl/index',ensureEditor,tplCms.index);
 app.get('/cms/tpl/ajSelectTpl',ensureEditor,tplCms.ajSelectTpl);

@@ -31,7 +31,7 @@ exports.addAndMenu=function(websiteId,name,englishname,cb){
 		console.log(channel);
 		menuService.addParent(channel.website_id,channel.englishname,null,function(err,menu){
 			console.log("生成菜单成功 "+menu);
-			menuService.updateMenuById(menu.id,channel.website_id,channel.name,channel.englishname,1,function(err,num){
+			menuService.updateMenuById(menu.id,channel.website_id,channel.name,channel.englishname,1,null,function(err,num){
 				console.log("更新菜单和频道");
 				cb(err,channel);
 			});

@@ -42,22 +42,22 @@ exports.indexAdmin=function(req,res){
 exports.ajSaveInit=function(req,res){
 	var webisite={
 		account_id:req.user.id,
-		name:req.query.website_name,
-		english_name:req.query.website_english_name,
-		imgurl:req.query.website_image,
-		tplname:req.query.tplname,
+		name:req.body.website_name,
+		english_name:req.body.website_english_name,
+		imgurl:req.body.website_image,
+		tplname:req.body.tplname,
 		status:1
 	};
-	tplService.copyTplByNameAccount(req.query.tplname,webisite.account_id,function(err){
+	tplService.copyTplByNameAccount(req.body.tplname,webisite.account_id,function(err){
 		websiteService.add(webisite,function(err,website){
 			console.log("添加网站成功");
-			channelService.addAndMenu(website.id,req.query.channel_name,req.query.channel_english_name,function(err,channel){
+			channelService.addAndMenu(website.id,req.body.channel_name,req.body.channel_english_name,function(err,channel){
 				console.log("添加菜单成功");
 				nodeService.addArticle(website.id,
 					channel.id,
-					req.query.article_name,
-					req.query.article_content,
-					req.query.article_image,function(){
+					req.body.article_name,
+					req.body.article_content,
+					req.body.article_image,function(){
 						console.log("初始化成功");
 						return res.json({'success':1});
 				});

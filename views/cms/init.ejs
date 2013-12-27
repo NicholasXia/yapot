@@ -559,9 +559,25 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 
             $('#form_wizard_1').find('.button-previous').hide();
             $('#form_wizard_1 .button-submit').click(function () {
-                    $.getJSON('/cms/ajSaveInit',form.serialize(),function(data){
-                    	window.location = location;
-                    });
+                    // $.getJSON('/cms/ajSaveInit',form.serialize(),function(data){
+                    // 	window.location = location;
+                    // });
+                    $.ajax({
+		                type: "POST",
+		                url: "/cms/ajSaveInit",
+		                data: form.serialize(),
+		                dataType: "json",
+		                beforeSend:function(){
+		                    
+		                },
+		                error: function(jqXHR, textStatus, errorThrown){
+		                	cb({'error':1});
+		                },
+		                success: function(data){
+		                	window.location = location;
+		                    cb(null);
+		                }
+		            });
             }).hide();
 
             //TAB3选择模版
