@@ -138,9 +138,13 @@ var Menu=function(){
 		       		}
 	        	},
 
-	        	"plugins" : [  "themes","json_data","ui","crrm","cookies","dnd","search","types","hotkeys","contextmenu"]
+	        	"plugins" : [  "themes","json_data","ui","crrm","cookies","dnd","search","types","hotkeys"]
  			})
         	.bind("loaded.jstree", function (event, data) { })
+            .bind("create.jstree", function (e, data) {
+
+            })
+
 			.one("reopen.jstree", function (event, data) { })
 			.one("reselect.jstree", function (event, data) {})
 			.bind("select_node.jstree", event.selectMenuTree)

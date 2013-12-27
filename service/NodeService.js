@@ -4,6 +4,7 @@ var moment = require('moment');
 var channelService = require('./ChannelService');
 var websiteService = require('./WebsiteService');
 var _=require('underscore');
+var async=require('async');
 exports.addArticle=function(websiteId,channelId,title,content,imgUrl,cb){
 	function cbSave(err,data){
 		cb(err,data);
@@ -136,3 +137,22 @@ exports.updateVideoById=function(nodeId,video,cb){
 // var b={c:222}
 // _.extend(a,b);
 // console.log(a);
+
+// function updateUrl(node,cb){
+// 	if(node.article.img_url.indexOf('undefined')!){
+// 		console.log("删除 图片");
+// 		nodeDao.update({"_id":node.id},{$set:{'article.img_url':null}},{ multi: false },cb);
+// 	}else{
+// 		var domain='http://weixin.china-obgyn.net/users'
+// 		var newimgurl=domain+node.article.img_url.split('/users')[1];
+// 		console.log(newimgurl);
+// 		nodeDao.update({"_id":node.id},{$set:{'article.img_url':newimgurl}},{ multi: false },cb);
+// 	}
+	
+// }
+
+// nodeDao.find({},function(err,nodes){
+// 	async.each(nodes,updateUrl,function(err){
+
+// 	});
+// });

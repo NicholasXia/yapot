@@ -54,21 +54,24 @@
 					<%}%>
 					</a>
 					<ul class="sub-menu">
-						<li class="<%if(locals.editTplActive){%>start <%=editTplActive%><%}%> ">
+						<li class="<%if(locals.selectTplActive){%>start <%=selectTplActive%><%}%> ">
 							<a href="/cms/tpl/index">
 							<i class="fa fa-archive"></i> 
 							<span class="title">选择模板</span>	
+							<%if(locals.selectTplActive){%>				
+								<span class="selected"></span>
+							<%}%>
+							</a>
+						</li>
+						<li class="<%if(locals.editTplActive){%>start <%=editTplActive%><%}%> ">
+							<a href="/cms/tpl/edit">
+							<i class="fa fa-archive"></i> 
+							<span class="title">编辑模板</span>	
 							<%if(locals.editTplActive){%>				
 								<span class="selected"></span>
 							<%}%>
 							</a>
 						</li>
-						<!-- <li class="<%if(locals.menuActive){%>start <%=menuActive%><%}%> ">
-							<a href="/cms/menu/index">
-							<i class="fa fa-list-ul"></i> 
-							<span class="title">模板编辑</span>					
-							</a>
-						</li> -->
 					
 					</ul>
 				</li>

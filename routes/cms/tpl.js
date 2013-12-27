@@ -25,7 +25,26 @@ exports.index=function(req,res){
 	console.log("tpl "+req.user);
 	pageRender.user=req.user;
 	pageRender.website=req.session.website;
-	pageRender.editTplActive='active';
+	pageRender.selectTplActive='active';
 	_.extend(pageRender,renderObj);
 	return res.render("cms/tpls",pageRender);
+}
+
+exports.edit=function(req,res){
+	var pageRender={};
+	console.log("tpl "+req.user);
+	pageRender.user=req.user;
+	pageRender.website=req.session.website;
+	pageRender.editTplActive='active';
+	_.extend(pageRender,renderObj);
+	return res.render("cms/edittpls",pageRender);
+}
+
+exports.ajGetTree=function(req,res){
+	var accountId=req.user.id;
+	websiteService.findByAccountId(accountId,function(err,website){
+		tplService.getTplsTreeByAccountId(accountId,website.tplname,function(tree){
+			return res.json(tree);
+		});
+	});
 }

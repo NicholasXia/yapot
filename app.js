@@ -217,7 +217,8 @@ app.post('/cms/ajSaveInit',ensureEditor,my.ajSaveInit);
 app.get('/cms/tpl/ajGetAll',ensureEditor,tplCms.ajGetAll);
 app.get('/cms/tpl/index',ensureEditor,tplCms.index);
 app.get('/cms/tpl/ajSelectTpl',ensureEditor,tplCms.ajSelectTpl);
-
+app.get('/cms/tpl/edit',ensureEditor,tplCms.edit);
+app.get('/cms/tpls/ajGetTree',ensureEditor,tplCms.ajGetTree);
 
 //ADMIN
 app.get('/cms/admin/index',ensureAdmin,my.indexAdmin);

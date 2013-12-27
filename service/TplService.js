@@ -55,6 +55,31 @@ exports.copyTplByNameAccount=function(name,accountId,fcb){
 	});
 }
 
+exports.getTplsTreeByAccountId=function(accountId,tplName,cb){
+	var desPath=__dirname.replace('service','')+'/views/users/'+accountId+'/'+tplName;
+	fs.readdir(desPath,function(err,files){
+		var trees=[];
+		for(var i=0;i<files.length;i++){
+			if(files[i].indexOf('ejs')!=-1){
+				var tplsTree={
+				'data':'',
+				'attr':{}
+				};
+				tplsTree.data=files[i].replace('.ejs','');
+				tplsTree.attr.id=files[i];
+				trees.push(tplsTree);
+			}
+			
+		}
+		cb(trees);
+	});
+	
+}
+
+// exports.getTplsTreeByAccountId('52bcf092db400bac36000001','ocean',function(tree){
+// 	console.log(tree);
+// });
+
 // exports.copyTplByNameAccount('default','52aaa12e26ea200824000002',function(err){
 // 	console.log(err);
 // });
