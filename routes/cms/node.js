@@ -1,7 +1,8 @@
 var nodeService=require('../../service/NodeService');
 var _=require('underscore');
 var nodeObj={
-	nodeActive:'active'
+	nodeActive:'active',
+	cmsActive:'active'
 }
 
 exports.index=function(req,res){
@@ -9,6 +10,7 @@ exports.index=function(req,res){
 	pageRender.user=req.user;
 	// pageRender.nodeManActive='active';
 	pageRender.nodeActive='active';
+
 	_.extend(pageRender,nodeObj);
 	res.render("cms/node",pageRender);
 }

@@ -3,7 +3,36 @@
 			<a class="navbar-brand" href="#">
 				<!-- <img src="/assets/img/yapot.png" alt="logo" class="img-responsive" width='86px' height='15px'/> -->
 			</a>
+
+
+
 			<!-- END LOGO -->
+			<div class="hor-menu hidden-sm hidden-xs">
+			<ul class="nav navbar-nav">
+				<li <%if(locals.cmsActive){%>class="active"<%}%>>
+					<a href="/cms/index">
+					微官网
+					<%if(locals.cmsActive){%>
+					<span class="selected">
+					</span>
+					<%}%>
+					</a>
+				</li>
+				<li <%if(locals.wxActive){%>class="active"<%}%>>
+					<a href="/wx/index">
+					微信
+					<%if(locals.wxActive){%>
+					<span class="selected">
+					</span>
+					<%}%>
+					
+					</a>
+				</li>
+
+			</ul>
+		</div>
+
+
 			<!-- BEGIN RESPONSIVE MENU TOGGLER --> 
 			<a href="javascript:;" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 			<img src="/assets/img/menu-toggler.png" alt="" />

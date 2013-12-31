@@ -23,6 +23,7 @@ var http = require('http');
 var path = require('path');
 var upload = require('jquery-file-upload-middleware');
 var config=require('./config/website');
+var wxRoutesConfig=require('./config/WxRoutes');
 var app = express();
 require("./model/MongoConnect");
 var passport = require('passport')
@@ -229,6 +230,9 @@ app.get('/cms/admin/account/ajList',ensureAdmin,accountCms.ajList);
 app.get('/cms/admin/account/ajAdd',ensureAdmin,accountCms.ajAdd);
 app.get('/cms/admin/account/ajUpdatePassword',ensureAdmin,accountCms.ajUpdatePassword);
 
+//WX
+wxRoutesConfig.routes(ensureEditor,app);
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
@@ -236,7 +240,8 @@ http.createServer(app).listen(app.get('port'), function(){
 function ensureEditor(req,res,next){
    if (req.isAuthenticated()) { 
     if(req.user.role==0){
-       return res.send('无权限');
+      console.log("ddd" +req.user.role);
+       return res.send('无权限111');
     }
     return next(); 
   }

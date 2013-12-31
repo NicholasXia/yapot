@@ -1,7 +1,8 @@
 var menuService=require('../../service/MenuService');
 var _=require('underscore');
 var renderObj={
-	settingActive:'active'
+	settingActive:'active',
+	cmsActive:'active'
 }
 exports.index=function(req,res){
 	var pageRender={};

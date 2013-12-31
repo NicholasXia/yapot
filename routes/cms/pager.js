@@ -3,6 +3,7 @@ exports.index=function(req,res){
 	var pageRender={};
 	pageRender.user=req.user;
 	pageRender.pagerActive='active';
+	pageRender.cmsActive='active';
 	res.render("cms/pager",pageRender);
 }
 

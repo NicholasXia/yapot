@@ -19,7 +19,7 @@ exports.index=function(req,res){
 		req.session.website=website;
 		console.log("website "+website);
 		website.url="/u/"+website.english_name;
-		return res.render("cms/index",{user:req.user,indexActive:'active',website:website});
+		return res.render("cms/index",{user:req.user,cmsActive:'active',indexActive:'active',website:website});
 	});	
 }
 

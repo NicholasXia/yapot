@@ -1,6 +1,7 @@
 var channelService=require('../../service/ChannelService');
 var renderObj={
-	settingActive:'active'
+	settingActive:'active',
+	cmsActive:'active'
 }
 exports.index=function(req,res){
 	// console.log(req.user);

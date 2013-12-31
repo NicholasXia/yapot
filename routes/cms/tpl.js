@@ -2,7 +2,8 @@ var tplService = require('../../service/TplService');
 var _=require('underscore');
 var websiteService = require('../../service/WebsiteService');
 var renderObj={
-	tplActive:'active'
+	tplActive:'active',
+	cmsActive:'active'
 }
 exports.ajGetAll=function(req,res){
 	tplService.getAll(function(err,tpls){
