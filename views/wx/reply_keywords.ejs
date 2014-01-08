@@ -1,0 +1,446 @@
+	
+<!DOCTYPE html>
+<!-- 
+Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.0
+Version: 1.5.3
+Author: KeenThemes
+Website: http://www.keenthemes.com/
+Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
+-->
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+	<meta charset="utf-8" />
+	<title>首页</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	<meta name="MobileOptimized" content="320">
+	<!-- BEGIN GLOBAL MANDATORY STYLES -->          
+	<% include ../include/global_css %>
+	<!-- END GLOBAL MANDATORY STYLES -->
+	<!-- BEGIN THEME STYLES --> 
+	<% include ../include/theme_css %>
+	<!-- END THEME STYLES -->
+	<link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-toastr/toastr.min.css" />
+	<link rel="stylesheet" type="text/css" href="/assets/plugins/select2/select2_metro.css"/>
+	
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+	<!-- BEGIN HEADER -->   
+	<div class="header navbar navbar-inverse navbar-fixed-top">
+		<!-- BEGIN TOP NAVIGATION BAR -->
+		<% include ../include/top %>
+		<!-- END TOP NAVIGATION BAR -->
+	</div>
+	<!-- END HEADER -->
+	<div class="clearfix"></div>
+	<!-- BEGIN CONTAINER -->   
+	<div class="page-container">
+		<!-- BEGIN SIDEBAR -->
+		<div class="page-sidebar navbar-collapse collapse">
+			<!-- BEGIN SIDEBAR MENU -->        	
+			<%include ../include/wx_menu.ejs%>
+			<!-- END SIDEBAR MENU -->
+		</div>
+		<!-- END SIDEBAR -->
+		<!-- BEGIN PAGE -->
+		<div class="page-content">
+		
+
+			<!-- BEGIN PAGE HEADER-->
+			<div class="row">
+				<div class="col-md-12">
+					<!-- BEGIN PAGE TITLE & BREADCRUMB-->			
+					<h3 class="page-title">
+						关键词自动回复			<small>回复规则与微信官方一致</small>
+					</h3>
+					<ul class="page-breadcrumb breadcrumb">
+				
+						<li>
+							<i class="fa fa-home"></i>
+							<a href="#">自动回复</a> 
+							<i class="fa fa-angle-right"></i> 
+							<a href="#">关键词自动回复</a> 
+						</li>
+				
+					</ul>
+					<!-- END PAGE TITLE & BREADCRUMB-->
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="portlet">
+						<div class="portlet-body">
+							<button id="idAddBT" type="button" class="btn green btn-lg">添加规则</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<render id="idNewRuleRender">
+			</render>
+
+			<!-- <div class="row">
+				<div class="col-md-12">
+					<div class="portlet box blue ">
+									<div class="portlet-title">
+										<div class="caption">
+											<i class="fa fa-reorder"></i>规则名称
+										</div>
+										<div class="tools">
+											<a href="javascript:;" class="collapse"></a>
+											<a href="javascript:;" class="remove"></a>
+										</div>
+									</div>
+									<div class="portlet-body form ">
+										
+										<form action="#" class="form-horizontal">
+											<div class="form-body">
+												
+												<div class="form-group">
+													<label class="control-label col-md-2">规则名称</label>
+													<div class="col-md-5">
+														<input type="name" class="form-control"/>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<label class="control-label col-md-2">关键词</label>
+													<div class="col-md-5">
+														<input type="hidden" id="idKeywords" class="clsKeywords form-control select2">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="control-label col-md-2">回复</label>
+													<div class="col-md-2">
+															<button type="button" class="clsAddWordBT btn blue">文字</button>
+															<button type="button" class="btn green">文章</button>
+													</div>
+
+													<div class="col-md-2">
+														<div class="checkbox-list">
+
+															<label class="checkbox-inline">
+																<input type="checkbox">回复全部  
+															</label>
+															
+											
+												
+														</div>
+													</div>
+												</div>
+									
+												<div class="form-group">
+													
+										
+													<label class="control-label col-md-2">回复详情<br/>
+			
+
+													</label>
+
+													<div class="col-md-6">
+														<ul class="media-list">
+															<hr/>
+														<li class="media">
+										<a class="pull-right" href="#">
+										<img class="media-object" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABTElEQVR4Xu2YQQ7DIAwE4ZSHJc/Om3LPKRUHtzSFVBgQlpgeQ2Ps1bLT4o/juNzEH48AOIAjQAZMnIGOEIQCUAAKQAEoMLECYBAMgkEwCAYnhgB/hsAgGASDYBAMgsGJFQCDLTC47/vbQ9u2/fhJ1lNrOfP1qJnaq9oB8XCpQf8NkmqqR82c0FUChEa9925d12yKlArQo+ZTxDUR4Lo+JI1tHg8fmpA1eb4sizvP8+v4iAClNbU5Xi2AbByGy1k3dzRiAe7iiGAlNTUiVAsQH4FUs/emUg65P6upWSpCNwHiRkodkBPgX83S4cP3qwQIBXLnXJpJrT9lgLamZvgmAmg3tvJetQOsDKLtAwFa/BTWqm/hPRyAA7gT5E6QO0ELaTyqBygABaAAFIACoxLYwr5QAApAASgABSyk8ageoAAUgAJQAAqMSmAL+74A0deRkB1poOYAAAAASUVORK5CYII=" alt="64x64" data-src="holder.js/64x64" style="width: 64px; height: 64px;">
+										</a>
+										<div class="media-body">
+											<h4 class="media-heading">Media heading</h4>
+											 Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+										</div>
+									</li>
+									<hr/>
+									<li class="media">	
+			<button type="button" class="pull-right btn btn-danger">删除</button>
+			<div class="media-body">
+				
+				 Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+			</div>
+		</li>
+												
+													</ul>
+													</div>
+												</div>
+											
+											</div>
+											<div class="form-actions fluid">
+												<div class="row">
+													<div class="col-md-12">
+														<div class="col-md-offset-3 col-md-9">
+															<button type="submit" class="btn green"><i class="fa fa-check"></i> 保存规则</button>
+															
+														</div>
+													</div>
+												</div>
+											</div>
+										</form>
+										
+									</div>
+								</div>
+				</div>
+			</div> -->
+
+
+		
+			<!-- END PAGE HEADER-->
+			<!-- BEGIN PAGE CONTENT-->
+			
+			<!-- END PAGE CONTENT-->
+		</div>
+		<!-- END PAGE -->    
+	</div>
+
+	<!-- 添加文字回复 -->
+	<div id="idAddWordModal" class="modal fade" tabindex="-1" data-width="400">
+		<div class="modal-dialog modal-wide">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+					<h4 class="modal-title">添加文字回复</h4>
+				</div>
+				
+				<div class="modal-body form">
+					<div class="form-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1">文字</label>
+							<textarea class="clsText form-control" row="30"></textarea>	
+						</div>
+					</div>
+					<div class="form-actions fluid">
+						<div class="col-md-offset-3 col-md-9">
+							<button type="button" class="btn green clsTmpSaveBT">保存</button>
+							<button type="button"  data-dismiss="modal" class="btn default">关闭</button>
+						</div>
+					</div>
+				</div>
+			
+			</div>
+		</div>
+	</div>
+
+	<template id="idRuleListTpl">
+		{{#rules}}
+		<div class="row">
+			<div class="col-md-12">
+				<div class="portlet box blue ">
+					<div class="portlet-title">
+						<div class="caption">
+							<i class="fa fa-reorder"></i><span>{{name}}</span>
+						</div>
+						<div class="tools">
+							<a href="javascript:;" class="collapse"></a>
+							<a href="javascript:;" class="remove"></a>
+						</div>
+					</div>
+					<div class="portlet-body form ">
+						<!-- BEGIN FORM-->
+						<form action="#" class="clsRuleForm form-horizontal">
+							<input name='id' value='{{_id}}' type='hidden'/>
+							<div class="form-body">	
+								<div class="form-group">
+									<label class="control-label col-md-2">规则名称</label>
+									<div class="col-md-5">
+										<input type="text" value='{{name}}' name="rulename" class="form-control"/>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="control-label col-md-2">关键词</label>
+									<div class="col-md-5">
+										<input type="hidden" name="keywords"  id="idKeywords"  class="clsKeywords form-control select2" value='{{viewKeywords}}'>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-2">回复</label>
+									<div class="col-md-2">
+											<button type="button" class="clsAddWordBT btn blue">文字</button>
+											<button type="button" class="btn green">文章</button>
+									</div>
+
+								<!-- 	<div class="col-md-2">
+										<div class="checkbox-list">
+											<label class="checkbox-inline">
+												<input name="all" value='true' type="checkbox" 
+												/> 回复全部  
+											</label>
+											
+										</div>
+									</div> -->
+								</div>
+								
+								<div class="form-group">
+									<label class="control-label col-md-2">回复详情
+									</label>
+									<div class="col-md-6">
+										
+										<ul class='media-list'>
+											{{#replies}}
+											<li class="clsWord media">	
+												<hr/>
+												<button type="button" class="clsTmpDelWord pull-right btn btn-danger">删除</button>
+												<div class="media-body">
+													<h4 class="media-heading">{{word.content}}</h4>
+													
+												</div>
+												
+											</li>
+											{{/replies}}
+											
+											
+												
+											
+										
+										</ul>
+										
+									</div>
+								</div>
+							</div>
+							<div class="form-actions fluid">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="col-md-offset-3 col-md-9">
+											<button type="submit" class="btn green"><i class="fa fa-check"></i> 保存规则</button>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+						<!-- END FORM-->
+					</div>
+				</div>
+			</div>
+		</div>
+		{{/rules}}
+	</template>
+
+	<template id="idRuleTpl">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="portlet box blue ">
+					<div class="portlet-title">
+						<div class="caption">
+							<i class="fa fa-reorder"></i><span>规则名称</span>
+						</div>
+						<div class="tools">
+							<a href="javascript:;" class="collapse"></a>
+							<a href="javascript:;" class="remove"></a>
+						</div>
+					</div>
+					<div class="portlet-body form ">
+						<!-- BEGIN FORM-->
+						<form action="#" class="clsRuleForm form-horizontal">
+							<input name='id' value='' type='hidden'/>
+							<div class="form-body">	
+								<div class="form-group">
+									<label class="control-label col-md-2">规则名称</label>
+									<div class="col-md-5">
+										<input type="text" name="rulename" class="form-control"/>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="control-label col-md-2">关键词</label>
+									<div class="col-md-5">
+										<input type="hidden" name="keywords"  id="idKeywords" class="clsKeywords form-control select2">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-2">回复</label>
+									<div class="col-md-2">
+											<button type="button" class="clsAddWordBT btn blue">文字</button>
+											<button type="button" class="btn green">文章</button>
+									</div>
+
+								<!-- 	<div class="col-md-2">
+										<div class="checkbox-list">
+											<label class="checkbox-inline">
+												<input name="all" value='true' type="checkbox">回复全部  
+											</label>
+										</div>
+									</div> -->
+								</div>
+								
+								<div class="form-group">
+									<label class="control-label col-md-2">回复详情
+									</label>
+									<div class="col-md-6">
+										
+										<ul class='media-list'>
+											<p class="form-control-static">
+											无任何回复
+											</p>
+										</ul>
+										
+									</div>
+								</div>
+							</div>
+							<div class="form-actions fluid">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="col-md-offset-3 col-md-9">
+											<button type="submit" class="btn green"><i class="fa fa-check"></i> 保存规则</button>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+						<!-- END FORM-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</template>
+
+	<template id="idRuleWord">
+
+		<li class="clsWord media">	
+			<hr/>
+			<button type="button" class="clsTmpDelWord pull-right btn btn-danger">删除</button>
+			<div class="media-body">
+				<h4 class="media-heading">{{word}}</h4>
+				
+			</div>
+			
+		</li>
+		
+	</template>
+
+	<!-- END CONTAINER -->
+	<!-- BEGIN FOOTER -->
+	<%include ../include/footer.ejs %>
+	<!-- END FOOTER -->
+	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+	<!-- BEGIN CORE PLUGINS -->   
+	<%include ../include/ie.ejs %>
+	<%include ../include/core_plugin.ejs %>
+	<!-- END CORE PLUGINS -->
+	<script type="text/javascript" src="/assets/plugins/jquery-file-upload/js/vendor/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="/assets/plugins/jquery-file-upload/js/jquery.iframe-transport.js"></script>
+	<script type="text/javascript" src="/assets/plugins/jquery-file-upload/js/jquery.fileupload.js"></script>
+	<script type="text/javascript" src="/assets/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="/assets/plugins/jquery-validation/dist/additional-methods.min.js"></script>
+	<script src="/assets/plugins/bootstrap-toastr/toastr.min.js"></script>
+	<script src="/assets/scripts/app.js"></script>   
+	<script src="/assets/plugins/moment.min.js"></script>    
+	<script type="text/javascript" src="/assets/plugins/select2/select2.min.js"></script>
+	<script src="/assets/scripts/wx/reply_keywords.js"></script>   
+	<script>
+		jQuery(document).ready(function() {    
+		   App.init();
+		   ReplyKeywords.init();
+		});
+	</script>
+	<!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

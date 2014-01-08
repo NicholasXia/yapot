@@ -2,6 +2,7 @@ var websiteService=require('../../service/WebsiteService');
 var channelService=require('../../service/ChannelService');
 var nodeService=require('../../service/NodeService');
 var tplService=require('../../service/TplService');
+var wxAccountService = require('../../service/wx/WxAccountService');
 exports.redirectIndex=function(req,res){
 	if(req.user.role==0){
 		res.redirect('/cms/admin/index');
@@ -12,14 +13,23 @@ exports.redirectIndex=function(req,res){
 }
 
 exports.index=function(req,res){
-	websiteService.findByAccountId(req.user.id,function(err,website){
+	var accountId=req.user.id;
+	websiteService.findByAccountId(accountId,function(err,website){
 		if(!website){
 			return res.render("cms/init.ejs",{user:req.user});
 		}
-		req.session.website=website;
-		console.log("website "+website);
-		website.url="/u/"+website.english_name;
-		return res.render("cms/index",{user:req.user,cmsActive:'active',indexActive:'active',website:website});
+
+		wxAccountService.findByAccountId(accountId,function(err,wxAccount){
+			if(wxAccount) req.session.wxAccount=wxAccount;
+			console.log('wx account '+wxAccount);
+			req.session.website=website;
+			console.log("website "+website);
+			website.url="/u/"+website.english_name;
+			return res.render("cms/index",{user:req.user,cmsActive:'active',indexActive:'active',website:website});
+
+		});
+
+		
 	});	
 }
 

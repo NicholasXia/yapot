@@ -33,6 +33,8 @@ exports.updateTplById=function(id,tplname,cb){
 	});
 }
 
+
+
 //Test Code
 // exports.add(
 // 	{account_id:'5296ab15dbdd4e141d000001',name:'中国妇产科网',english_name:'fuchanke',status:websiteDao.ACTIVE},

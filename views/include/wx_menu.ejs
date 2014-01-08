@@ -26,6 +26,36 @@
 					<%}%>
 					</a>
 				</li>
-				
+				<li class="<%if(locals.replyActive){%>start <%=replyActive%><%}%>">
+					<a href="#">
+					<i class="fa fa-home"></i> 
+					<span class="title">自动回复</span>	
+					<%if(locals.replyActive){%>
+					<span class="selected"></span>
+					<%}%>
+					</a>
+
+					<ul class="sub-menu">
+						<li class="<%if(locals.followActive){%>start <%=followActive%><%}%> ">
+							<a href="/wx/reply/follow">
+							<i class="fa fa-archive"></i> 
+							<span class="title">被添加自动回复</span>	
+							<%if(locals.followActive){%>			
+								<span class="selected"></span>
+							<%}%>
+							</a>
+						</li>
+						<li class="<%if(locals.keywordsActive){%>start <%=keywordsActive%><%}%> ">
+							<a href="/wx/reply/keywords">
+							<i class="fa fa-archive"></i> 
+							<span class="title">关键词自动回复</span>	
+							<%if(locals.keywordsActive){%>			
+								<span class="selected"></span>
+							<%}%>
+							</a>
+						</li>
+					
+					</ul>
+				</li>
 
 			</ul>

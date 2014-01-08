@@ -28,6 +28,6 @@ wxAccountSchema.virtual('viewType').get(function(){
 });
 wxAccountSchema.virtual('viewUrl').get(function(){
 	
-	return webconfig.domain+"/api/"+this.id;
+	return webconfig.domain+"/wx/api/"+this.id;
 });
 module.exports = db.model('wx_account', wxAccountSchema);

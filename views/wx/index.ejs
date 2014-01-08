@@ -222,77 +222,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 	<script>
 		jQuery(document).ready(function() {    
 		   App.init();
-		   	$('#fileupload').fileupload({
-	            dataType: 'json',
-	            done: function (e, data) {
-	                $.each(data.result.files, function (index, file) {//
-	                    $("#idImage").attr("src",file.url);
-	                    $("#idImageHidden").val(file.url);
-	                });
-	            },
-	            progressall: function (e, data) {
-	                var progress = parseInt(data.loaded / data.total * 100, 10);
-	                $('#idProgressBar > .progress-bar').css(
-	                    'width',
-	                    progress + '%'
-	                );
-	                $('#idProgressBar > .progress-bar').attr(
-	                    'aria-valuenow',
-	                    progress
-	                );
-	            }
-            });
-		   	var form1= $("#idWebsiteForm");
-		   	var error1 = $('.alert-danger', form1);
-            var success1 = $('.alert-success', form1);
-            form1.validate({
-	                errorElement: 'span', //default input error message container
-	                errorClass: 'help-block', // default input error message class
-	                focusInvalid: false, // do not focus the last invalid input
-	                ignore: "",
-	                rules: {
-	                    website_name: {
-	                        required: true
-	                     
-	                    }
-	                },
-	                messages: {
-		                website_name: {
-		                    required: "请填写网站名称"
-		                   
-		                }
-	            	},
-
-	                invalidHandler: function (event, validator) { //display error alert on form submit              
-	                    success1.hide();
-	                    error1.show();
-	                    App.scrollTo(error1, -200);
-	                },
-
-	                highlight: function (element) { // hightlight error inputs
-	                    $(element)
-	                        .closest('.form-group').addClass('has-error'); // set error class to the control group
-	                },
-
-	                unhighlight: function (element) { // revert the change done by hightlight
-	                    $(element)
-	                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
-	                },
-
-	                success: function (label) {
-	                    label
-	                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
-	                },
-
-	                submitHandler: function (form) {
-	                    
-	                   	$.getJSON('/cms/website/ajUpdate',$(form).serialize(),function(data){
-	                   		success1.show();
-	                    	error1.hide();
-	                    	$("iframe").attr('src',$("iframe").attr('src'));
-	                   	});
-	                }
-            	});
+		   
 		});
 	</script>
 	<!-- END JAVASCRIPTS -->

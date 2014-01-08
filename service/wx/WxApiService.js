@@ -13,3 +13,9 @@ exports.check=function(token,timestamp,nonce,signature){
 	if(sha1Str==signature) checked=true;
 	return checked;
 }
+
+
+exports.toTextXML=function(content,weixinObj){
+	var responseText="<xml><ToUserName><![CDATA["+weixinObj.FromUserName[0]+"]]></ToUserName><FromUserName><![CDATA["+weixinObj.ToUserName[0]+"]]></FromUserName><CreateTime>"+parseInt(Date.now()/1000)+"</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA["+content+"]]></Content><FuncFlag>0</FuncFlag></xml>";
+	return responseText;
+}

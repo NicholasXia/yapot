@@ -13,14 +13,14 @@ exports.index=function(req,res){
 		}else{
 			return res.render('wx/init',rendObj);
 		}
-	});
-	
+	});	
 }
 
 exports.ajSaveInit=function(req,res){
 	req.body.accountId=req.user.id;
 	req.body.token=_.random(10000,99999);
-	wxAccountService.add(req.body,function(err,data){
-		return res.json(data);
+	wxAccountService.add(req.body,function(err,wxAccount){
+		req.session.wxAccount=wxAccount;
+		return res.json(wxAccount);
 	});
 }
