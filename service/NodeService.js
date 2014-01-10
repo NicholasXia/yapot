@@ -87,6 +87,12 @@ exports.findById=function(id,cb){
 	});
 }
 
+exports.findByIds=function(ids,cb){
+	nodeDao.find({"_id":{"$in":ids}},cb);
+}
+
+
+
 exports.updateByNodeId=function(nodeId,cb){
 	nodeDao.update({"_id":nodeId},{$inc:{'analytics.good_num':1}},{ multi: true },cb);
 }

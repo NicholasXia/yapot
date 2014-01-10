@@ -17,13 +17,23 @@ var subKeyword={
 	match:Boolean//trun 全文匹配 false 精准匹配
 }
 var subReply={
-	rtype:Number,//类型 1.文字 2.文章
+	rtype:Number,//类型 1.文字 2.文章（单图文） 3.一组文章（多图文）
 	word:{
 		content:String
 	},
 	node:{
-		node_id:String
-	}
+		node_id:String,
+		title:String
+	},
+	gnode:{
+		node:[
+			{
+				node_id:String,
+				title:String
+			}
+		]	
+	}	
+	
 }
 wxReplyRuleSchema.virtual('viewKeywords').get(function(){
 	var ks=[];

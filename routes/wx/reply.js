@@ -1,5 +1,5 @@
 var wxReplyFollowService=require('../../service/wx/WxReplyFollowService');
-var wxReplyRuleService=require('../../service/wx/wxReplyRuleService');
+var wxReplyRuleService=require('../../service/wx/WxReplyRuleService');
 var _=require('underscore');
 var renderObj={
 	wxActive:'active',

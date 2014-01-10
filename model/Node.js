@@ -62,6 +62,43 @@ nodeSchema.virtual('video.description').get(function(){
 	return this.video.content;
 });
 
+nodeSchema.virtual('wxTitle').get(function(){
+//	console.log("cc"+this.article);
+	var title="";
+	if(this.article.title){
+		title=this.article.title;
+	}else{
+		title=this.video.title;
+	}
+	return S(title).left(websiteConfig.WX_TITLE).s;
+});
+
+nodeSchema.virtual('wxDes').get(function(){
+//	console.log("cc"+this.article);
+	var title="";
+	if(this.article.content){
+		title=this.article.content;
+	}else{
+		title=this.video.content;
+	}
+	return S(title).left(websiteConfig.WX_DES).s;
+});
+
+nodeSchema.virtual('wxUrl').get(function(){
+	return websiteConfig.domain+"/u/"+this.website_english_name+"/"+this.channel_english_name+"/"+this.id;
+});
+
+nodeSchema.virtual('wxImg').get(function(){
+//	console.log("cc"+this.article);
+	var wxImg="";
+	if(this.article.img_url){
+		wxImg=this.article.img_url;
+	}else{
+		wxImg=this.video.img_url;
+	}
+	return wxImg;
+});
+
 nodeSchema.set('toJSON', { virtuals: true });
 // db is global
 module.exports = db.model('node', nodeSchema);

@@ -1,4 +1,8 @@
 var ReplyKeywords=function(){
+	var addArticleTB;
+	var ds={
+		selectArticleAry:[]
+	}
 	var service={
 		init:function(){
 			$(".clsKeywords").select2(
@@ -8,12 +12,12 @@ var ReplyKeywords=function(){
 					return {id:term, text:term};
 			  }
 			});
-			
 		},
 		saveRule:function($form,cb){
 			var keywordsAry=$form.find('input[name="keywords"]').val().split(',');
 			var $wordReplies=$form.find('.clsWord .media-heading');
-			
+			var $articleReplies=$form.find('.clsArticle .media-heading');
+			var $garticleReplies=$form.find('.clsgArticle');
 			var keywordsObjs=[];
 			var replies=[];
 			var all=false;
@@ -24,7 +28,7 @@ var ReplyKeywords=function(){
 				keywordsObj.match=true;
 				keywordsObjs.push(keywordsObj);
 			}
-			
+			//文字回复
 			for(var i=0;i<$wordReplies.size();i++){
 				var reply={};
 				reply.rtype=1;
@@ -33,6 +37,34 @@ var ReplyKeywords=function(){
 				};
 				replies.push(reply);
 			}
+			
+			//文章回复
+			for(var i=0;i<$articleReplies.size();i++){
+				var reply={};
+				reply.rtype=2;
+				reply.node={
+					id:$articleReplies.eq(i).attr('articleid'),
+					title:$articleReplies.eq(i).text()
+				};
+				replies.push(reply);
+			}
+
+			//一组文章回复
+			for(var i=0;i<$garticleReplies.size();i++){
+				var reply={};
+				reply.rtype=3;
+				reply.gnode={node:[]};
+				var $articles=$garticleReplies.eq(i).find('.media-heading');
+				for(var j=0;j<$articles.size();j++){
+					var node={
+						id:$articles.eq(j).attr('articleid'),
+						title:$articles.eq(j).text()
+					};
+					reply.gnode.node.push(node);
+				}
+				replies.push(reply);
+			}
+
 			if($form.find('input[name="rulename"]').val()=='true'){
 				all=true;
 			}
@@ -87,6 +119,31 @@ var ReplyKeywords=function(){
                    
                 }
             });
+		},
+		findAllChannels:function(cb){
+			$.ajax({
+                type: "GET",
+                url: "/cms/channel/ajGetAll",
+              
+                dataType: "json",
+                beforeSend:function(){
+                    
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    cb({'error':1});
+                },
+                success: function(channels){
+                    console.log(channels);
+                    cb(channels);
+                   
+                }
+            });
+		},
+		clsAddArticleModal:function(){
+			$("#idAddArticleModal .clsChannel option").eq(0).attr('selected','selected');
+			ds.selectArticleAry=[];
+			render.articleTable('');
+			$("#idAddArticleModal .clsArticles").select2("data",ds.selectArticleAry);
 		}
 	};
 	var render={
@@ -97,6 +154,18 @@ var ReplyKeywords=function(){
 		},
 		addTmpWord:function(word,$wordWrapObj){
 			var output= Mustache.render($("#idRuleWord").html(), {word:word});
+			$wordWrapObj.find(".form-control-static").html('');
+			$(output).hide().prependTo($wordWrapObj).slideDown("slow");
+			//$wordWrapObj.html(output);
+		},
+		addTmpArticle:function(articles,$wordWrapObj){
+			var output= Mustache.render($("#idRuleArticle").html(),{articles:articles});
+			$wordWrapObj.find(".form-control-static").html('');
+			$(output).hide().prependTo($wordWrapObj).slideDown("slow");
+			//$wordWrapObj.html(output);
+		},
+		addTmpArticleGroup:function(articles,$wordWrapObj){
+			var output= Mustache.render($("#idRuleArticleGroup").html(),{articles:articles});
 			$wordWrapObj.find(".form-control-static").html('');
 			$(output).hide().prependTo($wordWrapObj).slideDown("slow");
 			//$wordWrapObj.html(output);
@@ -123,6 +192,48 @@ var ReplyKeywords=function(){
 				$(output).hide().prependTo("#idNewRuleRender").slideDown("slow");
 				cb();
 			});
+		},
+		channelSelect:function(cb){
+			service.findAllChannels(function(channels){
+				var $selectObj=$("#idAddArticleModal .clsChannel");
+				$selectObj.html('<option>请选择频道</option>');
+				for(var i=0;i<channels.length;i++){
+					$selectObj.append('<option value="'+channels[i]._id+'">'+channels[i].name+'</option>');
+				}
+				cb();
+			});
+		},
+		articleTable:function(channelId){
+			
+			if(ReplyKeywords.addArticleTB){
+
+				ReplyKeywords.addArticleTB.fnDestroy();
+				
+			}
+			ReplyKeywords.addArticleTB=$('#idAddArticleModal .clsArticleTB').dataTable({
+               "bProcessing": true,
+                "bFilter": true,
+                "bServerSide": false,
+                "sAjaxSource": "/cms/node/ajList?channelId="+channelId,
+                "aoColumns": [
+                  
+                    { "mData": "_id",
+                      "mRender":function(data,type,full){
+                       
+                        return "<input type='checkbox' title='"+full.viewTitle+"' value='"+data+"'/>";
+                      }
+                    },
+                     { "mData": "viewTitle"},
+                    { "mData": "viewCreateDate" }
+                ]
+                ,"aaSorting": [[2,'desc']]
+            });
+		},
+		articlesSelect:function(){
+			$(".clsArticles").select2(
+			{ 
+
+			});
 		}
 	};
 	var event={
@@ -138,6 +249,7 @@ var ReplyKeywords=function(){
 			$("#idAddBT").click(function(){
 				render.addNewRule();//添加一个区块
 				event.clickAddWord();
+				event.clickAddArticle();
 				event.clickSaveRule();
 			});
 		},
@@ -148,8 +260,32 @@ var ReplyKeywords=function(){
 				event.saveTmpWord($(this));
 			});
 		},
+		clickAddArticle:function(){
+			
+			$(".clsAddAritcleBT").die().live('click',function(){
+				service.clsAddArticleModal();
+				$("#idAddArticleModal").modal('show');
+				render.articlesSelect();
+				render.channelSelect(function(){
+					event.changeChannel();
+				});
+				event.saveTmpArticle($(this));
+			});
+			
+		},
+		saveTmpArticle:function($formObj){
+			$("#idAddArticleModal .clsTmpSaveBT").die().live('click',function(){
+				var articleWrapObj=$formObj.closest('.form-body').find('.media-list');
+				if($("#idGroupCK").attr("checked")){
+					render.addTmpArticleGroup(ds.selectArticleAry,articleWrapObj);
+				}else{
+					render.addTmpArticle(ds.selectArticleAry,articleWrapObj);
+				}
+				
+			});
+		},
 		saveTmpWord:function($formObj){
-			$(".clsTmpSaveBT").die().live('click',function(){
+			$("#idAddWordModal .clsTmpSaveBT").die().live('click',function(){
 				var wordWrapObj=$formObj.closest('.form-body').find('.media-list');
 				render.addTmpWord($(this).closest('.modal-body').find('textarea').val(),wordWrapObj);
 			});
@@ -211,6 +347,22 @@ var ReplyKeywords=function(){
                     }
                 });
 
+		},
+		changeChannel:function(){
+			$("#idAddArticleModal .clsChannel").die().live('change',function(){
+				var channalId=$(this).val();
+				render.articleTable(channalId);
+				event.clickSelectArticle();
+			});
+		},
+		clickSelectArticle:function(){
+			$("#idAddArticleModal .clsArticleTB input[type='checkbox']").die().live('click',function(){
+				var articleId=$(this).val();
+				var title=$(this).attr('title');
+				ds.selectArticleAry.push({id:articleId,text:title});
+				$("#idAddArticleModal .clsArticles").select2("data",ds.selectArticleAry);
+
+			});
 		}
 	};
 	return {
@@ -218,6 +370,7 @@ var ReplyKeywords=function(){
 			event.pageLoad(function(){
 				event.clickAddRule();
 				event.clickAddWord();
+				event.clickAddArticle();
 				event.delTmpWord();
 				event.clickSaveRule();
 			});
