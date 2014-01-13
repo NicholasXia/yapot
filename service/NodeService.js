@@ -88,7 +88,8 @@ exports.findById=function(id,cb){
 }
 
 exports.findByIds=function(ids,cb){
-	nodeDao.find({"_id":{"$in":ids}},cb);
+	nodeDao.find
+	({"_id":{"$in":ids}},cb);
 }
 
 

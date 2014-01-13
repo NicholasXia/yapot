@@ -54,7 +54,15 @@
 							<%}%>
 							</a>
 						</li>
-					
+						<li class="<%if(locals.otherActive){%>start <%=otherActive%><%}%> ">
+							<a href="/wx/reply/other">
+							<i class="fa fa-archive"></i> 
+							<span class="title">其它自动回复</span>	
+							<%if(locals.otherActive){%>			
+								<span class="selected"></span>
+							<%}%>
+							</a>
+						</li>
 					</ul>
 				</li>
 

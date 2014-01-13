@@ -1,4 +1,5 @@
 var wxReplyFollowService=require('../../service/wx/WxReplyFollowService');
+var wxReplyOtherService=require('../../service/wx/WxReplyOtherService');
 var wxReplyRuleService=require('../../service/wx/WxReplyRuleService');
 var _=require('underscore');
 var renderObj={
@@ -28,6 +29,19 @@ exports.keywords=function(req,res){
 	return res.render('wx/reply_keywords',pageRender);
 }
 
+exports.other=function(req,res){
+	var wxId=req.session.wxAccount._id;
+
+	var pageRender={};
+	_.extend(pageRender,renderObj);
+	pageRender.otherActive='active';
+	pageRender.user=req.user;
+	wxReplyOtherService.findByWxId(wxId,function(err,wxRly){
+		pageRender.wxRpy=wxRly;
+		return res.render('wx/reply_other',pageRender);
+	});
+}
+
 exports.ajSaveFollowWord=function(req,res){
 	var wxId=req.session.wxAccount._id;
 	console.log("微信账号ID "+wxId);
@@ -36,6 +50,18 @@ exports.ajSaveFollowWord=function(req,res){
 		content:wordContent
 	}
 	wxReplyFollowService.saveWordByWxId(wxId,word,function(err,num){
+		return res.json(err);
+	});
+}
+
+exports.ajSaveOtherWord=function(req,res){
+	var wxId=req.session.wxAccount._id;
+	console.log("微信账号ID "+wxId);
+	var wordContent=req.body.word;
+	var word={
+		content:wordContent
+	}
+	wxReplyOtherService.saveWordByWxId(wxId,word,function(err,num){
 		return res.json(err);
 	});
 }

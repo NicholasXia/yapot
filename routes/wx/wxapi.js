@@ -1,6 +1,7 @@
 var wxApiService= require('../../service/wx/WxApiService');
 var wxAccountService=require('../../service/wx/WxAccountService');
 var wxReplyFollowService=require('../../service/wx/WxReplyFollowService');
+var wxReplyOtherService=require('../../service/wx/WxReplyOtherService');
 var wxReplyRuleService=require('../../service/wx/WxReplyRuleService');
 var nodeService=require('../../service/NodeService');
 var xml2js=require('xml2js');
@@ -67,33 +68,51 @@ exports.api=function(req,res){
 		console.log("用户发送消息 ");
 		res.type('xml');
 		wxReplyRuleService.findRandomReply(keyword,function(err,reply){
-			if(reply.rtype=='1'){//文字类型
-				var responseText=wxApiService.toTextXML(reply.word.content,req.body.xml);
-	        	res.send(responseText);
-			}else if(reply.rtype=='2'){//图文类型
-				nodeService.findById(reply.node.node_id,function(err,node){
-					console.log(node);
-					var responseNews=wxApiService.toSingleXML(node.wxTitle,node.wxTitle,node.wxImg,node.wxUrl,req.body.xml);
-					res.send(responseNews);
-				});
-			}else if(reply.rtype=='3'){//多图文类型
-				var ids=[];
-		
-				for(var i=0;i<reply.gnode.node.length;i++){
-					
-					ids.push(reply.gnode.node[i].node_id);
-				}
-				
-				nodeService.findByIds(ids,function(err,nodes){
-					console.log(nodes);
-					if(nodes){
-						var responseNews=wxApiService.toMultXML(nodes,req.body.xml);
+			// console.log(reply);
+			if(reply){
+				if(reply.rtype=='1'){//文字类型
+					var responseText=wxApiService.toTextXML(reply.word.content,req.body.xml);
+		        	res.send(responseText);
+				}else if(reply.rtype=='2'){//图文类型
+					nodeService.findById(reply.node.node_id,function(err,node){
+						console.log(node);
+						var responseNews=wxApiService.toSingleXML(node.wxTitle,node.wxTitle,node.wxImg,node.wxUrl,req.body.xml);
 						res.send(responseNews);
+					});
+				}else if(reply.rtype=='3'){//多图文类型
+					var ids=[];
+			
+					for(var i=0;i<reply.gnode.node.length;i++){
+						
+						ids.push(reply.gnode.node[i].node_id);
 					}
 					
+					nodeService.findByIds(ids,function(err,nodes){
+						console.log(nodes);
+						if(nodes){
+							var responseNews=wxApiService.toMultXML(nodes,req.body.xml);
+							res.send(responseNews);
+						}
+						
+					});
+					
+				}
+			}else{//无回复
+				wxReplyOtherService.findByWxId(wxid,function(err,wxReplyOther){
+					if(wxReplyOther){
+						res.type('xml'); 
+						var responseText=wxApiService.toTextXML(wxReplyOther.word.content,req.body.xml);
+						console.log(responseText);
+		        		res.send(responseText);
+						return res;
+					}else{
+						res.send("");
+						return res;
+					}
+
 				});
-				
 			}
+			
 			return res;
 		});
 		
