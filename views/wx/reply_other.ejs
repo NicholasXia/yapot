@@ -1,0 +1,160 @@
+	
+<!DOCTYPE html>
+<!-- 
+Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.0
+Version: 1.5.3
+Author: KeenThemes
+Website: http://www.keenthemes.com/
+Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
+-->
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+	<meta charset="utf-8" />
+	<title>其它自动回复</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	<meta name="MobileOptimized" content="320">
+	<!-- BEGIN GLOBAL MANDATORY STYLES -->          
+	<% include ../include/global_css %>
+	<!-- END GLOBAL MANDATORY STYLES -->
+	<!-- BEGIN THEME STYLES --> 
+	<% include ../include/theme_css %>
+	<!-- END THEME STYLES -->
+	<link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-toastr/toastr.min.css" />
+	
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+	<!-- BEGIN HEADER -->   
+	<div class="header navbar navbar-inverse navbar-fixed-top">
+		<!-- BEGIN TOP NAVIGATION BAR -->
+		<% include ../include/top %>
+		<!-- END TOP NAVIGATION BAR -->
+	</div>
+	<!-- END HEADER -->
+	<div class="clearfix"></div>
+	<!-- BEGIN CONTAINER -->   
+	<div class="page-container">
+		<!-- BEGIN SIDEBAR -->
+		<div class="page-sidebar navbar-collapse collapse">
+			<!-- BEGIN SIDEBAR MENU -->        	
+			<%include ../include/wx_menu.ejs%>
+			<!-- END SIDEBAR MENU -->
+		</div>
+		<!-- END SIDEBAR -->
+		<!-- BEGIN PAGE -->
+		<div class="page-content">
+		
+
+			<!-- BEGIN PAGE HEADER-->
+			<div class="row">
+				<div class="col-md-12">
+					<!-- BEGIN PAGE TITLE & BREADCRUMB-->			
+					<h3 class="page-title">
+						其它自动回复				<small>无关键词回复时，自动回复给用户的信息</small>
+					</h3>
+					<ul class="page-breadcrumb breadcrumb">
+				
+						<li>
+							<i class="fa fa-home"></i>
+							<a href="#">自动回复</a> 
+							<i class="fa fa-angle-right"></i> 
+							<a href="#">其它自动回复</a> 
+						</li>
+				
+					</ul>
+					<!-- END PAGE TITLE & BREADCRUMB-->
+				</div>
+			</div>
+
+			
+			<div class="row">
+		
+				<div class="col-md-12">
+					<div class="tabbable tabbable-custom boxless">
+						<ul class="nav nav-tabs">
+							<li class="active">
+								<a href="#tab_0" data-toggle="tab">文字</a>
+							</li>
+							<!-- <li>
+								<a href="#tab_1" data-toggle="tab">图文</a>
+							</li> -->
+						</ul>
+					</div>
+					<div class="tab-content">
+						<div class="tab-pane active" id="tab_0">
+							<div class="portlet box green ">
+								<div class="portlet-title">
+									<div class="caption">
+										<i class="fa fa-reorder"></i>设置文字
+									</div>
+									
+								</div>
+								<div class="portlet-body form">
+									<form id="idSaveWordFM" class="form-horizontal" role="form">
+										<div class="form-body">
+										
+											<div class="form-group">
+												
+												<div class="col-md-12">
+													<textarea id="idWordText" name="followWord" class="form-control" rows="10"><%if(wxRpy){%><%=wxRpy.word.content%><%}%></textarea>
+												</div>
+											</div>
+			
+										<div class="form-actions fluid">
+											<div class="col-md-offset-3 col-md-9">
+												<button id="idSaveWordBT" type="button" class="btn green">保存</button>
+												
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		
+			<!-- END PAGE HEADER-->
+			<!-- BEGIN PAGE CONTENT-->
+			
+			<!-- END PAGE CONTENT-->
+		</div>
+		<!-- END PAGE -->    
+	</div>
+	<!-- END CONTAINER -->
+	<!-- BEGIN FOOTER -->
+	<%include ../include/footer.ejs %>
+	<!-- END FOOTER -->
+	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+	<!-- BEGIN CORE PLUGINS -->   
+	<%include ../include/ie.ejs %>
+	<%include ../include/core_plugin.ejs %>
+	<!-- END CORE PLUGINS -->
+	<script type="text/javascript" src="/assets/plugins/jquery-file-upload/js/vendor/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="/assets/plugins/jquery-file-upload/js/jquery.iframe-transport.js"></script>
+	<script type="text/javascript" src="/assets/plugins/jquery-file-upload/js/jquery.fileupload.js"></script>
+	<script type="text/javascript" src="/assets/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="/assets/plugins/jquery-validation/dist/additional-methods.min.js"></script>
+	<script src="/assets/plugins/bootstrap-toastr/toastr.min.js"></script>
+	<script src="/assets/scripts/app.js"></script>   
+	<script src="/assets/plugins/moment.min.js"></script>    
+	<script src="/assets/scripts/wx/reply_other.js"></script>     
+	<script>
+		jQuery(document).ready(function() {    
+		   App.init();
+		   ReplyOther.init();
+		});
+	</script>
+	<!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>
