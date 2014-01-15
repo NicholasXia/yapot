@@ -17,7 +17,7 @@ var subKeyword={
 	match:Boolean//trun 全文匹配 false 精准匹配
 }
 var subReply={
-	rtype:Number,//类型 1.文字 2.文章（单图文） 3.一组文章（多图文）
+	rtype:Number,//类型 1.文字 2.文章（单图文） 3.一组文章（多图文）4.频道 5.页面 6.一组页面
 	word:{
 		content:String
 	},
@@ -32,6 +32,23 @@ var subReply={
 				title:String
 			}
 		]	
+	},
+	channel:{
+		name:String,
+		channel_id:String,
+		num:String
+	},
+	pages:{
+		name:String,
+		page_id:String
+	},
+	gpage:{
+		page:[
+			{
+				name:String,
+				page_id:String
+			}
+		]
 	}	
 	
 }

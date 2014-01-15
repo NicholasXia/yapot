@@ -66,6 +66,13 @@ exports.ajSaveOtherWord=function(req,res){
 	});
 }
 
+exports.ajDeleteRule=function(req,res){
+	console.log("删除ID "+req.query.ruleid);
+	wxReplyRuleService.delete(req.query.ruleid,function(err){
+		return res.json({'success':1});
+	});
+}
+
 exports.ajSaveRule=function(req,res){
 	var wxId=req.session.wxAccount._id;
 	var rule={};
@@ -96,7 +103,8 @@ exports.ajSaveRule=function(req,res){
 }
 
 exports.ajFindAll=function(req,res){
-	wxReplyRuleService.findAll(function(err,rules){
+	var wxId=req.session.wxAccount._id;
+	wxReplyRuleService.findAll(wxId,function(err,rules){
 		return res.json(rules);
 	});
 }

@@ -4,6 +4,7 @@ var wxReplyFollowService=require('../../service/wx/WxReplyFollowService');
 var wxReplyOtherService=require('../../service/wx/WxReplyOtherService');
 var wxReplyRuleService=require('../../service/wx/WxReplyRuleService');
 var nodeService=require('../../service/NodeService');
+var pagerService=require('../../service/PagerService');
 var xml2js=require('xml2js');
 exports.initApi=function(req,res){
 	var id=req.params.id;
@@ -96,6 +97,36 @@ exports.api=function(req,res){
 						
 					});
 					
+				}else if(reply.rtype=='4'){//频道
+					nodeService.findLatestByChannelId(reply.channel.channel_id,reply.channel.num,function(err,nodes){
+						if(nodes){
+							var responseNews=wxApiService.toMultXML(nodes,req.body.xml);
+							res.send(responseNews);
+						}
+					});
+				}else if(reply.rtype=='5'){//页面
+					pagerService.findById(reply.page.page_id,function(err,page){
+						if(page){
+							var responseNews=wxApiService.toSingleXML(page.name,page.name,'',page.wxUrl,req.body.xml);
+							res.send(responseNews);
+						}
+					});
+				}else if(reply.rtype=='6'){//一组页面
+					var ids=[];
+			
+					for(var i=0;i<reply.gpage.page.length;i++){
+						
+						ids.push(reply.gpage.page[i].page_id);
+					}
+					
+					pagerService.findByIds(ids,function(err,pages){
+			
+						if(pages){
+							var responseNews=wxApiService.toMultXML(pages,req.body.xml);
+							res.send(responseNews);
+						}
+						
+					});
 				}
 			}else{//无回复
 				wxReplyOtherService.findByWxId(wxid,function(err,wxReplyOther){

@@ -78,6 +78,11 @@ exports.findByChannelId=function(channelId,pageParam,cb){
 	page.pageQuery2(nodeDao,{channel_id:channelId},pageParam,cb);
 }
 
+exports.findLatestByChannelId=function(channelId,limit,cb){
+	nodeDao.find({'channel_id':channelId}).sort({'create_date':-1}).limit(limit).exec(cb);
+}
+
+
 exports.findById=function(id,cb){
 
 	nodeDao.findOne({"_id":id},function(err,node){

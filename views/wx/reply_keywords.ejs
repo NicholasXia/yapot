@@ -265,6 +265,89 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 		</div>
 	</div>
 
+	<!-- 添加频道回复 -->
+	<div id="idAddChannelModal" class="modal fade" tabindex="-1" data-width="400">
+		<div class="modal-dialog modal-wide">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+					<h4 class="modal-title">添加频道回复</h4>
+				</div>
+				
+				<div class="modal-body form">
+					<div class="form-body">
+						<div class="form-group">
+							<label >选择频道</label>
+							<select class="clsChannel form-control">
+								
+							</select>
+						</div>
+						
+						<div class="form-group">
+							<label >回复文章数</label>
+		
+							<select class="clsArticles form-control" >
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+								<option selected>5</option>
+								<option>6</option>
+								<option>7</option>
+								<option>8</option>
+								<option>9</option>
+								<option>10</option>
+							</select>
+
+						</div>
+					</div>
+					<div class="form-actions fluid">
+						<div class="col-md-offset-3 col-md-9">
+							<button type="button" class="btn green clsTmpSaveBT">保存</button>
+							<button type="button"  data-dismiss="modal" class="btn default">关闭</button>
+						</div>
+					</div>
+				</div>
+			
+			</div>
+		</div>
+	</div>
+
+	<!-- 添加页面回复 -->
+	<div id="idAddPageModal" class="modal fade" tabindex="-1" data-width="400">
+		<div class="modal-dialog modal-wide">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+					<h4 class="modal-title">添加页面回复</h4>
+				</div>
+				
+				<div class="modal-body form">
+					<div class="form-body">
+						<div class="form-group">
+							<label >选择页面</label>
+							<select multiple class="clsPage form-control">
+								
+							</select>
+						</div>
+						<div class="form-group">
+							<label >多页面合并</label>
+							<input id='idPagerCK' type='checkbox'/>
+						</div>
+					</div>
+					
+					<div class="form-actions fluid">
+						<div class="col-md-offset-3 col-md-9">
+							<button type="button" class="btn green clsTmpSaveBT">保存</button>
+							<button type="button"  data-dismiss="modal" class="btn default">关闭</button>
+						</div>
+					</div>
+				</div>
+			
+			</div>
+		</div>
+	</div>
+
 	<!-- 添加文字回复 -->
 	<div id="idAddWordModal" class="modal fade" tabindex="-1" data-width="400">
 		<div class="modal-dialog modal-wide">
@@ -293,9 +376,30 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 		</div>
 	</div>
 
+	<!--确认删除MODAL -->
+	<div class="modal fade" id="idRemoveModal" tabindex="-1" role="basic" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+					<h4 class="modal-title">删除提示</h4>
+				</div>
+				<div class="modal-body">
+					 确认删除此规则？删除后不可恢复，请谨慎操作
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn default" data-dismiss="modal">关闭</button>
+					<button id="idRemoveBT" ruleid='' type="button" class="btn blue">删除</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+
 	<template id="idRuleListTpl">
 		{{#rules}}
-		<div class="row">
+		<div class="row clsRule">
 			<div class="col-md-12">
 				<div class="portlet box green">
 					<div class="portlet-title">
@@ -304,7 +408,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 						</div>
 						<div class="tools">
 							<a href="javascript:;" class="collapse"></a>
-							<a href="javascript:;" class="remove"></a>
+					
 						</div>
 					</div>
 					<div class="portlet-body form ">
@@ -327,9 +431,11 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 								</div>
 								<div class="form-group">
 									<label class="control-label col-md-2">回复</label>
-									<div class="col-md-2">
+									<div class="col-md-3">
 											<button type="button" class="clsAddWordBT btn blue">文字</button>
 											<button type="button" class="clsAddAritcleBT btn purple">文章</button>
+											<button type="button" class="clsAddChannelBT btn green">频道</button>
+											<button type="button" class="clsAddPageBT btn blue">页面</button>
 									</div>
 
 								<!-- 	<div class="col-md-2">
@@ -388,6 +494,45 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 												</li>
 												{{/gnode}}
 
+												{{#channel.channel_id}}
+												<li class="clsChannel media">	
+													<hr/>
+													<button type="button" class="clsTmpDelWord pull-right btn btn-danger">删除</button>
+													<div class="media-body">
+														<h4 class="media-heading" channelid='{{channel.channel_id}}' num='{{channel.num}}' channelname='{{channel.name}}'>频道名：{{channel.name}} 回复文章数：{{channel.num}}</h4>
+														<a href="#" class="btn default btn-xs green pull-left">频道</a>
+													</div>
+													
+												</li>
+												{{/channel.channel_id}}
+
+												{{#page.page_id}}
+												<li class="clsPage media">	
+													<hr/>
+													<button type="button" class="clsTmpDelWord pull-right btn btn-danger">删除</button>
+													<div class="media-body">
+														<h4 class="media-heading" pageid='{{page.page_id}}'>{{page.name}}</h4>
+														<a href="#" class="btn default btn-xs green pull-left">页面</a>
+													</div>
+													
+												</li>
+												{{/page.page_id}}
+
+												{{#gpage}}
+												<li class="clsPageGroup media">	
+													<hr/>
+													<button type="button" class="clsTmpDelWord pull-right btn btn-danger">删除</button>
+													<div class="media-body">
+														{{#gpage.page}}
+														<h4 class="media-heading" pageid='{{page_id}}'>{{name}}</h4>
+														{{/gpage.page}}
+														<a href="#" class="btn default btn-xs green pull-left">一组页面</a>
+													</div>
+													
+												</li>
+												{{/gpage}}
+
+
 											{{/replies}}
 											
 											
@@ -404,7 +549,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 									<div class="col-md-12">
 										<div class="col-md-offset-3 col-md-9">
 											<button type="submit" class="btn green"><i class="fa fa-check"></i> 保存规则</button>
-											
+											<button type="button"  class="clsRemove btn red"><i class="fa fa-cross"></i> 删除规则</button>
 										</div>
 									</div>
 								</div>
@@ -419,7 +564,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 	</template>
 
 	<template id="idRuleTpl">
-		<div class="row">
+		<div class="row clsRule">
 			<div class="col-md-12">
 				<div class="portlet box blue ">
 					<div class="portlet-title">
@@ -428,7 +573,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 						</div>
 						<div class="tools">
 							<a href="javascript:;" class="collapse"></a>
-							<a href="javascript:;" class="remove"></a>
+							
 						</div>
 					</div>
 					<div class="portlet-body form ">
@@ -451,9 +596,11 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 								</div>
 								<div class="form-group">
 									<label class="control-label col-md-2">回复</label>
-									<div class="col-md-2">
+									<div class="col-md-3">
 											<button type="button" class="clsAddWordBT btn blue">文字</button>
 											<button type="button" class="clsAddAritcleBT btn purple">文章</button>
+											<button type="button" class="clsAddChannelBT btn green">频道</button>
+											<button type="button" class="clsAddPageBT btn blue">页面</button>
 									</div>
 
 								<!-- 	<div class="col-md-2">
@@ -484,7 +631,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 									<div class="col-md-12">
 										<div class="col-md-offset-3 col-md-9">
 											<button type="submit" class="btn green"><i class="fa fa-check"></i> 保存规则</button>
-											
+											<button type="button"  class="clsRemove btn red"><i class="fa fa-cross"></i> 删除规则</button>
 										</div>
 									</div>
 								</div>
@@ -528,22 +675,65 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 		{{/articles}}
 	</template>
 
+
+
 	<template id="idRuleArticleGroup">
-		
 		<li class="clsgArticle media">	
 			<hr/>
-			
 			<button type="button" class="clsTmpDelWord pull-right btn btn-danger">删除</button>
-
 			<div class="media-body">
 				{{#articles}}
 				<h4 class="media-heading" articleid='{{id}}'>{{text}}</h4>
 				{{/articles}}
 				<a href="#" class="btn default btn-xs purple pull-left">一组文章</a>
 			</div>
+		</li>
+	</template>
+
+	<template id="idRulePage">
+		{{#pages}}
+		<li class="clsPage media">	
+			<hr/>
+			
+			<button type="button" class="clsTmpDelWord pull-right btn btn-danger">删除</button>
+
+			<div class="media-body">
+				<h4 class="media-heading" pageid='{{id}}'>{{name}}</h4>
+				<a href="#" class="btn default btn-xs green pull-left">页面</a>
+			</div>
+			
+		</li>
+		{{/pages}}
+	</template>
+
+	<template id="idRulePageGroup">
+		
+		<li class="clsPageGroup media">	
+			<hr/>
+			
+			<button type="button" class="clsTmpDelWord pull-right btn btn-danger">删除</button>
+
+			<div class="media-body">
+				{{#pages}}
+				<h4 class="media-heading" pageid='{{id}}'>{{name}}</h4>
+				{{/pages}}
+				<a href="#" class="btn default btn-xs green pull-left">一组页面</a>
+			</div>
 			
 		</li>
 		
+	</template>
+
+	<template id="idRuleChannel">
+		<li class="clsChannel media">	
+			<hr/>
+			<button type="button" class="clsTmpDelWord pull-right btn btn-danger">删除</button>
+			<div class="media-body">
+				<h4 class="media-heading" channelid='{{channel.id}}' num='{{channel.num}}' channelname='{{channel.name}}'>频道名：{{channel.name}} 回复文章数：{{channel.num}}</h4>
+			
+				<a href="#" class="btn default btn-xs green pull-left">频道</a>
+			</div>
+		</li>
 	</template>
 
 

@@ -80,6 +80,8 @@ exports.routes=function(auth,app){
 	app.get('/wx/reply/keywords',auth,reply.keywords);
 	app.get('/wx/reply/other',auth,reply.other);
 	app.post('/wx/reply/ajSaveRule',auth,reply.ajSaveRule);
+	app.get('/wx/reply/ajDeleteRule',auth,reply.ajDeleteRule);
+	
 	app.post('/wx/reply/ajSaveFollowWord',auth,reply.ajSaveFollowWord);
 	app.post('/wx/reply/ajSaveOtherWord',auth,reply.ajSaveOtherWord);
 	app.get('/wx/reply/ajFindAll',auth,reply.ajFindAll);

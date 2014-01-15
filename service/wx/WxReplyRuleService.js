@@ -15,13 +15,13 @@ exports.update=function(id,wxReplyRule,cb){
 		keywordsTmp.push(keyword);
 	}
 	for(var i=0;i<wxReplyRule.replies.length;i++){
-		var reply={word:{},node:{},gnode:{}};
+		var reply={word:{},node:{},gnode:{},channel:{},page:{},gpage:{}};
 
 		reply.rtype=wxReplyRule.replies[i].rtype;
 		if(reply.rtype=='1'){//文字类型
 			reply.word.content=wxReplyRule.replies[i].word.content;
 		}else if(reply.rtype=='2'){//文章类型
-			reply.node.node_id=wxReplyRule.replies[i].node.id;
+			reply.node.node_id=wxReplyRule.replies[i].node.node_id;
 			reply.node.title=wxReplyRule.replies[i].node.title;
 		}else if(reply.rtype=='3'){//一组文章类型
 			reply.gnode.node=[];
@@ -29,9 +29,24 @@ exports.update=function(id,wxReplyRule,cb){
 
 				var node={};
 
-				node.node_id=wxReplyRule.replies[i].gnode.node[j].id;
+				node.node_id=wxReplyRule.replies[i].gnode.node[j].node_id;
 				node.title=wxReplyRule.replies[i].gnode.node[j].title;
 				reply.gnode.node.push(node);
+			}
+		}else if(reply.rtype=='4'){//频道
+			reply.channel.channel_id=wxReplyRule.replies[i].channel.channel_id;
+			reply.channel.name=wxReplyRule.replies[i].channel.name;
+			reply.channel.num=wxReplyRule.replies[i].channel.num;
+		}else if(reply.rtype=='5'){//页面
+			reply.page.page_id=wxReplyRule.replies[i].page.page_id;
+			reply.page.name=wxReplyRule.replies[i].page.name;
+		}else if(reply.rtype=='6'){//一组页面
+			reply.gpage.page=[];
+			for(var j=0;j<wxReplyRule.replies[i].gpage.page.length;j++){
+				var page={};
+				page.page_id=wxReplyRule.replies[i].gpage.page[j].page_id;
+				page.name=wxReplyRule.replies[i].gpage.page[j].name;
+				reply.gpage.page.push(page);
 			}
 		}
 		repliesTmp.push(reply);
@@ -63,8 +78,12 @@ exports.findRandomReply=function(mathKeyword,cb){
 	});
 }
 
-exports.findAll=function(cb){
-	wxReplyRuleDao.find().sort({'create_date':-1}).exec(cb);
+exports.findAll=function(wxId,cb){
+	wxReplyRuleDao.find({'wxid':wxId}).sort({'create_date':-1}).exec(cb);
+}
+
+exports.delete=function(id,cb){
+	wxReplyRuleDao.remove({"_id":id},cb);
 }
 
 // var wxReplyRule={

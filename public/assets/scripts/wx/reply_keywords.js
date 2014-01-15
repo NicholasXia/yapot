@@ -1,5 +1,6 @@
 var ReplyKeywords=function(){
 	var addArticleTB;
+	var pagerSelect;
 	var ds={
 		selectArticleAry:[]
 	}
@@ -18,6 +19,9 @@ var ReplyKeywords=function(){
 			var $wordReplies=$form.find('.clsWord .media-heading');
 			var $articleReplies=$form.find('.clsArticle .media-heading');
 			var $garticleReplies=$form.find('.clsgArticle');
+			var $channelReplies=$form.find('.clsChannel .media-heading');
+			var $pageReplies=$form.find('.clsPage .media-heading');
+			var $pageGroupReplies=$form.find('.clsPageGroup');
 			var keywordsObjs=[];
 			var replies=[];
 			var all=false;
@@ -43,9 +47,36 @@ var ReplyKeywords=function(){
 				var reply={};
 				reply.rtype=2;
 				reply.node={
-					id:$articleReplies.eq(i).attr('articleid'),
+					node_id:$articleReplies.eq(i).attr('articleid'),
 					title:$articleReplies.eq(i).text()
 				};
+				replies.push(reply);
+			}
+
+			//页面回复
+			for(var i=0;i<$pageReplies.size();i++){
+				var reply={};
+				reply.rtype=5;
+				reply.page={
+					page_id:$pageReplies.eq(i).attr('pageid'),
+					name:$pageReplies.eq(i).text()
+				};
+				replies.push(reply);
+			}
+
+			//一组页面回复
+			for(var i=0;i<$pageGroupReplies.size();i++){
+				var reply={};
+				reply.rtype=6;
+				reply.gpage={page:[]};
+				var $pages=$pageGroupReplies.eq(i).find('.media-heading');
+				for(var j=0;j<$pages.size();j++){
+					var page={
+						page_id:$pages.eq(j).attr('pageid'),
+						name:$pages.eq(j).text()
+					};
+					reply.gpage.page.push(page);
+				}
 				replies.push(reply);
 			}
 
@@ -57,10 +88,23 @@ var ReplyKeywords=function(){
 				var $articles=$garticleReplies.eq(i).find('.media-heading');
 				for(var j=0;j<$articles.size();j++){
 					var node={
-						id:$articles.eq(j).attr('articleid'),
+						node_id:$articles.eq(j).attr('articleid'),
 						title:$articles.eq(j).text()
 					};
 					reply.gnode.node.push(node);
+				}
+				replies.push(reply);
+			}
+
+			//频道回复
+
+			for(var i=0;i<$channelReplies.size();i++){
+				var reply={};
+				reply.rtype=4;
+				reply.channel={
+					name:$channelReplies.eq(i).attr('channelname'),
+					channel_id:$channelReplies.eq(i).attr('channelid'),
+					num:$channelReplies.eq(i).attr('num')
 				}
 				replies.push(reply);
 			}
@@ -139,11 +183,55 @@ var ReplyKeywords=function(){
                 }
             });
 		},
+		findAllPages:function(cb){
+			$.ajax({
+                type: "GET",
+                url: "/cms/pager/ajGetByWebsiteId",
+              
+                dataType: "json",
+                beforeSend:function(){
+                    
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    cb({'error':1});
+                },
+                success: function(pagers){
+             
+                    cb(pagers);
+                   
+                }
+            });
+		},
+		
 		clsAddArticleModal:function(){
 			$("#idAddArticleModal .clsChannel option").eq(0).attr('selected','selected');
 			ds.selectArticleAry=[];
 			render.articleTable('');
 			$("#idAddArticleModal .clsArticles").select2("data",ds.selectArticleAry);
+		},
+		deleteRule:function(ruleId,cb){
+			
+			if(ruleId){
+				$.ajax({
+	                type: "GET",
+	                url: "/wx/reply/ajDeleteRule",
+	              	data:{ruleid:ruleId},
+	                dataType: "json",
+	                beforeSend:function(){
+	                    
+	                },
+	                error: function(jqXHR, textStatus, errorThrown){
+	                    cb({'error':1});
+	                },
+	                success: function(suc){  
+	                    cb(suc);
+	                   
+	                }
+            	});
+			}else{
+				cb();
+			}
+			
 		}
 	};
 	var render={
@@ -156,8 +244,22 @@ var ReplyKeywords=function(){
 			var output= Mustache.render($("#idRuleWord").html(), {word:word});
 			$wordWrapObj.find(".form-control-static").html('');
 			$(output).hide().prependTo($wordWrapObj).slideDown("slow");
+
 			//$wordWrapObj.html(output);
 		},
+		addTmpPages:function(pages,$wordWrapObj){
+			var output= Mustache.render($("#idRulePage").html(), {pages:pages});
+			$wordWrapObj.find(".form-control-static").html('');
+			$(output).hide().prependTo($wordWrapObj).slideDown("slow");
+			//$wordWrapObj.html(output);
+		},
+		addTmpPagesGroup:function(pages,$wordWrapObj){
+			var output= Mustache.render($("#idRulePageGroup").html(), {pages:pages});
+			$wordWrapObj.find(".form-control-static").html('');
+			$(output).hide().prependTo($wordWrapObj).slideDown("slow");
+			//$wordWrapObj.html(output);
+		},
+
 		addTmpArticle:function(articles,$wordWrapObj){
 			var output= Mustache.render($("#idRuleArticle").html(),{articles:articles});
 			$wordWrapObj.find(".form-control-static").html('');
@@ -169,6 +271,11 @@ var ReplyKeywords=function(){
 			$wordWrapObj.find(".form-control-static").html('');
 			$(output).hide().prependTo($wordWrapObj).slideDown("slow");
 			//$wordWrapObj.html(output);
+		},
+		addTmpChannel:function(channel,$wordWrapObj){
+			var output= Mustache.render($("#idRuleChannel").html(),{channel:channel});
+			$wordWrapObj.find(".form-control-static").html('');
+			$(output).hide().prependTo($wordWrapObj).slideDown("slow");
 		},
 		saveRule:function($form,rule){
 			if(rule.error){
@@ -193,13 +300,34 @@ var ReplyKeywords=function(){
 				cb();
 			});
 		},
-		channelSelect:function(cb){
+		channelSelect:function(idModal,cb){
 			service.findAllChannels(function(channels){
-				var $selectObj=$("#idAddArticleModal .clsChannel");
+				var $selectObj=$("#"+idModal+" .clsChannel");
+
 				$selectObj.html('<option>请选择频道</option>');
 				for(var i=0;i<channels.length;i++){
 					$selectObj.append('<option value="'+channels[i]._id+'">'+channels[i].name+'</option>');
 				}
+				cb();
+			});
+		},
+		pageSelect:function(cb){
+			service.findAllPages(function(pages){
+				var $selectObj=$("#idAddPageModal .clsPage");
+
+				$selectObj.html('');
+				var pagers=[]
+				// pagers.push({id:'',text:'请选择页面'});
+				for(var i=0;i<pages.length;i++){
+					// var pager={}
+					// pager.id=pages[i]._id;
+					// pager.text=pages[i].name;
+					// pagers.push(pager);
+					$selectObj.append('<option value="'+pages[i]._id+'">'+pages[i].name+'</option>');
+				}
+	
+				$("#idAddPageModal .clsPage").select2({placeholder:'请选择页面'});
+				// $selectObj.select2('data',pagers);
 				cb();
 			});
 		},
@@ -240,7 +368,8 @@ var ReplyKeywords=function(){
 		pageLoad:function(cb){	
 			render.rulesList(function(){//初始化RULE
 				service.init();//初始化关键词控件
-
+				render.pageSelect(function(){
+				});
 				cb();
 			});
 			
@@ -250,7 +379,9 @@ var ReplyKeywords=function(){
 				render.addNewRule();//添加一个区块
 				event.clickAddWord();
 				event.clickAddArticle();
+				event.clickAddChannel();
 				event.clickSaveRule();
+				event.clickRemoveRule();
 			});
 		},
 		clickAddWord:function(){
@@ -266,12 +397,32 @@ var ReplyKeywords=function(){
 				service.clsAddArticleModal();
 				$("#idAddArticleModal").modal('show');
 				render.articlesSelect();
-				render.channelSelect(function(){
+				render.channelSelect('idAddArticleModal',function(){
 					event.changeChannel();
 				});
 				event.saveTmpArticle($(this));
 			});
 			
+		},
+		clickAddChannel:function(){
+			
+			$(".clsAddChannelBT").die().live('click',function(){
+				
+				$("#idAddChannelModal").modal('show');
+
+				render.channelSelect('idAddChannelModal',function(){
+					
+				});
+				event.saveTmpChannel($(this));
+			});
+			
+		},
+		clickAddPage:function(){		
+			$(".clsAddPageBT").die().live('click',function(){				
+				$("#idAddPageModal").modal('show');
+
+				event.saveTmpPage($(this));
+			});	
 		},
 		saveTmpArticle:function($formObj){
 			$("#idAddArticleModal .clsTmpSaveBT").die().live('click',function(){
@@ -284,10 +435,45 @@ var ReplyKeywords=function(){
 				
 			});
 		},
+		saveTmpChannel:function($formObj){
+			$("#idAddChannelModal .clsTmpSaveBT").die().live('click',function(){
+				var articleWrapObj=$formObj.closest('.form-body').find('.media-list');
+				var $channelOption= $("#idAddChannelModal .clsChannel").find("option:selected");
+				var $articleOption= $("#idAddChannelModal .clsArticles").find("option:selected");
+				var channel={
+					id:$channelOption.val(),
+					name:$channelOption.text(),
+					num:$articleOption.text()
+				}
+				console.log(channel);
+				render.addTmpChannel(channel,articleWrapObj);	
+			});
+		},	
 		saveTmpWord:function($formObj){
 			$("#idAddWordModal .clsTmpSaveBT").die().live('click',function(){
 				var wordWrapObj=$formObj.closest('.form-body').find('.media-list');
 				render.addTmpWord($(this).closest('.modal-body').find('textarea').val(),wordWrapObj);
+			});
+		},
+		saveTmpPage:function($formObj){
+			$("#idAddPageModal .clsTmpSaveBT").die().live('click',function(){
+				var wordWrapObj=$formObj.closest('.form-body').find('.media-list');
+				var $selectOpts=$(this).closest('.modal-body').find('.clsPage option:selected');
+				var pages=[];
+				for(var i=0;i<$selectOpts.size();i++){
+
+					var page={
+						id:$selectOpts.eq(i).val(),
+						name:$selectOpts.eq(i).text()
+					}
+					pages.push(page);
+				}
+				if($("#idPagerCK").attr("checked")){
+					render.addTmpPagesGroup(pages,wordWrapObj);
+				}else{
+					render.addTmpPages(pages,wordWrapObj);
+				}
+				
 			});
 		},
 		delTmpWord:function(){
@@ -363,16 +549,38 @@ var ReplyKeywords=function(){
 				$("#idAddArticleModal .clsArticles").select2("data",ds.selectArticleAry);
 
 			});
+		},
+		clickRemoveRule:function(){
+			$(".clsRemove").die().click(function(){
+				var delRuleId=$(this).closest('form').find('input[name="id"]').val();
+				$("#idRemoveModal").modal('show');
+				$("#idRemoveBT").attr('ruleid',delRuleId);
+				event.clickDeleteRule($(this).closest('.clsRule'));
+			});
+		},
+		clickDeleteRule:function($deletRule){
+			$("#idRemoveBT").die().live('click',function(){
+				$("#idRemoveModal").modal('hide');
+				$deletRule.slideUp('slow');
+				service.deleteRule($(this).attr('ruleid'),function(){
+					toastr.success('成功', '删除规则成功！'); 
+				});
+			});
 		}
 	};
 	return {
 		init:function(){
 			event.pageLoad(function(){
+
 				event.clickAddRule();
 				event.clickAddWord();
 				event.clickAddArticle();
+				event.clickAddChannel();
+				event.clickAddPage();
 				event.delTmpWord();
 				event.clickSaveRule();
+				event.clickRemoveRule();
+				
 			});
 		}
 	}

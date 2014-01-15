@@ -47,7 +47,10 @@ exports.findById=function(id,cb){
 exports.update=function(id,pager,cb){
 	pagerDao.update({"_id":id},{$set:pager},{ multi: false },cb);
 }
-
+exports.findByIds=function(ids,cb){
+	pagerDao.find
+	({"_id":{"$in":ids}},cb);
+}
 // exports.findAllTreeByWebsiteId('12123123',function(tree){
 // 		console.log(tree);
 // });
