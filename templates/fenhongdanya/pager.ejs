@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<%include header%>
+<style type="text/css">
+	#content {
+
+		padding:24px 10px 10px;
+	}
+
+	#content .title{
+		color:#f6688d;
+		font-size: 1.5em;
+	}
+
+	#content .other{
+		margin-top: 5px;
+	}
+	#content .other .channel{
+		color:#f6688d;
+		margin-top: 5px;
+	}
+	#content .other .time{
+		color:#d0d0d0;
+
+	}
+
+	#content .img{
+		margin-top: 20px;
+		text-align: center;
+	}
+
+	#content .content{
+		margin-top: 20px;
+		
+	}
+
+	#content .action{
+		margin-top: 30px;
+		text-align: center;
+
+	}
+	#content .action a{
+		color:#f6688d;
+		display: inline-block;
+		text-decoration: none;
+		margin-left: 20px;
+		margin-bottom: 50px;
+	}
+
+	
+
+
+</style>
+<body>
+	<div>
+		<div id="header">
+			<a href="javascript:history.go(-1)">返回</a>
+			<span></span>
+		</div>
+		<div id="content">
+			<p>
+				<%-pager.content%>
+			</p>
+		</div>
+	
+	</div>
+
+	<%include js%>
+
+	
+	
+
+
+</body>
+
+
+
+
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<%include header%>
+<style type="text/css">
+	#content {
+
+		padding:24px 10px 10px;
+	}
+
+	#content .title{
+		color:#f6688d;
+		font-size: 1.5em;
+	}
+
+	#content .other{
+		margin-top: 5px;
+	}
+	#content .other .channel{
+		color:#f6688d;
+		margin-top: 5px;
+	}
+	#content .other .time{
+		color:#d0d0d0;
+
+	}
+
+	#content .img{
+		margin-top: 20px;
+		text-align: center;
+	}
+
+	#content .content{
+		margin-top: 20px;
+		
+	}
+
+	#content .action{
+		margin-top: 30px;
+		text-align: center;
+
+	}
+	#content .action a{
+		color:#f6688d;
+		display: inline-block;
+		text-decoration: none;
+		margin-left: 20px;
+		margin-bottom: 50px;
+	}
+
+	
+
+
+</style>
+<body>
+	<div>
+		<div id="header">
+			<a href="javascript:history.go(-1)">返回</a>
+			<span></span>
+		</div>
+		<div id="content">
+			<div class='title'> <%=node.article.title%></div>
+			<div class='other'>
+				<span class='channel'><%=node.channel_name%></span>
+				<span class='time'><%=node.viewCreateDate%></span>
+			</div>
+			<%if(node.article.img_url){%>		
+				<div class='img'>
+                                       <img src="<%=node.article.img_url%>"/>
+					
+				</div>	   
+			<%}%>
+			
+			<div class='content'>
+				
+				<%-node.article.content%>
+			</div>
+			<div class='action'>
+				<a id="idGood" href="javascript:;">
+					<div><img src='/users/<%=website.account_id%>/skin/<%=website.tplname%>/images/zan.png' /></div><span id="idLabelGood">赞</span>(<span id="idGoodNum">
+                               	<%if(node.analytics.good_num){%>
+                               	<%=node.analytics.good_num%>
+                               	<%}else{%>0<%}%>
+                    </span>)
+				</a>
+				<a href="#">
+					<div><img src='/users/<%=website.account_id%>/skin/<%=website.tplname%>/images/up.png' /></div>返回顶部
+				</a>
+			</div>
+		</div>
+
+	</div>
+	<input id="idWebsiteId" type='hidden' value='<%=node.website_id%>'></input>
+	<input id="idChannelId" type='hidden' value='<%=node.channel_id%>'></input>
+	<input id="idNodeId" type='hidden' value='<%=node.id%>'></input>
+	<%include js%>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$.getJSON('/aj/ajGetGoodStatus',{nodeid:$("#idNodeId").val(),random:Math.random() },function(json){
+			// alert(json.status+" "+$("#idNodeId").val());
+			if(json.status==1){//赞开启
+				$("#idGood").click(function(){
+					$("#idGood").unbind('click');
+					$("#idLabelGood").html('已赞');
+					var goodNum= parseInt($("#idGoodNum").html())+1;
+					$("#idGoodNum").html(goodNum);
+					var params={
+						websiteid:$("#idWebsiteId").val(),
+						channelid:$("#idChannelId").val(),
+						nodeid:$("#idNodeId").val(),
+						random:Math.random()
+					}
+					$.getJSON('/aj/ajAddGood',params,function(json){
+						
+					});
+				});
+			}else{
+				$("#idLabelGood").html('已赞过');
+			}
+		});
+	});
+	</script>
+	
+
+
+</body>
+
+
+
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<%include header%>
+<style type="text/css">
+	#content {
+		text-align: center;
+		margin-top: 24px;
+
+	}
+
+	#content .bigLogo{
+		margin-top:50px;
+	}
+
+	#contengt .mainMenu{
+
+		width: 100%;
+	
+		
+	}
+
+	#content .mainMenu>ul{
+		text-align: left;
+		margin-top: 50px;
+		list-style: none;
+
+	}
+
+	#content .mainMenu>ul li{
+		text-align: center;
+		margin-left: 10px;
+		width: 33%;
+		display: inline-block;
+		margin-bottom: 50px;
+		
+	}
+
+	#content .mainMenu>ul li a{
+
+		font-size: 1.4em;
+		text-decoration: none;
+		color:#f6688d;
+	}
+
+</style>
+<body>
+	<div>
+		<div id="header">
+			<a href="#menu">菜单</a>
+			<span><%=website.name%></span>
+		</div>
+		<div id="content">
+			<div class='bigLogo'><img src="<%=website.imgurl%>" alt="" height="87px"></div>
+			<div class='mainMenu'>
+				<ul>
+					<% menus.forEach(function(menu){ %>
+					<li class='menuLi'>
+
+						<a href="<%=menu.link%>">
+							<span><i class="fa <%=menu.icon%> fa-2x"></i></span>
+							<h4><%=menu.name%></h4></a>
+					</li>
+					<% }) %>
+				</ul>
+			</div>
+		</div>
+		<%include slider%>
+	</div>
+	<%include js%>
+
+</body>
+
+</html>

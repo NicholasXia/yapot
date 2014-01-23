@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<%include header%>
+<style type="text/css">
+	#content {
+		margin-top: 10px;
+		margin-left:10px;
+	}
+
+	#content .article{
+		margin-top: 10px;
+		padding-bottom: 2px;
+		border-bottom: 1px solid #f3eaec;
+	}
+
+#content .title a{
+		color:#f6688d;
+		font-size: 1.5em;
+		text-decoration: none;
+	}
+#content .content img{
+    	float: right;
+    } 
+
+	#content .des{
+		margin-top: 5px;
+		font-size: 1.2em;
+	}
+	
+	#content .other{
+		margin-top: 5px;
+		font-size: 1em;
+		color:#d0d0d0;
+	}
+
+	#content .other a{
+		color:#f6688d;
+		text-decoration: none;
+	}
+	
+	#content .more {
+		margin-top: 40px;
+		text-align: center;
+	}
+        #idNext{
+          text-decoration:none;
+          color:#000;
+       }
+
+
+</style>
+<body>
+	<div>
+		<div id="header">
+			<a href="#menu">菜单</a>
+			<span><%=channel.name%>
+				<input id="idChannelId" type='hidden' value='<%=channel.id%>'/></span>
+		</div>
+		<div id="content">
+			<% if (articles.aaData.length!=0) { %>
+			<render id="idRenderNode">
+				<% articles.aaData.forEach(function(article){ %>
+					<!-- 图文 -->
+					<%if(article.article.title!=null){%> 
+					<div class='article'>
+						<div class='title'><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>/<%=article.id%>"><%=article.article.title%></a></div>
+						<div class='content'>
+							<%if(article.article.img_url){%>		
+								<img width='120px' height='80px' src="<%=article.article.img_url%>" />	   
+							<%}%>
+							<div class='des'>
+								<%-article.article.description%>
+							</div>
+							<div class='other'>
+								<a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>"><%=article.channel_name%></a> 
+								<span><%=article.viewCreateDate%></span>
+							</div>
+
+						</div>
+						
+					</div>
+					<%}%>
+
+					<!-- 视频 -->
+					<%if(article.video.title!=null){%> 
+					<div class='article'>
+						<div class='title'><a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>/<%=article.id%>"><%=article.video.title%></a></div>
+						<div class='content'>
+							<%if(article.video.img_url){%>		
+								<img width='120px' height='80px' src="<%=article.video.img_url%>" />	   
+							<%}%>
+							<div class='des'>
+								<%-article.video.description%>
+							</div>
+							<div class='other'>
+								<a href="/u/<%=article.website_english_name%>/<%=article.channel_english_name%>"><%=article.channel_name%></a> 
+								<span><%=article.viewCreateDate%></span>
+							</div>
+
+						</div>
+						
+					</div>
+					<%}%>
+				<%});%>
+			</render>
+			
+
+			<div class='more'>
+				<a id="idNext" href='javascript:void(0)'><img width='70px' height='70px' src="/users/<%=website.account_id%>/skin/<%=website.tplname%>/images/more.png"/></a>
+			</div>
+
+			<% }else{ %>
+				<div class='article'>
+					<h2>没有任何文章。。</h2>
+				</div>
+			<% }%>
+		</div>
+		<%include slider%>
+	</div>
+	<%include js%>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#idNext").click(function(){
+				var start=$("#content .article").length;
+
+				var url ='/node/ajlist?start='+start+"&channelid="+$("#idChannelId").val();
+			
+				$.getJSON(url,function(json){
+					
+					if(json.aaData.length==0){
+						$("#idNext").text("已经没有文章了...");
+						$("#idNext").unbind('click');
+					}else{
+						var output = Mustache.render($("#idNodeTemplate").html(), json);
+						$("#idRenderNode").append(output);
+					}
+					
+				});
+			});
+			
+		});
+	</script>
+
+
+	<template style='display:none' id="idNodeTemplate">
+		{{#aaData}}
+	
+			<!--图文-->
+			{{#article.title}}
+				<div class='article'>
+					<div class='title'><a href="/u/{{website_english_name}}/{{channel_english_name}}/{{id}}">{{article.title}}</a></div>
+					<div class='content'>
+						{{#article.img_url}}		
+							<img width='120px' height='80px' src="{{article.img_url}}" />	   
+						{{/article.img_url}}
+						<div class='des'>
+							{{{article.description}}}
+						</div>
+						<div class='other'>
+							<a href="/u/{{website_english_name}}/{{channel_english_name}}">{{channel_name}}</a> 
+							<span>{{viewCreateDate}}</span>
+						</div>
+
+					</div>
+					
+				</div>
+
+			{{/article.title}}
+			<!--视频-->
+			{{#video.title}}
+				<div class='article'>
+					<div class='title'><a href="/u/{{website_english_name}}/{{channel_english_name}}/{{id}}">{{video.title}}</a></div>
+					<div class='content'>
+						{{#video.img_url}}		
+							<img width='120px' height='80px' src="{{video.img_url}}" />	   
+						{{/video.img_url}}
+						<div class='des'>
+							{{{video.description}}}
+						</div>
+						<div class='other'>
+							<a href="/u/{{website_english_name}}/{{channel_english_name}}">{{channel_name}}</a> 
+							<span>{{viewCreateDate}}</span>
+						</div>
+
+					</div>
+					
+				</div>
+			{{/video.title}}
+
+		{{/aaData}}
+	</template>
+</body>
+
+</html>

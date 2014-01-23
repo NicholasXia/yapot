@@ -1,0 +1,10 @@
+<nav id="menu">
+	<ul>
+		<div>紫竹药业</div>
+		<% menus.forEach(function(menu){ %>
+		<li>
+		<a href="<%=menu.link%>"><i class="fa <%=menu.icon%>"></i>&nbsp<%=menu.name%></a>
+		</li>
+		<% }) %>
+	</ul>
+</nav>
