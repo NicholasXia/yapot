@@ -76,6 +76,7 @@ function checkAuth(req,res,next){
 exports.routes=function(auth,app){
 	app.get('/wx/index',auth,wxMy.index);
 	app.post('/wx/ajSaveInit',auth,wxMy.ajSaveInit);
+	app.get('/wx/ajSaveApp',auth,wxMy.ajSaveApp);
 	app.get('/wx/reply/follow',auth,reply.follow);
 	app.get('/wx/reply/keywords',auth,reply.keywords);
 	app.get('/wx/reply/other',auth,reply.other);

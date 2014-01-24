@@ -19,12 +19,14 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 	<meta content="" name="description" />
 	<meta content="" name="author" />
 	<meta name="MobileOptimized" content="320">
+
 	<!-- BEGIN GLOBAL MANDATORY STYLES -->          
 	<% include ../include/global_css %>
 	<!-- END GLOBAL MANDATORY STYLES -->
 	<!-- BEGIN THEME STYLES --> 
 	<% include ../include/theme_css %>
 	<!-- END THEME STYLES -->
+	<link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-toastr/toastr.min.css" />
 
 	
 </head>
@@ -91,7 +93,8 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 										<form class="form-horizontal" role="form">
 											<div class="form-body">
 												
-												<h3 class="form-section">开发模式设置</h3>
+												<h3 class="form-section" style='padding-bottom:20px;'>开发模式设置<a  data-target="#appModal" data-toggle="modal" style='float:right' class="btn btn-primary">开发者凭据设置</a></h3>
+
 												<div class="row">
 													<div class="col-md-8">
 														<div class="form-group">
@@ -192,7 +195,37 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 
 				</div>
 			</div>
-		
+			
+
+			<!-- /.modal -->
+			<div id="appModal" class="modal fade" tabindex="-1" data-width="400">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+							<h4 class="modal-title">开发者凭据</h4>
+						</div>
+						<div class="modal-body">
+							<div class="row">
+								<div class="col-md-12">
+									<h4>AppId</h4>
+									<p>
+										<input id='app' type="text" class="col-md-12 form-control" <%if(wxAccount.app.appid){%> value="<%=wxAccount.app.appid%>" <%}%>>
+									</p>
+									<h4>AppSecret</h4>
+									<p>
+										<input id='secret' type="text" class="col-md-12 form-control" <%if(wxAccount.app.secret){%> value='<%=wxAccount.app.secret%>' <%}%>>
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" data-dismiss="modal" class="btn">关闭</button>
+							<button type="button" class="saveAppCLS btn red" >保存</button>
+						</div>
+					</div>
+				</div>
+			</div>
 
 
 		
@@ -217,12 +250,56 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 	<script type="text/javascript" src="/assets/plugins/jquery-file-upload/js/jquery.fileupload.js"></script>
 	<script type="text/javascript" src="/assets/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="/assets/plugins/jquery-validation/dist/additional-methods.min.js"></script>
+	<script src="/assets/plugins/bootstrap-toastr/toastr.min.js"></script>
 	<script src="/assets/scripts/app.js"></script>   
 	<script src="/assets/plugins/moment.min.js"></script>      
 	<script>
 		jQuery(document).ready(function() {    
 		   App.init();
-		   
+		   var service={
+		   		addApp:function(appid,secret,cb){
+		   			var params={
+		   				appid:appid,
+		   				secret:secret
+		   			};
+
+		   			$.ajax({
+		                type: "GET",
+		                url: "/wx/ajSaveApp",
+		                data: params,
+		                dataType: "json",
+		                beforeSend:function(){
+		                    
+		                },
+		                error: function(jqXHR, textStatus, errorThrown){
+		                   
+		                     cb({'error':1});
+		                },
+		                success: function(data){
+		                
+		                    console.log(data);
+		                    cb(data);
+		                   
+		                }
+		            });
+		   		}
+		   }
+
+			var event={
+				saveApp:function(){
+					$(".saveAppCLS").click(function(){
+					
+						var appid=$("#app").val();
+						var secret=$("#secret").val();
+
+						service.addApp(appid,secret,function(data){
+							toastr.success('保存开发者凭据成功');
+						});
+					});
+				}
+			}
+
+			event.saveApp();
 		});
 	</script>
 	<!-- END JAVASCRIPTS -->

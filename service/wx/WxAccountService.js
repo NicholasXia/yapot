@@ -11,3 +11,7 @@ exports.findById=function(id,cb){
 exports.add=function(wexinObj,cb){
 	wxAccountDao.create(wexinObj,cb);
 }
+
+exports.saveApp=function(accountId,app,cb){
+	wxAccountDao.update({ "accountId": accountId }, {$set:{app:app} }, {upsert:true, multi: false }, cb);
+}

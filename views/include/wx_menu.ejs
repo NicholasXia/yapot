@@ -63,7 +63,16 @@
 							<%}%>
 							</a>
 						</li>
+						
 					</ul>
 				</li>
-
+				<li class="<%if(locals.wxIndexActive){%>start <%=wxIndexActive%><%}%>">
+					<a href="/wx/index">
+					<i class="fa fa-home"></i> 
+					<span class="title">自定义菜单</span>	
+					<%if(locals.wxIndexActive){%>
+					<span class="selected"></span>
+					<%}%>
+					</a>
+				</li>
 			</ul>

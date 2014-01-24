@@ -5,6 +5,7 @@ var wxReplyOtherService=require('../../service/wx/WxReplyOtherService');
 var wxReplyRuleService=require('../../service/wx/WxReplyRuleService');
 var nodeService=require('../../service/NodeService');
 var pagerService=require('../../service/PagerService');
+var request=require('request');
 var xml2js=require('xml2js');
 exports.initApi=function(req,res){
 	var id=req.params.id;
@@ -183,4 +184,84 @@ exports.api=function(req,res){
 	// console.log("这都是什么啊！！");
 	// return res.send('ddd');
 }
+
+
+exports.getAccessToken=function(appid,secret,cb){
+	request('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+appid+'&secret='+secret,function(err,rep,body){
+		var body=JSON.parse(body);
+		if(body.errcode){
+			cb(body,null);
+		}else{
+			cb(null,body);
+		}
+		
+	});
+}
+/*
+{
+    "button": [
+        {
+            "type": "view", 
+            "name": "中国妇产科微官网", 
+            "url": "http://weixin.china-obgyn.net/u/obgyn"
+        }
+    ]
+}
+*/
+exports.addMenu=function(menuObj,accessToken,cb){
+	var menuStr=JSON.stringify(menuObj);
+	console.log(menuStr);
+	var opts={
+		body:menuStr,
+		url:'https://api.weixin.qq.com/cgi-bin/menu/create?access_token='+accessToken,
+		method:'POST'
+
+	}
+	request(opts,cb);
+
+}
+
+// exports.getAccessToken('wxa5c24287eb47aa1f','e97abfdd70a285a61875f8e6311c78d2',function(err,accessToken){
+// 	console.log(accessToken);
+// });
+var menuObj={
+    "button": [
+        {
+            "type": "view", 
+            "name": "微官网", 
+            "url": "http://weixin.china-obgyn.net/u/obgyn"
+        },
+        {
+           "name":"实时更新",
+           "sub_button":[
+           {	
+               "type":"view",
+               "name":"专业文章",
+               "url":"http://weixin.china-obgyn.net/u/obgyn/art"
+            },
+            {
+               "type":"view",
+               "name":"新闻资讯",
+               "url":"http://weixin.china-obgyn.net/u/obgyn/newss"
+            },
+            {
+               "type":"view",
+               "name":"会议通知",
+               "url":"http://weixin.china-obgyn.net/u/obgyn/meetings"
+            },
+            {
+               "type":"view",
+               "name":"图书推荐",
+               "url":"http://weixin.china-obgyn.net/u/obgyn/booking"
+            }]
+        }
+    ]
+}
+exports.getAccessToken('wxa5c24287eb47aa1f','e97abfdd70a285a61875f8e6311c78d2',function(err,accessToken){
+	console.log(accessToken);
+	exports.addMenu(menuObj,accessToken.access_token,function(err,res,body){
+		console.log(err+" "+body);
+	});
+});
+
 

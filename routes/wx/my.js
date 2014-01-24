@@ -24,3 +24,15 @@ exports.ajSaveInit=function(req,res){
 		return res.json(wxAccount);
 	});
 }
+
+
+exports.ajSaveApp=function(req,res){
+	var app={
+		appid:req.query.appid,
+		secret:req.query.secret
+	};
+	wxAccountService.saveApp(req.user.id,app,function(err,num){
+		console.log(err+" = "+num);
+		res.json(num);
+	});
+}
