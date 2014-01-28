@@ -67,7 +67,7 @@ nodeSchema.virtual('wxTitle').get(function(){
 	var title="";
 	if(this.article.title){
 		title=this.article.title;
-	}else{
+	}else if(this.video.title){
 		title=this.video.title;
 	}
 	return S(title).left(websiteConfig.WX_TITLE).s;

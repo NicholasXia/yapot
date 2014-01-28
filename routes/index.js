@@ -10,6 +10,8 @@ exports.index = function(req, res){
 };
 
 exports.login=function(req,res){
+	res.cookie('lala', 'aaa');
+	res.cookie('name', 'tobi', { domain: 'localhost'});
 	req.logout();
 	return res.render('login');
 }

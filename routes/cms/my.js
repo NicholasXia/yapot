@@ -4,6 +4,7 @@ var nodeService=require('../../service/NodeService');
 var tplService=require('../../service/TplService');
 var wxAccountService = require('../../service/wx/WxAccountService');
 exports.redirectIndex=function(req,res){
+
 	if(req.user.role==0){
 		res.redirect('/cms/admin/index');
 	}
@@ -25,6 +26,7 @@ exports.index=function(req,res){
 			req.session.website=website;
 			console.log("website "+website);
 			website.url="/u/"+website.english_name;
+			
 			return res.render("cms/index",{user:req.user,cmsActive:'active',indexActive:'active',website:website});
 
 		});
